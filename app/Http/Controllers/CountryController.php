@@ -27,7 +27,7 @@ class CountryController extends Controller
 
         Country::create($attributes);
 
-        return CountryIframe::iframeClose() . '\d' . CityIframe::unLoadParent();
+        return CountryIframe::iframeClose() . '<br>' . CityIframe::unLoadParent();
     }
 
     public function edit(Country $country)
@@ -45,7 +45,7 @@ class CountryController extends Controller
 
         $country->update($attributes);
 
-        return CountryIframe::iframeClose() . '\d' . CityIframe::reloadParent($country->id);
+        return CountryIframe::iframeClose() . '<br>' . CityIframe::reloadParent($country->id);
     }
 
     public function destroy(Country $country)
