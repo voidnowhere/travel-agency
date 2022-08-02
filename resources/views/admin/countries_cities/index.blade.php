@@ -1,0 +1,9 @@
+<x-admin.layout.management name="Countries and Cities management">
+    <iframe id="{{ \App\Iframes\CountryIframe::$parentIframeId }}" class="p-2 w-full grow"
+            src="{{ route('admin.countries') }}"></iframe>
+    <iframe id="{{ \App\Iframes\CountryIframe::$iframeId }}"
+            class="w-96 h-full absolute hidden top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></iframe>
+    <iframe id="iframe_cities" class="p-2 w-full grow"></iframe>
+    <iframe id="{{ \App\Iframes\CityIframe::$iframeId }}"
+            class="w-96 h-full absolute hidden top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></iframe>
+</x-admin.layout.management>
