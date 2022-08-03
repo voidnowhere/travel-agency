@@ -33,7 +33,7 @@ class CityController extends Controller
         return
             CityIframe::iframeCUClose()
             . '<br>' .
-            CityIframe::reloadParent($country->id, true);
+            CityIframe::reloadParent($country->id);
     }
 
     public function edit(City $city)
@@ -52,7 +52,7 @@ class CityController extends Controller
         return
             CityIframe::iframeCUClose()
             . '<br>' .
-            CityIframe::reloadParent($city->country_id, true);
+            CityIframe::reloadParent($city->country_id);
     }
 
     public function destroy(City $city)
@@ -76,7 +76,7 @@ class CityController extends Controller
             ],
             'is_active' => 'nullable',
         ]);
-        $attributes['is_active'] = ($country->is_active ?? $city->country->is_active) || (bool)($attributes['is_active'] ?? false);
+        $attributes['is_active'] = ($country?->is_active === false) || (bool)($attributes['is_active'] ?? false);
         return $attributes;
     }
 }

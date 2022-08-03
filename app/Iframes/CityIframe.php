@@ -15,19 +15,18 @@ class CityIframe
         return $script;
     }
 
-    public static function reloadParent(int $country_id, bool $fromCUIframe = false): string
+    public static function reloadParent(int $country_id): string
     {
         $script = '<script>';
-        $script .= ($fromCUIframe) ? 'parent.' : '';
-        $script .= "document.location.href = '" . route('admin.cities', ['country' => $country_id]) . "';";
+        $script .= "parent.document.getElementById('" . self::$parentIframeId . "').src = '" . route('admin.cities', ['country' => $country_id]) . "';";
         $script .= '</script>';
         return $script;
     }
 
-    public static function unloadParentFromOutside(): string
+    public static function unloadParent(): string
     {
         $script = '<script>';
-        $script .= "parent.parent.document.getElementById('" . static::$parentIframeId . "').src = '';";
+        $script .= "parent.document.getElementById('" . static::$parentIframeId . "').src = '';";
         $script .= '</script>';
         return $script;
     }

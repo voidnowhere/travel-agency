@@ -1,7 +1,8 @@
 @props(['title', 'iframeIdToClose', 'operation', 'countryIsActive' => null, 'countryOrCity' => null, 'patchMethod' => false])
-<x-admin.iframe.layout :title="$title" body-class="h-screen flex items-center">
-    <div class="pr-4 py-3 bg-blue-100 rounded-3xl border-2 border-blue-400">
-        <div class="flex justify-end">
+<x-admin.iframe.layout :title="$title" body-class="h-screen flex items-center justify-center">
+    <div class="px-4 py-3 bg-blue-100 rounded-3xl border-2 border-blue-400">
+        <div class="flex justify-between">
+            <h1 class="font-semibold">{{ $title }}</h1>
             <x-svg.close
                 class="w-7 h-7 hover:cursor-pointer transition-all duration-100 rounded-full hover:border-2 hover:border-blue-500"
                 :iframe-id-to-close="$iframeIdToClose"/>

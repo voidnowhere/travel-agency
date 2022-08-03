@@ -30,9 +30,9 @@ class CountryController extends Controller
         return
             CountryIframe::iframeCUClose()
             . '<br>' .
-            CityIframe::unloadParentFromOutside()
+            CityIframe::unloadParent()
             . '<br>' .
-            CountryIframe::reloadParent(true);
+            CountryIframe::reloadParent();
     }
 
     public function edit(Country $country)
@@ -53,9 +53,9 @@ class CountryController extends Controller
         return
             CountryIframe::iframeCUClose()
             . '<br>' .
-            CityIframe::unloadParentFromOutside()
+            CityIframe::unloadParent()
             . '<br>' .
-            CountryIframe::reloadParent(true);
+            CountryIframe::reloadParent();
     }
 
     public function destroy(Country $country)
@@ -64,7 +64,7 @@ class CountryController extends Controller
         $country->delete();
 
         return
-            CityIframe::unloadParentFromOutside()
+            CityIframe::unloadParent()
             . '<br>' .
             CountryIframe::reloadParent();
     }

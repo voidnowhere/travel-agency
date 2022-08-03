@@ -14,11 +14,9 @@
             {{ $slot }}
             </tbody>
         </table>
-        <iframe id="{{ $iframeIdToShow }}"
-                class="w-96 h-full absolute hidden top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></iframe>
         <script>
             function showCountryCityCUIframe(id, src) {
-                const iframe = document.getElementById(id);
+                const iframe = parent.document.getElementById(id);
                 iframe.src = src;
                 iframe.classList.remove('hidden');
             }

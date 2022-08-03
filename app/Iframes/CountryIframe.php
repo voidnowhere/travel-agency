@@ -15,11 +15,10 @@ class CountryIframe
         return $script;
     }
 
-    public static function reloadParent(bool $fromCUIframe = false): string
+    public static function reloadParent(): string
     {
         $script = '<script>';
-        $script .= ($fromCUIframe) ? 'parent.' : '';
-        $script .= "document.location.href = '" . route('admin.countries') . "'";
+        $script .= "parent.document.getElementById('" . self::$parentIframeId . "').src = '" . route('admin.countries') . "'";
         $script .= '</script>';
         return $script;
     }

@@ -1,4 +1,4 @@
-<x-admin.iframe.countries_cities.crud.layout
+<x-admin.iframe.countries_cities.cu.layout
     title="Edit City"
     iframe-id-to-close="{{ \App\Iframes\CityIframe::$iframeCUId }}"
     operation="edit"
