@@ -5,9 +5,9 @@
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
 </svg>
 <script>
-    function closeIframe(){
-        const iframe = parent.document.querySelector('#{{ $iframeIdToClose }}');
-        iframe.src = '';
+    function closeIframe() {
+        const iframe = parent.document.getElementById('{{ $iframeIdToClose }}');
         iframe.classList.add('hidden');
+        iframe.src = '';
     }
 </script>
