@@ -4,31 +4,30 @@ namespace App\Iframes;
 
 class CityIframe
 {
-    public static string $iframeId = 'iframe_city_cu';
+    public static string $iframeCUId = 'iframe_city_cu';
     public static string $parentIframeId = 'iframe_cities';
 
-    public static function iframeClose(): string
+    public static function iframeCUClose(): string
     {
         $script = '<script>';
-        $script .= "parent.document.querySelector('#" . static::$iframeId . "').classList.add('hidden');";
-        $script .= "parent.document.querySelector('#" . static::$parentIframeId . "').contentDocument.location.reload()";
+        $script .= "parent.document.getElementById('" . static::$iframeCUId . "').classList.add('hidden');";
         $script .= '</script>';
         return $script;
     }
 
-    public static function reloadParent(int $country_id): string
+    public static function reloadParent(int $country_id, bool $fromCUIframe = false): string
     {
         $script = '<script>';
-        $script .= "parent.document.querySelector('#" . static::$parentIframeId . "').src = '';";
-        $script .= "parent.document.querySelector('#" . static::$parentIframeId . "').src = '" . route('admin.cities', ['country' => $country_id]) . "';";
+        $script .= ($fromCUIframe) ? 'parent.' : '';
+        $script .= "document.location.href = '" . route('admin.cities', ['country' => $country_id]) . "';";
         $script .= '</script>';
         return $script;
     }
 
-    public static function unLoadParent(): string
+    public static function unloadParentFromOutside(): string
     {
         $script = '<script>';
-        $script .= "parent.document.querySelector('#" . static::$parentIframeId . "').src = '';";
+        $script .= "parent.parent.document.getElementById('" . static::$parentIframeId . "').src = '';";
         $script .= '</script>';
         return $script;
     }

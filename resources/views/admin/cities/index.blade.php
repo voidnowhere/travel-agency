@@ -1,5 +1,5 @@
 <x-admin.iframe.countries_cities.layout
-    title="Cities" iframe-id-to-show="{{ \App\Iframes\CityIframe::$iframeId }}"
+    title="cities" iframe-id-to-show="{{ \App\Iframes\CityIframe::$iframeCUId }}"
     :route="route('admin.cities.create', ['country' => $country_id])">
     @if($cities->count() > 0)
         @foreach($cities as $city)
@@ -11,8 +11,9 @@
                 <td class="flex justify-center py-3 px-6">
                     <x-svg.crud.edit
                         class="w-6 h-6 hover:cursor-pointer"
-                        on-click="showCountryCRUDIframe('{{ \App\Iframes\CityIframe::$iframeId }}', '{{ route('admin.cities.city.edit', ['city' => $city->id])}}')"/>
+                        on-click="showCountryCityCUIframe('{{ \App\Iframes\CityIframe::$iframeCUId }}', '{{ route('admin.cities.city.edit', ['city' => $city->id])}}')"/>
                     <x-svg.crud.delete class="w-6 h-6 hover:cursor-pointer"
+                                       delete-what="city"
                                        :form-action="route('admin.cities.city.edit', ['city' => $city->id])"/>
                 </td>
             </tr>
@@ -22,11 +23,4 @@
             <td colspan="3" class="text-center">No Data Found!</td>
         </tr>
     @endif
-    <script>
-        function showCountryCRUDIframe(id, src) {
-            const iframe = parent.document.querySelector(`#${id}`);
-            iframe.src = src;
-            iframe.classList.remove('hidden');
-        }
-    </script>
 </x-admin.iframe.countries_cities.layout>

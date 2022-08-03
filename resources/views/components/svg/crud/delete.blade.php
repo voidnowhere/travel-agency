@@ -1,8 +1,9 @@
-@props(['class', 'formAction'])
+@props(['class', 'formAction', 'deleteWhat'])
 <form method="POST" action="{{ $formAction }}">
     @csrf
     @method('DELETE')
-    <button type="submit" onclick="if(!confirm('Do you really want to delete this country?')) event.preventDefault();">
+    <button type="submit"
+            onclick="confirmDeleteSubmit(event)">
         <svg class="{{ $class }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"
              xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -10,3 +11,10 @@
         </svg>
     </button>
 </form>
+<script>
+    function confirmDeleteSubmit(event) {
+        if (!confirm('Do you really want to delete this {{ $deleteWhat }}{{ ($deleteWhat === 'country') ? ' and its linked cities' : '' }}!')) {
+            event.preventDefault();
+        }
+    }
+</script>

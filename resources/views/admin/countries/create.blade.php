@@ -1,2 +1,4 @@
 <x-admin.iframe.countries_cities.crud.layout
-    title="Add Country" iframe-id-to-close="{{ \App\Iframes\CountryIframe::$iframeId }}"/>
+    title="Create Country"
+    iframe-id-to-close="{{ \App\Iframes\CountryIframe::$iframeCUId }}"
+    operation="create"/>

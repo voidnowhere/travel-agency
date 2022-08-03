@@ -17,9 +17,11 @@ class CityController extends Controller
         ]);
     }
 
-    public function create()
+    public function create(Country $country)
     {
-        return view('admin.cities.create');
+        return view('admin.cities.create', [
+            'countryIsActive' => $country->is_active,
+        ]);
     }
 
     public function store(Country $country)
@@ -28,7 +30,10 @@ class CityController extends Controller
 
         $country->cities()->create($attributes);
 
-        return CityIframe::iframeClose();
+        return
+            CityIframe::iframeCUClose()
+            . '<br>' .
+            CityIframe::reloadParent($country->id, true);
     }
 
     public function edit(City $city)
@@ -44,7 +49,10 @@ class CityController extends Controller
 
         $city->update($attributes);
 
-        return CityIframe::iframeClose();
+        return
+            CityIframe::iframeCUClose()
+            . '<br>' .
+            CityIframe::reloadParent($city->country_id, true);
     }
 
     public function destroy(City $city)
@@ -68,7 +76,7 @@ class CityController extends Controller
             ],
             'is_active' => 'nullable',
         ]);
-        $attributes['is_active'] = (bool)($attributes['is_active'] ?? false);
+        $attributes['is_active'] = ($country->is_active ?? $city->country->is_active) || (bool)($attributes['is_active'] ?? false);
         return $attributes;
     }
 }

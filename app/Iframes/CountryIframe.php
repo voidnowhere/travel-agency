@@ -4,23 +4,22 @@ namespace App\Iframes;
 
 class CountryIframe
 {
-    public static string $iframeId = 'iframe_country_cu';
+    public static string $iframeCUId = 'iframe_country_cu';
     public static string $parentIframeId = 'iframe_countries';
 
-    public static function iframeClose(): string
+    public static function iframeCUClose(): string
     {
         $script = '<script>';
-        $script .= "parent.document.querySelector('#" . static::$iframeId . "').classList.add('hidden');";
-        $script .= "parent.document.querySelector('#" . static::$parentIframeId . "').contentDocument.location.reload()";
+        $script .= "parent.document.getElementById('" . static::$iframeCUId . "').classList.add('hidden');";
         $script .= '</script>';
         return $script;
     }
 
-    public static function reloadParent(): string
+    public static function reloadParent(bool $fromCUIframe = false): string
     {
         $script = '<script>';
-        $script .= "parent.document.querySelector('#" . static::$parentIframeId . "').src = '';";
-        $script .= "parent.document.querySelector('#" . static::$parentIframeId . "').src = '" . route('admin.countries') . "';";
+        $script .= ($fromCUIframe) ? 'parent.' : '';
+        $script .= "document.location.href = '" . route('admin.countries') . "'";
         $script .= '</script>';
         return $script;
     }
