@@ -16,27 +16,27 @@
                     <x-svg.crud.edit
                         class="w-6 h-6 hover:cursor-pointer"
                         on-click="showCountryCityCUIframe('{{ \App\Iframes\CountryIframe::$iframeCUId }}', '{{ route('admin.countries.country.edit', ['country' => $country->id])}}')"/>
-                    <x-svg.crud.delete class="w-6 h-6 hover:cursor-pointer"
-                                       delete-what="country"
-                                       :form-action="route('admin.countries.country.edit', ['country' => $country->id])"/>
+                    <x-svg.crud.delete
+                        class="w-6 h-6 hover:cursor-pointer"
+                        on-click="submitDelete('{{ \App\Iframes\CountryIframe::$iframeDId }}', '{{ route('admin.countries.country.delete', ['country' => $country->id]) }}')"/>
                 </td>
             </tr>
         @endforeach
+        <script>
+            function focusTableTr(tabindex) {
+                document.querySelectorAll('tr').forEach(tr => {
+                    tr.classList.remove('bg-blue-50');
+                });
+                document.querySelector(`tr[tabindex="${tabindex}"]`).classList.add('bg-blue-50');
+            }
+
+            function loadCitiesIframe(src) {
+                parent.document.getElementById('{{ \App\Iframes\CityIframe::$parentIframeId }}').src = src;
+            }
+        </script>
     @else
         <tr>
             <td colspan="3" class="text-center">No Data Found!</td>
         </tr>
     @endif
-    <script>
-        function focusTableTr(tabindex) {
-            document.querySelectorAll('tr').forEach(tr => {
-                tr.classList.remove('bg-blue-50');
-            });
-            document.querySelector(`tr[tabindex="${tabindex}"]`).classList.add('bg-blue-50');
-        }
-
-        function loadCitiesIframe(src) {
-            parent.document.getElementById('{{ \App\Iframes\CityIframe::$parentIframeId }}').src = src;
-        }
-    </script>
 </x-admin.iframe.countries_cities.layout>

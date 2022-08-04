@@ -5,6 +5,7 @@ namespace App\Iframes;
 class CountryIframe
 {
     public static string $iframeCUId = 'iframe_country_cu';
+    public static string $iframeDId = 'iframe_country_d';
     public static string $parentIframeId = 'iframe_countries';
 
     public static function iframeCUClose(): string

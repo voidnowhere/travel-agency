@@ -12,9 +12,9 @@
                     <x-svg.crud.edit
                         class="w-6 h-6 hover:cursor-pointer"
                         on-click="showCountryCityCUIframe('{{ \App\Iframes\CityIframe::$iframeCUId }}', '{{ route('admin.cities.city.edit', ['city' => $city->id])}}')"/>
-                    <x-svg.crud.delete class="w-6 h-6 hover:cursor-pointer"
-                                       delete-what="city"
-                                       :form-action="route('admin.cities.city.edit', ['city' => $city->id])"/>
+                    <x-svg.crud.delete
+                        class="w-6 h-6 hover:cursor-pointer"
+                        on-click="submitDelete('{{ \App\Iframes\CityIframe::$iframeDId }}', '{{ route('admin.cities.city.delete', ['city' => $city->id]) }}')"/>
                 </td>
             </tr>
         @endforeach

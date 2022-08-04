@@ -16,9 +16,14 @@
         </table>
         <script>
             function showCountryCityCUIframe(id, src) {
-                const iframe = parent.document.getElementById(id);
+                let iframe = parent.document.getElementById(id);
                 iframe.src = src;
                 iframe.classList.remove('hidden');
+            }
+
+            function submitDelete(id, src) {
+                let iframe = parent.document.getElementById(id);
+                iframe.src = src;
             }
         </script>
     </div>

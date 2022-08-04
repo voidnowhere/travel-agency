@@ -55,6 +55,11 @@ class CityController extends Controller
             CityIframe::reloadParent($city->country_id);
     }
 
+    public function delete(City $city)
+    {
+        return view('admin.cities.delete');
+    }
+
     public function destroy(City $city)
     {
         $city->delete();

@@ -5,6 +5,7 @@ namespace App\Iframes;
 class CityIframe
 {
     public static string $iframeCUId = 'iframe_city_cu';
+    public static string $iframeDId = 'iframe_city_d';
     public static string $parentIframeId = 'iframe_cities';
 
     public static function iframeCUClose(): string

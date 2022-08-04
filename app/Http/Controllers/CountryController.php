@@ -58,6 +58,13 @@ class CountryController extends Controller
             CountryIframe::reloadParent();
     }
 
+    public function delete(Country $country)
+    {
+        return view('admin.countries.delete', [
+            'country' => $country,
+        ]);
+    }
+
     public function destroy(Country $country)
     {
         $country->cities()->delete();
