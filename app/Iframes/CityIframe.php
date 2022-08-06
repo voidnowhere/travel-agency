@@ -11,15 +11,15 @@ class CityIframe
     public static function iframeCUClose(): string
     {
         $script = '<script>';
-        $script .= "parent.document.getElementById('" . static::$iframeCUId . "').classList.add('hidden');";
+        $script .= "parent.document.getElementById('" . self::$iframeCUId . "').classList.add('hidden');";
         $script .= '</script>';
         return $script;
     }
 
-    public static function reloadParent(int $country_id): string
+    public static function reloadParent(int $countryId): string
     {
         $script = '<script>';
-        $script .= "parent.document.getElementById('" . self::$parentIframeId . "').src = '" . route('admin.cities', ['country' => $country_id]) . "';";
+        $script .= "parent.document.getElementById('" . self::$parentIframeId . "').src = '" . route('admin.cities', ['country' => $countryId]) . "';";
         $script .= '</script>';
         return $script;
     }

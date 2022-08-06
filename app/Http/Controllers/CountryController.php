@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Iframes\CityIframe;
 use App\Iframes\CountryIframe;
 use App\Models\Country;
+use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class CountryController extends Controller
@@ -21,18 +22,18 @@ class CountryController extends Controller
         return view('admin.countries.create');
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        $attributes = $this->validateCountry();
-
-        Country::create($attributes);
+        $country = Country::create($this->validateCountry($request));
 
         return
             CountryIframe::iframeCUClose()
             . '<br>' .
-            CityIframe::unloadParent()
+            CountryIframe::reloadParent()
             . '<br>' .
-            CountryIframe::reloadParent();
+            CountryIframe::parentFocusRow($country->id)
+            . '<br>' .
+            CityIframe::reloadParent($country->id);
     }
 
     public function edit(Country $country)
@@ -42,9 +43,9 @@ class CountryController extends Controller
         ]);
     }
 
-    public function update(Country $country)
+    public function update(Request $request, Country $country)
     {
-        $attributes = $this->validateCountry($country);
+        $attributes = $this->validateCountry($request, $country);
 
         $country->cities()->update(['is_active' => $attributes['is_active']]);
 
@@ -53,9 +54,11 @@ class CountryController extends Controller
         return
             CountryIframe::iframeCUClose()
             . '<br>' .
-            CityIframe::unloadParent()
+            CountryIframe::reloadParent()
             . '<br>' .
-            CountryIframe::reloadParent();
+            CountryIframe::parentFocusRow($country->id)
+            . '<br>' .
+            CityIframe::reloadParent($country->id);
     }
 
     public function delete(Country $country)
@@ -76,9 +79,9 @@ class CountryController extends Controller
             CountryIframe::reloadParent();
     }
 
-    public function validateCountry(Country $country = null)
+    public function validateCountry(Request $request, Country $country = null)
     {
-        $attributes = request()->validate([
+        $attributes = $request->validate([
             'name' => [
                 'required',
                 'min:2',
@@ -88,7 +91,9 @@ class CountryController extends Controller
             ],
             'is_active' => 'nullable',
         ]);
+
         $attributes['is_active'] = ($country === null) || (bool)($attributes['is_active'] ?? false);
+
         return $attributes;
     }
 }

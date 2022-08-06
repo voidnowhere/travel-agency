@@ -1,4 +1,4 @@
-@props(['title', 'loadCSS' => true, 'bodyClass' => ''])
+@props(['title', 'loadCSS' => true])
 <!doctype html>
 <html lang="en">
 <head>
@@ -9,7 +9,7 @@
         @vite('resources/css/app.css')
     @endif
 </head>
-<body class="{{ $bodyClass }}">
+<body class="h-screen">
 {{ $slot }}
 </body>
 </html>
