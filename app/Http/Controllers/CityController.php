@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Iframes\CityIframe;
 use App\Models\City;
 use App\Models\Country;
+use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class CityController extends Controller
@@ -24,16 +25,14 @@ class CityController extends Controller
         ]);
     }
 
-    public function store(Country $country)
+    public function store(Request $request, Country $country)
     {
-        $attributes = $this->validateCountry(country: $country);
-
-        $country->cities()->create($attributes);
+        $country->cities()->create($this->validateCountry($request, country: $country));
 
         return
             CityIframe::iframeCUClose()
             . '<br>' .
-            CityIframe::reloadParent($country->id, true);
+            CityIframe::reloadParent($country->id);
     }
 
     public function edit(City $city)
@@ -43,16 +42,21 @@ class CityController extends Controller
         ]);
     }
 
-    public function update(City $city)
+    public function update(Request $request, City $city)
     {
-        $attributes = $this->validateCountry($city);
-
-        $city->update($attributes);
+        $city->update($this->validateCountry($request, $city));
 
         return
             CityIframe::iframeCUClose()
             . '<br>' .
-            CityIframe::reloadParent($city->country_id, true);
+            CityIframe::reloadParent($city->country_id);
+    }
+
+    public function delete(City $city)
+    {
+        return view('admin.cities.delete', [
+            'city' => $city,
+        ]);
     }
 
     public function destroy(City $city)
@@ -62,9 +66,9 @@ class CityController extends Controller
         return CityIframe::reloadParent($city->country_id);
     }
 
-    public function validateCountry(City $city = null, Country $country = null)
+    public function validateCountry(Request $request, City $city = null, Country $country = null)
     {
-        $attributes = request()->validate([
+        $attributes = $request->validate([
             'name' => [
                 'required',
                 'min:2',
@@ -76,7 +80,13 @@ class CityController extends Controller
             ],
             'is_active' => 'nullable',
         ]);
-        $attributes['is_active'] = ($country->is_active ?? $city->country->is_active) || (bool)($attributes['is_active'] ?? false);
+
+        if (!$country?->is_active) {
+            $attributes['is_active'] = false;
+        } else {
+            $attributes['is_active'] = (bool)($attributes['is_active'] ?? false);
+        }
+
         return $attributes;
     }
 }
