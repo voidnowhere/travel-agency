@@ -1,11 +1,12 @@
 <x-admin.iframe.layout title="Countries">
     <x-table.layout>
-        <x-table.thead :columns="['Name', 'Active']" :iframe-c-u-id="\App\Iframes\CityIframe::$iframeCUId"
+        <x-table.thead :columns="['Name', 'Order', 'Active']" :iframe-c-u-id="\App\Iframes\CityIframe::$iframeCUId"
                        :route-create="route('admin.cities.create', ['country' => $country_id])"/>
-        <x-table.tbody :count="$cities->count()">
+        <x-table.tbody :count="$cities->count()" :columns-count="3">
             @foreach($cities as $city)
                 <tr class="border-b-2 border-b-blue-400 hover:bg-blue-50">
                     <td class="py-3 px-6 hover:cursor-pointer">{{ $city->name }}</td>
+                    <td class="text-center py-3 px-6">{{ $city->order_by }}</td>
                     <td class="text-center py-3 px-6">
                         <input type="checkbox" class="w-4 h-4" disabled {{ ($city->is_active) ? 'checked' : '' }}>
                     </td>

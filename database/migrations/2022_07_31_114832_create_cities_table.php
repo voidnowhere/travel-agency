@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('country_id')->constrained();
             $table->string('name');
+            $table->unsignedInteger('order_by');
             $table->boolean('is_active');
             $table->timestamps();
 

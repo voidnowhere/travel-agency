@@ -2,7 +2,7 @@
     <x-table.layout>
         <x-table.thead :columns="['Name', 'Active']" :iframe-c-u-id="\App\Iframes\ResidenceCategoryIframe::$iframeCUId"
                        :route-create="route('admin.residence.categories.create')"/>
-        <x-table.tbody :count="$residenceCategories->count()">
+        <x-table.tbody :count="$residenceCategories->count()" :columns-count="2">
             @foreach($residenceCategories as $category)
                 <tr class="border-b-2 border-b-blue-400 {{ ($loop->even) ? 'bg-blue-50' : '' }}"
                     tabindex="{{ $category->id }}"
