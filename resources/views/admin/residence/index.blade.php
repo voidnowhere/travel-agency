@@ -4,7 +4,7 @@
             :columns="['Name', 'Active', 'City', 'Category', 'Description', 'Website', 'Email', 'Contact', 'Tax', 'Order']"
             :iframe-c-u-id="\App\Iframes\ResidenceIframe::$iframeCUId"
             :route-create="route('admin.residences.create')"/>
-        <x-table.tbody :count="$residences->count()">
+        <x-table.tbody :count="$residences->count()" :columns-count="10">
             @foreach($residences as $residence)
                 <tr class="border-b-2 border-b-blue-400 {{ ($loop->even) ? 'bg-blue-50' : '' }}"
                     tabindex="{{ $residence->id }}"

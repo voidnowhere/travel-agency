@@ -14,6 +14,7 @@ class City extends Model
     protected $fillable = [
         'country_id',
         'name',
+        'order_by',
         'is_active',
     ];
 

@@ -14,7 +14,7 @@ class CountryController extends Controller
     public function index()
     {
         return view('admin.countries.index', [
-            'countries' => Country::latest()->get(),
+            'countries' => Country::orderBy('order_by')->get(),
         ]);
     }
 
@@ -94,11 +94,16 @@ class CountryController extends Controller
                 'alpha',
                 Rule::unique('countries')->ignore($country->name ?? '', 'name'),
             ],
-            'is_active' => 'nullable',
+            'order' => 'required|int',
+            'active' => 'nullable',
         ]);
 
-        $attributes['is_active'] = ($country === null) || (bool)($attributes['is_active'] ?? false);
+        $attributes['active'] = ($country === null) || (bool)($attributes['active'] ?? false);
 
-        return $attributes;
+        return [
+            'name' => $attributes['name'],
+            'order_by' => $attributes['order'],
+            'is_active' => $attributes['active'],
+        ];
     }
 }

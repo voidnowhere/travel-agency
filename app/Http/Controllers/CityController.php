@@ -14,7 +14,7 @@ class CityController extends Controller
     public function index(Country $country)
     {
         return view('admin.cities.index', [
-            'cities' => $country->cities()->latest()->get(),
+            'cities' => $country->cities()->orderBy('order_by')->get(),
             'country_id' => $country->id,
         ]);
     }
@@ -90,15 +90,20 @@ class CityController extends Controller
                     ->ignore($city->name ?? '', 'name')
                     ->where('country_id', $city->country_id ?? $country->id),
             ],
-            'is_active' => 'nullable',
+            'order' => 'required|int',
+            'active' => 'nullable',
         ]);
 
         if (!$country?->is_active) {
-            $attributes['is_active'] = false;
+            $attributes['active'] = false;
         } else {
-            $attributes['is_active'] = (bool)($attributes['is_active'] ?? false);
+            $attributes['active'] = (bool)($attributes['active'] ?? false);
         }
 
-        return $attributes;
+        return [
+            'name' => $attributes['name'],
+            'order_by' => $attributes['order'],
+            'is_active' => $attributes['active'],
+        ];
     }
 }

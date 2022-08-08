@@ -4,6 +4,7 @@
         :iframe-id-to-close="\App\Iframes\CountryIframe::$iframeCUId">
         <x-form.layout>
             <x-form.input_text name="name" type="text" label="Name"/>
+            <x-form.input_text name="order" type="text" label="Order"/>
             <x-form.submit>Create</x-form.submit>
         </x-form.layout>
     </x-form.container>
