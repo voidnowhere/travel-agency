@@ -1,4 +1,4 @@
-<x-admin.layout.management name="Residence Categories management">
+<x-admin.layout.management name="Residence Categories Management">
     <iframe id="{{ \App\Iframes\ResidenceCategoryIframe::$parentIframeId }}" class="w-full lg:w-1/2"
             src="{{ route('admin.residence.categories') }}"></iframe>
     <iframe id="{{ \App\Iframes\ResidenceCategoryIframe::$iframeCUId }}"

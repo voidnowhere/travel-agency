@@ -3,6 +3,7 @@
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\ResidenceCategoryController;
+use App\Http\Controllers\ResidenceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,8 +25,8 @@ Route::get('/admin', fn() => view('admin.dashboard.index'))->name('admin');
 
 Route::get('/admin/countries-cities', fn() => view('admin.countries_cities.index'))->name('admin.countries-cities');
 
-Route::controller(CountryController::class)->group(function () {
-    Route::prefix('/admin/countries')->group(function () {
+Route::prefix('/admin/countries')->group(function () {
+    Route::controller(CountryController::class)->group(function () {
         Route::get('', 'index')->name('admin.countries');
         Route::get('/create', 'create')->name('admin.countries.create');
         Route::post('/create', 'store');
@@ -36,9 +37,10 @@ Route::controller(CountryController::class)->group(function () {
     });
 });
 
-Route::controller(CityController::class)->group(function () {
-    Route::prefix('/admin/cities')->group(function () {
+Route::prefix('/admin/cities')->group(function () {
+    Route::controller(CityController::class)->group(function () {
         Route::get('/{country}', 'index')->name('admin.cities');
+        Route::post('/get', 'get')->name('admin.cities.get');
         Route::get('/create/{country}', 'create')->name('admin.cities.create');
         Route::post('/create/{country}', 'store');
         Route::get('/{city}/edit', 'edit')->name('admin.cities.city.edit');
@@ -58,5 +60,18 @@ Route::prefix('/admin/residence/categories')->group(function () {
         Route::patch('/{category}/edit', 'update');
         Route::get('/{category}/delete', 'delete')->name('admin.residence.categories.category.delete');
         Route::delete('/{category}/delete', 'destroy');
+    });
+});
+
+Route::prefix('/admin/residences')->group(function () {
+    Route::get('', fn() => view('admin.residence.layout'))->name('admin.residences.layout');
+    Route::controller(ResidenceController::class)->group(function () {
+        Route::get('/all', 'index')->name('admin.residences');
+        Route::get('/create', 'create')->name('admin.residences.create');
+        Route::post('/create', 'store');
+        Route::get('/{residence}/edit', 'edit')->name('admin.residences.residence.edit');
+        Route::patch('/{residence}/edit', 'update');
+        Route::get('/{residence}/delete', 'delete')->name('admin.residences.residence.delete');
+        Route::delete('/{residence}/delete', 'destroy');
     });
 });

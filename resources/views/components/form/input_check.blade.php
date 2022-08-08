@@ -5,6 +5,6 @@
            name="{{ $name }}"
            {{ ($required) ? 'required': '' }}
            {{ (old($name) ?? $value) ? 'checked' : '' }}
-           class="p-1 hover:cursor-pointer {{ ($type === 'checkbox') ? 'w-4 h-4' : '' }}">
+           class="p-1 hover:cursor-pointer w-4 h-4">
     <x-form.input_error :name="$name"/>
 </div>

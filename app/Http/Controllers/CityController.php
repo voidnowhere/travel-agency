@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\JavaScriptHelper;
 use App\Iframes\CityIframe;
 use App\Models\City;
 use App\Models\Country;
@@ -16,6 +17,13 @@ class CityController extends Controller
             'cities' => $country->cities()->latest()->get(),
             'country_id' => $country->id,
         ]);
+    }
+
+    public function get(Request $request)
+    {
+        $country_id = $request->validate(['country_id' => 'required|int'])['country_id'];
+
+        return Country::findOrFail($country_id)->cities()->get(['id', 'name']);
     }
 
     public function create(Country $country)
@@ -61,6 +69,10 @@ class CityController extends Controller
 
     public function destroy(City $city)
     {
+        if ($city->residences()->count() > 0) {
+            return JavaScriptHelper::alert("You can't delete $city->name city!");
+        }
+
         $city->delete();
 
         return CityIframe::reloadParent($city->country_id);
