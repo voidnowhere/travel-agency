@@ -1,4 +1,4 @@
-@props(['title', 'loadCSS' => true])
+@props(['title', 'loadCSS' => true, 'loadJquery' => false])
 <!doctype html>
 <html lang="en">
 <head>
@@ -7,6 +7,10 @@
     <title>{{ $title }}</title>
     @if($loadCSS)
         @vite('resources/css/app.css')
+    @endif
+    @if($loadJquery)
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        @vite('resources/js/jquery.js')
     @endif
 </head>
 <body class="h-screen">

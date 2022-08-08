@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\JavaScriptHelper;
 use App\Iframes\ResidenceCategoryIframe;
 use App\Models\ResidenceCategory;
 use \Illuminate\Http\Request;
@@ -57,6 +58,10 @@ class ResidenceCategoryController extends Controller
 
     public function destroy(ResidenceCategory $category)
     {
+        if ($category->residences()->count() > 0) {
+            return JavaScriptHelper::alert("You can't delete $category->name category it has linked residences!");
+        }
+
         $category->delete();
 
         return ResidenceCategoryIframe::reloadParent();

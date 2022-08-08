@@ -4,7 +4,7 @@
                        :route-create="route('admin.residence.categories.create')"/>
         <x-table.tbody :count="$residenceCategories->count()">
             @foreach($residenceCategories as $category)
-                <tr class="border-b-2 border-b-blue-400 {{ ($loop->iteration % 2 === 0) ? 'bg-blue-50' : '' }}"
+                <tr class="border-b-2 border-b-blue-400 {{ ($loop->even) ? 'bg-blue-50' : '' }}"
                     tabindex="{{ $category->id }}"
                 >
                     <td class="py-3 px-6">{{ $category->name }}</td>

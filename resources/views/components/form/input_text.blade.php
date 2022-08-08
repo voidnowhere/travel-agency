@@ -5,6 +5,6 @@
            name="{{ $name }}"
            {{ ($required) ? 'required': '' }}
            value="{{ old($name) ?? $value }}"
-           class="p-1 bg-gray-100 rounded-lg focus:bg-white {{ ($type === 'checkbox') ? 'w-4 h-4' : '' }}">
+           class="p-1 bg-gray-100 rounded-lg focus:bg-white">
     <x-form.input_error :name="$name"/>
 </div>
