@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\CountryController;
+use App\Http\Controllers\HousingCategoryController;
 use App\Http\Controllers\ResidenceCategoryController;
 use App\Http\Controllers\ResidenceController;
 use Illuminate\Support\Facades\Route;
@@ -73,5 +74,18 @@ Route::prefix('/admin/residences')->group(function () {
         Route::patch('/{residence}/edit', 'update');
         Route::get('/{residence}/delete', 'delete')->name('admin.residences.residence.delete');
         Route::delete('/{residence}/delete', 'destroy');
+    });
+});
+
+Route::prefix('/admin/housing/categories')->group(function () {
+    Route::get('', fn() => view('admin.housing_categories.layout'))->name('admin.housing.categories.layout');
+    Route::controller(HousingCategoryController::class)->group(function () {
+        Route::get('/all', 'index')->name('admin.housing.categories');
+        Route::get('/create', 'create')->name('admin.housing.categories.create');
+        Route::post('/create', 'store');
+        Route::get('/{category}/edit', 'edit')->name('admin.housing.categories.category.edit');
+        Route::patch('/{category}/edit', 'update');
+        Route::get('/{category}/delete', 'delete')->name('admin.housing.categories.category.delete');
+        Route::delete('/{category}/delete', 'destroy');
     });
 });
