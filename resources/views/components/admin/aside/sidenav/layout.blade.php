@@ -1,13 +1,29 @@
-<nav class="bg-blue-400 rounded p-2 shadow-2xl"
-     x-data="{ residenceOpen: '{{ request()->routeIs('admin.residence.categories.layout') || request()->routeIs('admin.residences.layout') }}' }">
-    <ul class="space-y-2">
+@php
+    $isResidences = request()->routeIs('admin.residences.layout');
+    $isResidenceCategories = request()->routeIs('admin.residence.categories.layout');
+    $residenceOpen = $isResidences || $isResidenceCategories;
+    $isHousingCategories = request()->routeIs('admin.housing.categories.layout');
+    $housingOpen = $isHousingCategories;
+@endphp
+<nav class="bg-blue-400 rounded p-2 shadow-2xl">
+    <ul class="space-y-2" x-data="{ residenceOpen: '{{ $residenceOpen }}', housingOpen: '{{ $housingOpen }}' }">
         <x-admin.aside.sidenav.item name="Dashboard" :href="route('admin')" :is-active="request()->routeIs('admin')"/>
         <x-admin.aside.sidenav.item
             name="Residence" href="#" click="residenceOpen = !residenceOpen"
-            :is-active="request()->routeIs('admin.residence.categories.layout') || request()->routeIs('admin.residences.layout')"/>
+            :is-active="$residenceOpen"/>
         <x-admin.aside.sub_sidenav.layout x-show="residenceOpen">
-            <x-admin.aside.sub_sidenav.item name="All" :href="route('admin.residences.layout')"/>
-            <x-admin.aside.sub_sidenav.item name="Categories" :href="route('admin.residence.categories.layout')"/>
+            <x-admin.aside.sub_sidenav.item name="All" :href="route('admin.residences.layout')"
+                                            :is-active="$isResidences"/>
+            <x-admin.aside.sub_sidenav.item name="Categories" :href="route('admin.residence.categories.layout')"
+                                            :is-active="$isResidenceCategories"/>
+        </x-admin.aside.sub_sidenav.layout>
+        <x-admin.aside.sidenav.item
+            name="Housing" href="#" click="housingOpen = !housingOpen"
+            :is-active="$housingOpen"/>
+        <x-admin.aside.sub_sidenav.layout x-show="housingOpen">
+            <x-admin.aside.sub_sidenav.item name="All" href="#" :is-active="false"/>
+            <x-admin.aside.sub_sidenav.item name="Categories" :href="route('admin.housing.categories.layout')"
+                                            :is-active="$isHousingCategories"/>
         </x-admin.aside.sub_sidenav.layout>
         <x-admin.aside.sidenav.item
             name="Countries & Cities"
