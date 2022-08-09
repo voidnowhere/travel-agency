@@ -38,7 +38,7 @@ class ResidenceController extends Controller
 
     public function update(Request $request, Residence $residence)
     {
-        $residence->update($this->validateResidence($request));
+        $residence->update($this->validateResidence($request, $residence));
 
         return ResidenceIframe::iframeCUClose() . '<br>' . ResidenceIframe::reloadParent();
     }
