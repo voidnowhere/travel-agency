@@ -6,8 +6,10 @@
             name="Residence" href="#" click="residenceOpen = !residenceOpen"
             :is-active="request()->routeIs('admin.residence.categories.layout') || request()->routeIs('admin.residences.layout')"/>
         <x-admin.aside.sub_sidenav.layout x-show="residenceOpen">
-            <x-admin.aside.sub_sidenav.item name="All" :href="route('admin.residences.layout')"/>
-            <x-admin.aside.sub_sidenav.item name="Categories" :href="route('admin.residence.categories.layout')"/>
+            <x-admin.aside.sub_sidenav.item name="All" :href="route('admin.residences.layout')"
+                                            :is-active="request()->routeIs('admin.residences.layout')"/>
+            <x-admin.aside.sub_sidenav.item name="Categories" :href="route('admin.residence.categories.layout')"
+                                            :is-active="request()->routeIs('admin.residence.categories.layout')"/>
         </x-admin.aside.sub_sidenav.layout>
         <x-admin.aside.sidenav.item
             name="Countries & Cities"

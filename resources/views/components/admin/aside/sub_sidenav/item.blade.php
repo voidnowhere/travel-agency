@@ -1,7 +1,7 @@
-@props(['name', 'href'])
+@props(['name', 'href', 'isActive'])
 @php
     $active_class = 'hover:text-white hover:bg-blue-500';
-    if (request()->url() === $href){
+    if ($isActive){
         $active_class = 'bg-blue-500 text-white';
     }
 @endphp
