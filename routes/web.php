@@ -3,6 +3,7 @@
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\HousingCategoryController;
+use App\Http\Controllers\HousingFormulaController;
 use App\Http\Controllers\ResidenceCategoryController;
 use App\Http\Controllers\ResidenceController;
 use Illuminate\Support\Facades\Route;
@@ -87,5 +88,18 @@ Route::prefix('/admin/housing/categories')->group(function () {
         Route::patch('/{category}/edit', 'update');
         Route::get('/{category}/delete', 'delete')->name('admin.housing.categories.category.delete');
         Route::delete('/{category}/delete', 'destroy');
+    });
+});
+
+Route::prefix('/admin/housing/formulas')->group(function () {
+    Route::get('', fn() => view('admin.housing_formulas.layout'))->name('admin.housing.formulas.layout');
+    Route::controller(HousingFormulaController::class)->group(function () {
+        Route::get('/all', 'index')->name('admin.housing.formulas');
+        Route::get('/create', 'create')->name('admin.housing.formulas.create');
+        Route::post('/create', 'store');
+        Route::get('/{formula}/edit', 'edit')->name('admin.housing.formulas.formula.edit');
+        Route::patch('/{formula}/edit', 'update');
+        Route::get('/{formula}/delete', 'delete')->name('admin.housing.formulas.formula.delete');
+        Route::delete('/{formula}/delete', 'destroy');
     });
 });

@@ -77,11 +77,16 @@ class ResidenceCategoryController extends Controller
                 'alpha',
                 Rule::unique('residence_categories')->ignore($category->name ?? '', 'name'),
             ],
-            'is_active' => 'nullable',
+            'order' => 'required|int',
+            'active' => 'nullable',
         ]);
 
-        $attributes['is_active'] = (bool)($attributes['is_active'] ?? false);
+        $attributes['active'] = (bool)($attributes['active'] ?? false);
 
-        return $attributes;
+        return [
+            'name' => $attributes['name'],
+            'order_by' => $attributes['order'],
+            'is_active' => $attributes['active'],
+        ];
     }
 }

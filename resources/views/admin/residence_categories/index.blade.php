@@ -1,6 +1,6 @@
 <x-admin.iframe.layout title="Residence Categories">
     <x-table.layout>
-        <x-table.thead :columns="['Name', 'Active']" :iframe-c-u-id="\App\Iframes\ResidenceCategoryIframe::$iframeCUId"
+        <x-table.thead :columns="['Name', 'Order', 'Active']" :iframe-c-u-id="\App\Iframes\ResidenceCategoryIframe::$iframeCUId"
                        :route-create="route('admin.residence.categories.create')"/>
         <x-table.tbody :count="$residenceCategories->count()" :columns-count="2">
             @foreach($residenceCategories as $category)
@@ -8,6 +8,7 @@
                     tabindex="{{ $category->id }}"
                 >
                     <td class="py-3 px-6">{{ $category->name }}</td>
+                    <td class="py-3 px-6 text-center">{{ $category->order_by }}</td>
                     <td class="text-center py-3 px-6">
                         <input type="checkbox" class="w-4 h-4" disabled {{ ($category->is_active) ? 'checked' : '' }}>
                     </td>
