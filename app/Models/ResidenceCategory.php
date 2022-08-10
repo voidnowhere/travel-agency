@@ -12,6 +12,7 @@ class ResidenceCategory extends Model
 
     protected $fillable = [
         'name',
+        'order_by',
         'is_active',
     ];
 

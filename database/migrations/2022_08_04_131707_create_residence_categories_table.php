@@ -15,6 +15,7 @@ return new class extends Migration {
         Schema::create('residence_categories', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
+            $table->unsignedInteger('order_by');
             $table->boolean('is_active');
             $table->timestamps();
         });
