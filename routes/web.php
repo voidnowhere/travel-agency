@@ -3,6 +3,7 @@
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\HousingCategoryController;
+use App\Http\Controllers\HousingController;
 use App\Http\Controllers\HousingFormulaController;
 use App\Http\Controllers\ResidenceCategoryController;
 use App\Http\Controllers\ResidenceController;
@@ -66,9 +67,10 @@ Route::prefix('/admin/residence/categories')->group(function () {
 });
 
 Route::prefix('/admin/residences')->group(function () {
-    Route::get('', fn() => view('admin.residence.layout'))->name('admin.residences.layout');
+    Route::get('', fn() => view('admin.residences.layout'))->name('admin.residences.layout');
     Route::controller(ResidenceController::class)->group(function () {
         Route::get('/all', 'index')->name('admin.residences');
+        Route::post('/get', 'get')->name('admin.residences.get');
         Route::get('/create', 'create')->name('admin.residences.create');
         Route::post('/create', 'store');
         Route::get('/{residence}/edit', 'edit')->name('admin.residences.residence.edit');
@@ -101,5 +103,18 @@ Route::prefix('/admin/housing/formulas')->group(function () {
         Route::patch('/{formula}/edit', 'update');
         Route::get('/{formula}/delete', 'delete')->name('admin.housing.formulas.formula.delete');
         Route::delete('/{formula}/delete', 'destroy');
+    });
+});
+
+Route::prefix('/admin/housings')->group(function () {
+    Route::get('', fn() => view('admin.housings.layout'))->name('admin.housings.layout');
+    Route::controller(HousingController::class)->group(function () {
+        Route::get('/all', 'index')->name('admin.housings');
+        Route::get('/create', 'create')->name('admin.housings.create');
+        Route::post('/create', 'store');
+        Route::get('/{housing}/edit', 'edit')->name('admin.housings.housing.edit');
+        Route::patch('/{housing}/edit', 'update');
+        Route::get('/{housing}/delete', 'delete')->name('admin.housings.housing.delete');
+        Route::delete('/{housing}/delete', 'destroy');
     });
 });

@@ -12,14 +12,21 @@ class ResidenceController extends Controller
 {
     public function index()
     {
-        return view('admin.residence.index', [
+        return view('admin.residences.index', [
             'residences' => Residence::with('city.country', 'category')->orderBy('order_by')->get(),
         ]);
     }
 
+    public function get(Request $request)
+    {
+        $city_id = $request->validate(['city_id' => 'required|int'])['city_id'];
+
+        return City::findOrFail($city_id)->residences()->get(['id', 'name']);
+    }
+
     public function create()
     {
-        return view('admin.residence.create');
+        return view('admin.residences.create');
     }
 
     public function store(Request $request)
@@ -31,7 +38,7 @@ class ResidenceController extends Controller
 
     public function edit(Residence $residence)
     {
-        return view('admin.residence.edit', [
+        return view('admin.residences.edit', [
             'residence' => $residence,
         ]);
     }
@@ -45,7 +52,7 @@ class ResidenceController extends Controller
 
     public function delete(Residence $residence)
     {
-        return view('admin.residence.delete', [
+        return view('admin.residences.delete', [
             'residenceName' => $residence->name,
         ]);
     }

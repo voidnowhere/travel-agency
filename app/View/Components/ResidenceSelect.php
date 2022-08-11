@@ -2,17 +2,21 @@
 
 namespace App\View\Components;
 
-use App\Models\ResidenceCategory;
+use App\Models\City;
 use Illuminate\View\Component;
 
-class ResidenceCategoriesSelect extends Component
+class ResidenceSelect extends Component
 {
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(public string $value = '', public bool $required = true)
+    public function __construct(
+        public City   $city,
+        public bool   $default = true,
+        public string $value = '',
+        public bool   $required = true)
     {
         //
     }
@@ -24,8 +28,8 @@ class ResidenceCategoriesSelect extends Component
      */
     public function render()
     {
-        return view('components.residence-categories-select', [
-            'residenceCategories' => ResidenceCategory::all(),
+        return view('components.residence-select', [
+            'residences' => $this->city->residences()->get(['id', 'name']),
         ]);
     }
 }
