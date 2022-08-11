@@ -4,9 +4,10 @@
     $isResidenceCategories = request()->routeIs('admin.residence.categories.layout');
     $residenceOpen = $isResidences || $isResidenceCategories;
     // Housing
+    $isHousings = request()->routeIs('admin.housings.layout');
     $isHousingCategories = request()->routeIs('admin.housing.categories.layout');
     $isHousingFormulas = request()->routeIs('admin.housing.formulas.layout');
-    $housingOpen = $isHousingCategories || $isHousingFormulas;
+    $housingOpen = $isHousings || $isHousingCategories || $isHousingFormulas;
 @endphp
 <nav class="bg-blue-400 rounded p-2 shadow-2xl">
     <ul class="space-y-2" x-data="{ residenceOpen: '{{ $residenceOpen }}', housingOpen: '{{ $housingOpen }}' }">
@@ -24,7 +25,8 @@
             name="Housing" href="#" click="housingOpen = !housingOpen"
             :is-active="$housingOpen"/>
         <x-admin.aside.sub_sidenav.layout x-show="housingOpen">
-            <x-admin.aside.sub_sidenav.item name="All" href="#" :is-active="false"/>
+            <x-admin.aside.sub_sidenav.item name="All" :href="route('admin.housings.layout')"
+                                            :is-active="$isHousings"/>
             <x-admin.aside.sub_sidenav.item name="Categories" :href="route('admin.housing.categories.layout')"
                                             :is-active="$isHousingCategories"/>
             <x-admin.aside.sub_sidenav.item name="Formulas" :href="route('admin.housing.formulas.layout')"

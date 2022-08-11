@@ -17,6 +17,13 @@ class ResidenceController extends Controller
         ]);
     }
 
+    public function get(Request $request)
+    {
+        $city_id = $request->validate(['city_id' => 'required|int'])['city_id'];
+
+        return City::findOrFail($city_id)->residences()->get(['id', 'name']);
+    }
+
     public function create()
     {
         return view('admin.residence.create');
