@@ -67,7 +67,7 @@ Route::prefix('/admin/residence/categories')->group(function () {
 });
 
 Route::prefix('/admin/residences')->group(function () {
-    Route::get('', fn() => view('admin.residence.layout'))->name('admin.residences.layout');
+    Route::get('', fn() => view('admin.residences.layout'))->name('admin.residences.layout');
     Route::controller(ResidenceController::class)->group(function () {
         Route::get('/all', 'index')->name('admin.residences');
         Route::post('/get', 'get')->name('admin.residences.get');

@@ -2,11 +2,10 @@
 
 namespace App\View\Components;
 
-use App\Models\City;
 use App\Models\Country;
 use Illuminate\View\Component;
 
-class CitiesSelect extends Component
+class CitySelect extends Component
 {
     /**
      * Create a new component instance.
@@ -31,7 +30,7 @@ class CitiesSelect extends Component
      */
     public function render()
     {
-        return view('components.cities-select', [
+        return view('components.city-select', [
             'cities' => $this->country->cities()->get(['id', 'name']),
         ]);
     }

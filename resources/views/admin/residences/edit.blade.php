@@ -7,11 +7,12 @@
                 <div class="mt-2">
                     <x-form.input_text name="name" type="text" label="Name" :value="$residence->name"/>
                 </div>
-                <x-residence-categories-select :value="$residence->category->id"/>
+                <x-residence-category-select :value="$residence->category->id"/>
             </div>
             <div class="grid grid-cols-2">
                 <x-country-select on-change="getCities()" :value="$residence->city->country_id"/>
-                <x-cities-select :country="$residence->city->country" :value="$residence->city_id"/>
+                <x-city-select :country="\App\Models\Country::find(old('country')) ?? $residence->city->country"
+                               :value="$residence->city_id"/>
             </div>
             <div class="grid grid-cols-2">
                 <x-form.input_text name="website" type="text" label="Website" :value="$residence->website"/>

@@ -10,14 +10,14 @@
             <div class="grid grid-cols-2">
                 <x-country-select on-change="getCities(); $('#residence').empty();"
                                   :value="$housing->residence->city->country_id"/>
-                <x-cities-select
+                <x-city-select
                     :country="\App\Models\Country::find(old('country')) ?? \App\Models\Country::find($housing->residence->city->country_id)"
-                    :value="$housing->residence->city_id" :default="false" on-change="getResidences()"/>
+                    :value="$housing->residence->city_id" on-change="getResidences()"/>
             </div>
             <div class="grid grid-cols-2 flex items-center">
                 <x-residence-select
                     :city="\App\Models\City::find(old('city')) ?? \App\Models\City::find($housing->residence->city_id)"
-                    :value="$housing->residence_id" :default="false"/>
+                    :value="$housing->residence_id"/>
                 <x-form.input_check name="active" type="checkbox" :required="false" label="Active"
                                     :value="$housing->is_active"/>
             </div>

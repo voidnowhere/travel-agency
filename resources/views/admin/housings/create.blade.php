@@ -9,7 +9,7 @@
             </div>
             <div class="grid grid-cols-2">
                 <x-country-select on-change="getCities(); $('#residence').empty();"/>
-                <x-cities-select :country="\App\Models\Country::find(old('country')) ?? (new \App\Models\Country)"
+                <x-city-select :country="\App\Models\Country::find(old('country')) ?? (new \App\Models\Country)"
                                  :default="false" on-change="getResidences()"/>
             </div>
             <div class="grid grid-cols-2 flex items-center">

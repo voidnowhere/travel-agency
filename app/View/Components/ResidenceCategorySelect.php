@@ -5,7 +5,7 @@ namespace App\View\Components;
 use App\Models\ResidenceCategory;
 use Illuminate\View\Component;
 
-class ResidenceCategoriesSelect extends Component
+class ResidenceCategorySelect extends Component
 {
     /**
      * Create a new component instance.
@@ -24,7 +24,7 @@ class ResidenceCategoriesSelect extends Component
      */
     public function render()
     {
-        return view('components.residence-categories-select', [
+        return view('components.residence-category-select', [
             'residenceCategories' => ResidenceCategory::all(),
         ]);
     }

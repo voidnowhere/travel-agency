@@ -7,11 +7,12 @@
                 <div class="mt-2">
                     <x-form.input_text name="name" type="text" label="Name"/>
                 </div>
-                <x-residence-categories-select/>
+                <x-residence-category-select/>
             </div>
             <div class="grid grid-cols-2">
-                <x-country-select on-change="getCities()" :return-old="false"/>
-                <x-form.select name="city" label="City" :default="false" :return-old="false"/>
+                <x-country-select on-change="getCities()"/>
+                <x-city-select :country="\App\Models\Country::find(old('country')) ?? (new \App\Models\Country)"
+                               :default="false"/>
             </div>
             <div class="grid grid-cols-2">
                 <x-form.input_text name="website" type="text" label="Website"/>
@@ -29,26 +30,5 @@
             <x-form.submit>Create</x-form.submit>
         </x-form.layout>
     </x-form.container>
-    <script>
-        function getCities() {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: '{{ route('admin.cities.get') }}',
-                type: 'POST',
-                data: {'country_id': $('#country').val()},
-                dataType: 'json',
-                success: function (response) {
-                    const city_select = $('#city');
-                    city_select.empty().append('<option selected disabled class="hidden" value="">Select One</option>');
-                    response.forEach(city => {
-                        city_select.append(`<option value="${city.id}">${city.name}</option>`);
-                    });
-                },
-            });
-        }
-    </script>
+    <x-admin.iframe.ajax.get_cities/>
 </x-admin.iframe.layout>
