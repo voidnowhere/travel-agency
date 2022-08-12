@@ -70,7 +70,7 @@ class CityController extends Controller
     public function destroy(City $city)
     {
         if ($city->residences()->count() > 0) {
-            return JavaScriptHelper::alert("You can't delete $city->name city!");
+            return JavaScriptHelper::alert("You can't delete $city->name city it has linked residences!");
         }
 
         $city->delete();

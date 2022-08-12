@@ -72,7 +72,7 @@ class CountryController extends Controller
     public function destroy(Country $country)
     {
         if ($country->residences()->count() > 0) {
-            return JavaScriptHelper::alert("You can't delete $country->name country!");
+            return JavaScriptHelper::alert("You can't delete $country->name country it has linked residences!");
         }
 
         $country->cities()->delete();

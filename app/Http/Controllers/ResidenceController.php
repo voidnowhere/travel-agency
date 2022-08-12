@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\JavaScriptHelper;
 use App\Iframes\ResidenceIframe;
 use App\Models\City;
 use App\Models\Residence;
@@ -59,6 +60,10 @@ class ResidenceController extends Controller
 
     public function destroy(Residence $residence)
     {
+        if ($residence->housings()->count() > 0) {
+            return JavaScriptHelper::alert("You can't delete $residence->name residence it has linked housings!");
+        }
+
         $residence->delete();
 
         return ResidenceIframe::reloadParent();

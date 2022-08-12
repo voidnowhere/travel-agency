@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\JavaScriptHelper;
 use App\Iframes\HousingFormulaIframe;
 use App\Models\HousingFormula;
 use Illuminate\Http\Request;
@@ -57,6 +58,10 @@ class HousingFormulaController extends Controller
 
     public function destroy(HousingFormula $formula)
     {
+        if ($formula->prices()->count() > 0) {
+            return JavaScriptHelper::alert("You can't delete $formula->name formula it has linked prices!");
+        }
+
         $formula->delete();
 
         return HousingFormulaIframe::reloadParent();
