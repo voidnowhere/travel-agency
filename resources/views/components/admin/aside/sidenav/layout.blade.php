@@ -22,6 +22,8 @@
                                             :is-active="$isResidenceCategories"/>
         </x-admin.aside.sub_sidenav.layout>
         <x-admin.aside.sidenav.item
+            name="Season" :href="route('admin.seasons.layout')" :is-active="request()->routeIs('admin.seasons.layout')"/>
+        <x-admin.aside.sidenav.item
             name="Housing" href="#" click="housingOpen = !housingOpen"
             :is-active="$housingOpen"/>
         <x-admin.aside.sub_sidenav.layout x-show="housingOpen">
