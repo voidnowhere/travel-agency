@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\JavaScriptHelper;
 use App\Iframes\HousingCategoryIframe;
 use App\Models\HousingCategory;
 use Illuminate\Http\Request;
@@ -57,6 +58,10 @@ class HousingCategoryController extends Controller
 
     public function destroy(HousingCategory $category)
     {
+        if ($category->housings()->count() > 0) {
+            return JavaScriptHelper::alert("You can't delete $category->name category it has linked housings!");
+        }
+
         $category->delete();
 
         return HousingCategoryIframe::reloadParent();

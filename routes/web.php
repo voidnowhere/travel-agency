@@ -55,6 +55,20 @@ Route::prefix('/admin/cities')->group(function () {
     });
 });
 
+Route::prefix('/admin/residences')->group(function () {
+    Route::get('', fn() => view('admin.residences.layout'))->name('admin.residences.layout');
+    Route::controller(ResidenceController::class)->group(function () {
+        Route::get('/all', 'index')->name('admin.residences');
+        Route::post('/get', 'get')->name('admin.residences.get');
+        Route::get('/create', 'create')->name('admin.residences.create');
+        Route::post('/create', 'store');
+        Route::get('/{residence}/edit', 'edit')->name('admin.residences.residence.edit');
+        Route::patch('/{residence}/edit', 'update');
+        Route::get('/{residence}/delete', 'delete')->name('admin.residences.residence.delete');
+        Route::delete('/{residence}/delete', 'destroy');
+    });
+});
+
 Route::prefix('/admin/residence/categories')->group(function () {
     Route::get('', fn() => view('admin.residence_categories.layout'))->name('admin.residence.categories.layout');
     Route::controller(ResidenceCategoryController::class)->group(function () {
@@ -68,17 +82,17 @@ Route::prefix('/admin/residence/categories')->group(function () {
     });
 });
 
-Route::prefix('/admin/residences')->group(function () {
-    Route::get('', fn() => view('admin.residences.layout'))->name('admin.residences.layout');
-    Route::controller(ResidenceController::class)->group(function () {
-        Route::get('/all', 'index')->name('admin.residences');
-        Route::post('/get', 'get')->name('admin.residences.get');
-        Route::get('/create', 'create')->name('admin.residences.create');
+Route::prefix('/admin/housings')->group(function () {
+    Route::get('', fn() => view('admin.housings.layout'))->name('admin.housings.layout');
+    Route::controller(HousingController::class)->group(function () {
+        Route::get('/all', 'index')->name('admin.housings');
+        Route::post('/get', 'get')->name('admin.housings.get');
+        Route::get('/create', 'create')->name('admin.housings.create');
         Route::post('/create', 'store');
-        Route::get('/{residence}/edit', 'edit')->name('admin.residences.residence.edit');
-        Route::patch('/{residence}/edit', 'update');
-        Route::get('/{residence}/delete', 'delete')->name('admin.residences.residence.delete');
-        Route::delete('/{residence}/delete', 'destroy');
+        Route::get('/{housing}/edit', 'edit')->name('admin.housings.housing.edit');
+        Route::patch('/{housing}/edit', 'update');
+        Route::get('/{housing}/delete', 'delete')->name('admin.housings.housing.delete');
+        Route::delete('/{housing}/delete', 'destroy');
     });
 });
 
@@ -108,17 +122,16 @@ Route::prefix('/admin/housing/formulas')->group(function () {
     });
 });
 
-Route::prefix('/admin/housings')->group(function () {
-    Route::get('', fn() => view('admin.housings.layout'))->name('admin.housings.layout');
-    Route::controller(HousingController::class)->group(function () {
-        Route::get('/all', 'index')->name('admin.housings');
-        Route::post('/get', 'get')->name('admin.housings.get');
-        Route::get('/create', 'create')->name('admin.housings.create');
+Route::prefix('/admin/housing/prices')->group(function () {
+    Route::get('', fn() => view('admin.housing_prices.layout'))->name('admin.housing.prices.layout');
+    Route::controller(HousingPriceController::class)->group(function () {
+        Route::get('/all', 'index')->name('admin.housing.prices');
+        Route::get('/create', 'create')->name('admin.housing.prices.create');
         Route::post('/create', 'store');
-        Route::get('/{housing}/edit', 'edit')->name('admin.housings.housing.edit');
-        Route::patch('/{housing}/edit', 'update');
-        Route::get('/{housing}/delete', 'delete')->name('admin.housings.housing.delete');
-        Route::delete('/{housing}/delete', 'destroy');
+        Route::get('/{price}/edit', 'edit')->name('admin.housing.prices.price.edit');
+        Route::patch('/{price}/edit', 'update');
+        Route::get('/{price}/delete', 'delete')->name('admin.housing.prices.price.delete');
+        Route::delete('/{price}/delete', 'destroy');
     });
 });
 
@@ -132,18 +145,5 @@ Route::prefix('/admin/seasons')->group(function () {
         Route::patch('/{season}/edit', 'update');
         Route::get('/{season}/delete', 'delete')->name('admin.seasons.season.delete');
         Route::delete('/{season}/delete', 'destroy');
-    });
-});
-
-Route::prefix('/admin/housing/prices')->group(function () {
-    Route::get('', fn() => view('admin.housing_prices.layout'))->name('admin.housing.prices.layout');
-    Route::controller(HousingPriceController::class)->group(function () {
-        Route::get('/all', 'index')->name('admin.housing.prices');
-        Route::get('/create', 'create')->name('admin.housing.prices.create');
-        Route::post('/create', 'store');
-        Route::get('/{price}/edit', 'edit')->name('admin.housing.prices.price.edit');
-        Route::patch('/{price}/edit', 'update');
-        Route::get('/{price}/delete', 'delete')->name('admin.housing.prices.price.delete');
-        Route::delete('/{price}/delete', 'destroy');
     });
 });

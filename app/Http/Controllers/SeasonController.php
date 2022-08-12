@@ -13,10 +13,13 @@ class SeasonController extends Controller
     public function index()
     {
         return view('admin.seasons.index', [
-            'specialSeasons' => Season::where('type_SHML', '=', SeasonTypes::Special->value)->get(),
-            'highSeasons' => Season::where('type_SHML', '=', SeasonTypes::High->value)->get(),
-            'mediumSeasons' => Season::where('type_SHML', '=', SeasonTypes::Medium->value)->get(),
-            'lowSeasons' => Season::where('type_SHML', '=', SeasonTypes::Low->value)->get(),
+            'seasonsCount' => Season::count(),
+            'fourSeasons' => [
+                SeasonTypes::Special->name => Season::where('type_SHML', '=', SeasonTypes::Special->value)->get(),
+                SeasonTypes::High->name => Season::where('type_SHML', '=', SeasonTypes::High->value)->get(),
+                SeasonTypes::Medium->name => Season::where('type_SHML', '=', SeasonTypes::Medium->value)->get(),
+                SeasonTypes::Low->name => Season::where('type_SHML', '=', SeasonTypes::Low->value)->get(),
+            ],
         ]);
     }
 

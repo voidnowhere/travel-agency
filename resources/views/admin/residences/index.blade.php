@@ -1,17 +1,18 @@
+@php
+    $columns = ['Name', 'Active', 'City', 'Category', 'Description', 'Website', 'Email', 'Contact', 'Tax', 'Order'];
+@endphp
 <x-admin.iframe.layout title="Residences">
     <x-table.layout>
         <x-table.thead
-            :columns="['Name', 'Active', 'City', 'Category', 'Description', 'Website', 'Email', 'Contact', 'Tax', 'Order']"
+            :columns="$columns"
             :iframe-c-u-id="\App\Iframes\ResidenceIframe::$iframeCUId"
             :route-create="route('admin.residences.create')"/>
-        <x-table.tbody :count="$residences->count()" :columns-count="10">
+        <x-table.tbody :count="$residences->count()" :columns-count="count($columns)">
             @foreach($residences as $residence)
-                <tr class="border-b-2 border-b-blue-400 {{ ($loop->even) ? 'bg-blue-50' : '' }}"
-                    tabindex="{{ $residence->id }}"
-                >
+                <tr @class(['border-b-2 border-b-blue-400', 'bg-blue-50' => $loop->even])>
                     <td class="py-3 px-6">{{ $residence->name }}</td>
                     <td class="text-center py-3 px-6">
-                        <input type="checkbox" class="w-4 h-4" disabled {{ ($residence->is_active) ? 'checked' : '' }}>
+                        <input type="checkbox" class="w-4 h-4" disabled @checked($residence->is_active)>
                     </td>
                     <td class="py-3 px-6">{{ $residence->city->country->name . ', ' . $residence->city->name }}</td>
                     <td class="py-3 px-6">{{ $residence->category->name }}</td>
