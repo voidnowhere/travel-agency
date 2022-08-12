@@ -7,6 +7,7 @@ use App\Http\Controllers\HousingController;
 use App\Http\Controllers\HousingFormulaController;
 use App\Http\Controllers\ResidenceCategoryController;
 use App\Http\Controllers\ResidenceController;
+use App\Http\Controllers\SeasonController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -116,5 +117,18 @@ Route::prefix('/admin/housings')->group(function () {
         Route::patch('/{housing}/edit', 'update');
         Route::get('/{housing}/delete', 'delete')->name('admin.housings.housing.delete');
         Route::delete('/{housing}/delete', 'destroy');
+    });
+});
+
+Route::prefix('/admin/seasons')->group(function () {
+    Route::get('', fn() => view('admin.seasons.layout'))->name('admin.seasons.layout');
+    Route::controller(SeasonController::class)->group(function () {
+        Route::get('/all', 'index')->name('admin.seasons');
+        Route::get('/create', 'create')->name('admin.seasons.create');
+        Route::post('/create', 'store');
+        Route::get('/{season}/edit', 'edit')->name('admin.seasons.season.edit');
+        Route::patch('/{season}/edit', 'update');
+        Route::get('/{season}/delete', 'delete')->name('admin.seasons.season.delete');
+        Route::delete('/{season}/delete', 'destroy');
     });
 });
