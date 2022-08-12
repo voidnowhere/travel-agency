@@ -2,10 +2,10 @@
 
 namespace App\View\Components;
 
-use App\Models\City;
+use App\Models\Residence;
 use Illuminate\View\Component;
 
-class ResidenceSelect extends Component
+class HousingSelect extends Component
 {
     /**
      * Create a new component instance.
@@ -13,11 +13,10 @@ class ResidenceSelect extends Component
      * @return void
      */
     public function __construct(
-        public City   $city,
-        public bool   $default = true,
-        public string $value = '',
-        public bool   $required = true,
-        public string $onChange = '',
+        public Residence $residence,
+        public bool      $default = true,
+        public string    $value = '',
+        public bool      $required = true,
     )
     {
         //
@@ -30,8 +29,8 @@ class ResidenceSelect extends Component
      */
     public function render()
     {
-        return view('components.residence-select', [
-            'residences' => $this->city->residences()->get(['id', 'name']),
+        return view('components.housing-select', [
+            'housings' => $this->residence->housings()->get(['id', 'name']),
         ]);
     }
 }

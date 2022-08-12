@@ -5,6 +5,7 @@ use App\Http\Controllers\CountryController;
 use App\Http\Controllers\HousingCategoryController;
 use App\Http\Controllers\HousingController;
 use App\Http\Controllers\HousingFormulaController;
+use App\Http\Controllers\HousingPriceController;
 use App\Http\Controllers\ResidenceCategoryController;
 use App\Http\Controllers\ResidenceController;
 use App\Http\Controllers\SeasonController;
@@ -111,6 +112,7 @@ Route::prefix('/admin/housings')->group(function () {
     Route::get('', fn() => view('admin.housings.layout'))->name('admin.housings.layout');
     Route::controller(HousingController::class)->group(function () {
         Route::get('/all', 'index')->name('admin.housings');
+        Route::post('/get', 'get')->name('admin.housings.get');
         Route::get('/create', 'create')->name('admin.housings.create');
         Route::post('/create', 'store');
         Route::get('/{housing}/edit', 'edit')->name('admin.housings.housing.edit');
@@ -130,5 +132,18 @@ Route::prefix('/admin/seasons')->group(function () {
         Route::patch('/{season}/edit', 'update');
         Route::get('/{season}/delete', 'delete')->name('admin.seasons.season.delete');
         Route::delete('/{season}/delete', 'destroy');
+    });
+});
+
+Route::prefix('/admin/housing/prices')->group(function () {
+    Route::get('', fn() => view('admin.housing_prices.layout'))->name('admin.housing.prices.layout');
+    Route::controller(HousingPriceController::class)->group(function () {
+        Route::get('/all', 'index')->name('admin.housing.prices');
+        Route::get('/create', 'create')->name('admin.housing.prices.create');
+        Route::post('/create', 'store');
+        Route::get('/{price}/edit', 'edit')->name('admin.housing.prices.price.edit');
+        Route::patch('/{price}/edit', 'update');
+        Route::get('/{price}/delete', 'delete')->name('admin.housing.prices.price.delete');
+        Route::delete('/{price}/delete', 'destroy');
     });
 });
