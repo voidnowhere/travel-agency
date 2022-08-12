@@ -17,7 +17,7 @@ class CitySelect extends Component
         public string  $onChange = '',
         public bool    $default = true,
         public string  $value = '',
-        public bool    $required = true
+        public bool    $required = true,
     )
     {
         //

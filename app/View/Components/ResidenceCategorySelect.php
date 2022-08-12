@@ -12,7 +12,10 @@ class ResidenceCategorySelect extends Component
      *
      * @return void
      */
-    public function __construct(public string $value = '', public bool $required = true)
+    public function __construct(
+        public string $value = '',
+        public bool   $required = true,
+    )
     {
         //
     }
