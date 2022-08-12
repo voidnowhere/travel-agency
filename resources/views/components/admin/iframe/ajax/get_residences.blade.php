@@ -13,8 +13,8 @@
             success: function (response) {
                 const residence_select = $('#residence');
                 residence_select.empty().append('<option selected disabled class="hidden" value="">Select One</option>');
-                response.forEach(city => {
-                    residence_select.append(`<option value="${city.id}">${city.name}</option>`);
+                response.forEach(residence => {
+                    residence_select.append(`<option value="${residence.id}">${residence.name}</option>`);
                 });
             },
         });

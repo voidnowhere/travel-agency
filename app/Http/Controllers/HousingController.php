@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Iframes\HousingIframe;
 use App\Models\Housing;
+use App\Models\Residence;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -14,6 +15,13 @@ class HousingController extends Controller
         return view('admin.housings.index', [
             'housings' => Housing::with('residence', 'category')->orderBy('order_by')->get(),
         ]);
+    }
+
+    public function get(Request $request)
+    {
+        $residence_id = $request->validate(['residence_id' => 'required|int'])['residence_id'];
+
+        return Residence::findOrFail($residence_id)->housings()->get(['id', 'name']);
     }
 
     public function create()
