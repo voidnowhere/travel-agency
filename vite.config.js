@@ -8,6 +8,8 @@ export default defineConfig({
                 'resources/css/app.css',
                 'resources/js/app.js',
                 'resources/js/jquery.js',
+                'resources/js/alpinejs.js',
+                'resources/js/notiflix.js',
             ],
             refresh: true,
         }),

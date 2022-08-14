@@ -4,7 +4,7 @@
     <input type="{{ $type }}"
            name="{{ $name }}"
            @required($required)
-           value="{{ old($name) ?? $value }}"
+           value="{{ ($name !== 'password' && $name !== 'password_confirmation') ? old($name) ?? $value : null }}"
            class="p-1 bg-gray-100 rounded-lg focus:bg-white">
     <x-form.input_error :name="$name"/>
 </div>
