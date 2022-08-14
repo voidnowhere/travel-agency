@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import {defineConfig} from 'vite';
 import laravel from 'laravel-vite-plugin';
 
 export default defineConfig({
@@ -6,7 +6,8 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/css/app.css',
-                'resources/js/app.js',
+                // 'resources/js/app.js',
+                'resources/js/admin.js',
                 'resources/js/jquery.js',
                 'resources/js/alpinejs.js',
                 'resources/js/notiflix.js',
