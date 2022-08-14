@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cynab Trips</title>
-    @vite(['resources/css/app.css', 'resources/js/admin.js', 'resources/js/alpinejs.js'])
+    @vite(['resources/css/app.css', 'resources/js/admin.js', 'resources/js/alpinejs.js', 'resources/js/notiflix.js'])
 </head>
 <body class="bg-blue-100">
 <script>0</script>
@@ -33,5 +33,6 @@
         {{ $slot }}
     </main>
 </div>
+<x-notify.success/>
 </body>
 </html>

@@ -37,6 +37,10 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
 
+        if ($user->is_admin) {
+            return redirect()->intended(route('admin'))->with('success', 'Successful Login');
+        }
+
         return redirect()->intended(route('home'))->with('success', 'Successful Login');
     }
 
