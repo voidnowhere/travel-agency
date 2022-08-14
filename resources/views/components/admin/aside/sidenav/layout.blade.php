@@ -12,6 +12,7 @@
 @endphp
 <nav class="bg-blue-400 rounded p-2 shadow-2xl">
     <ul class="space-y-2" x-data="{ residenceOpen: '{{ $residenceOpen }}', housingOpen: '{{ $housingOpen }}' }">
+        <x-admin.aside.sidenav.item name="Home" :href="route('home')" :is-active="false"/>
         <x-admin.aside.sidenav.item name="Dashboard" :href="route('admin')" :is-active="request()->routeIs('admin')"/>
         <x-admin.aside.sidenav.item
             name="Residence" href="#" click="residenceOpen = !residenceOpen"
