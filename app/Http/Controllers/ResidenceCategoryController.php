@@ -13,7 +13,7 @@ class ResidenceCategoryController extends Controller
     public function index()
     {
         return view('admin.residence_categories.index', [
-            'residenceCategories' => ResidenceCategory::latest()->get(),
+            'residenceCategories' => ResidenceCategory::orderBy('order_by')->get(),
         ]);
     }
 
