@@ -14,7 +14,7 @@
                     :value="$housingPrice->housing->residence_id" :default="false" on-change="getHousings()"/>
                 <x-housing-select
                     :residence="\App\Models\Residence::find(old('residence')) ?? $housingPrice->housing->residence"
-                    :value="$housingPrice->housing->residence_id" :default="false"/>
+                    :value="$housingPrice->housing_id" :default="false"/>
             </div>
             <div class="grid grid-cols-2">
                 <x-housing-formula-select :value="old('formula') ?? $housingPrice->housing_formula_id"/>
