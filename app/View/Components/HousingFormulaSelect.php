@@ -14,8 +14,9 @@ class HousingFormulaSelect extends Component
      */
     public function __construct(
         public string $value = '',
-        public bool $required = true,
-        public bool $returnOld = true,
+        public bool   $required = true,
+        public bool   $returnOld = true,
+        public bool   $activeOnly = false,
     )
     {
         //
@@ -29,7 +30,9 @@ class HousingFormulaSelect extends Component
     public function render()
     {
         return view('components.housing-formula-select', [
-            'formulas' => HousingFormula::get(['id', 'name']),
+            'formulas' => ($this->activeOnly)
+                ? HousingFormula::active()->get(['id', 'name'])
+                : HousingFormula::get(['id', 'name']),
         ]);
     }
 }

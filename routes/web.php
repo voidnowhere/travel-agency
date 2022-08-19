@@ -7,6 +7,7 @@ use App\Http\Controllers\HousingCategoryController;
 use App\Http\Controllers\HousingController;
 use App\Http\Controllers\HousingFormulaController;
 use App\Http\Controllers\HousingPriceController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResidenceCategoryController;
 use App\Http\Controllers\ResidenceController;
@@ -38,10 +39,25 @@ Route::controller(AuthController::class)->group(function () {
         Route::get('/login', 'create')->name('login');
         Route::post('/login', 'store');
     });
-    Route::middleware('auth')->group(function () {
-        Route::post('/logout', 'destroy')->name('logout');
+    Route::post('/logout', 'destroy')->name('logout')->middleware('auth');
+});
+
+Route::middleware('can:user')->group(function () {
+    Route::post('/cities/get', [CityController::class, 'getActive'])->name('cities.get');
+    Route::post('/residences/get', [ResidenceController::class, 'getActive'])->name('residences.get');
+    Route::post('/housings/get', [HousingController::class, 'getActive'])->name('housings.get');
+    Route::prefix('/orders')->group(function () {
+        Route::get('', fn() => view('home.orders.layout'))->name('orders.layout');
+        Route::controller(OrderController::class)->group(function () {
+            Route::get('/all', 'index')->name('orders');
+            Route::get('/create', 'create')->name('orders.create');
+            Route::post('/create', 'store');
+            Route::get('/{order}/edit', 'edit')->name('orders.order.edit');
+            Route::patch('/{order}/edit', 'update');
+        });
     });
 });
+
 
 Route::middleware('can:admin')->group(function () {
     Route::get('/admin', fn() => view('admin.dashboard.index'))->name('admin');

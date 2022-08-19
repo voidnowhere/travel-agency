@@ -2,8 +2,11 @@
     <ul class="flex space-x-2">
         <x-home.nav.item name="Home" :href="route('home')" :is-active="request()->routeIs('home')"/>
         @admin
-        <x-home.nav.item name="Admin" :href="route('admin')" :is-active="false"/>
+            <x-home.nav.item name="Admin" :href="route('admin')"/>
         @endadmin
+        @user
+            <x-home.nav.item name="Orders" :href="route('orders.layout')" :is-active="request()->routeIs('orders.layout')"/>
+        @enduser
     </ul>
     @auth
         <ul class="relative" x-data="{ open: false }" @click.outside="open = false">

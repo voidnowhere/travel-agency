@@ -20,4 +20,9 @@ class HousingFormula extends Model
     {
         return $this->hasMany(HousingPrice::class, 'housing_formula_id');
     }
+
+    public function scopeActive($query)
+    {
+        $query->where('is_active', true);
+    }
 }

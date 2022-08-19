@@ -1,5 +1,5 @@
 @php
-    $columns = ['Housing', 'Formula', 'Type', 'One price', 'One extra price', 'Min nights', 'Weekend', 'Kid bed', 'Extra bed'];
+    $columns = ['Residence', 'Housing', 'Formula', 'Type', 'One price', 'One extra price', 'Min nights', 'Weekend', 'Kid bed', 'Extra bed'];
 @endphp
 <x-admin.iframe.layout title="Housing Prices">
     <x-table.layout>
@@ -10,6 +10,7 @@
         <x-table.tbody :count="$housingPrices->count()" :columns-count="count($columns)">
             @foreach($housingPrices as $housingPrice)
                 <tr @class(['border-b-2 border-b-blue-400', 'bg-blue-50' => $loop->even])>
+                    <td class="py-3 px-6 text-center">{{ $housingPrice->housing->residence->name }}</td>
                     <td class="py-3 px-6 text-center">{{ $housingPrice->housing->name }}</td>
                     <td class="py-3 px-6 text-center">{{ $housingPrice->formula->name }}</td>
                     <td class="py-3 px-6 text-center">{{ $housingPrice->type_SHML }}</td>
@@ -31,7 +32,8 @@
                     <td class="py-3 px-6">
                         <div class="flex justify-center items-center space-x-1">
                             <span>{{ $housingPrice->extra_bed_price }}</span>
-                            <input type="checkbox" class="w-4 h-4" disabled @checked($housingPrice->extra_bed_is_active)>
+                            <input type="checkbox" class="w-4 h-4"
+                                   disabled @checked($housingPrice->extra_bed_is_active)>
                         </div>
                     </td>
                     <td class="py-3 px-6">

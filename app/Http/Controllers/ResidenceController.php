@@ -14,7 +14,7 @@ class ResidenceController extends Controller
     public function index()
     {
         return view('admin.residences.index', [
-            'residences' => Residence::with('city.country', 'category')->orderBy('order_by')->get(),
+            'residences' => Residence::with(['city.country', 'category'])->orderBy('order_by')->get(),
         ]);
     }
 
@@ -22,7 +22,14 @@ class ResidenceController extends Controller
     {
         $city_id = $request->validate(['city_id' => 'required|int'])['city_id'];
 
-        return City::findOrFail($city_id)->residences()->get(['id', 'name']);
+        return City::findOrFail($city_id)->residences()->orderBy('order_by')->get(['id', 'name']);
+    }
+
+    public function getActive(Request $request)
+    {
+        $city_id = $request->validate(['city_id' => 'required|int'])['city_id'];
+
+        return City::findOrFail($city_id)->residences()->active()->orderBy('order_by')->get(['id', 'name']);
     }
 
     public function create()

@@ -18,6 +18,7 @@ class CitySelect extends Component
         public bool    $default = true,
         public string  $value = '',
         public bool    $required = true,
+        public bool    $activeOnly = false,
     )
     {
         //
@@ -31,7 +32,9 @@ class CitySelect extends Component
     public function render()
     {
         return view('components.city-select', [
-            'cities' => $this->country->cities()->get(['id', 'name']),
+            'cities' => ($this->activeOnly)
+                ? $this->country->cities()->active()->get(['id', 'name'])
+                : $this->country->cities()->get(['id', 'name']),
         ]);
     }
 }

@@ -13,7 +13,7 @@ class HousingPriceController extends Controller
     public function index()
     {
         return view('admin.housing_prices.index', [
-            'housingPrices' => HousingPrice::all(),
+            'housingPrices' => HousingPrice::with(['housing.residence', 'formula'])->get(),
         ]);
     }
 

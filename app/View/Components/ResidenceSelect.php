@@ -18,6 +18,7 @@ class ResidenceSelect extends Component
         public string $value = '',
         public bool   $required = true,
         public string $onChange = '',
+        public bool   $activeOnly = false,
     )
     {
         //
@@ -31,7 +32,9 @@ class ResidenceSelect extends Component
     public function render()
     {
         return view('components.residence-select', [
-            'residences' => $this->city->residences()->get(['id', 'name']),
+            'residences' => ($this->activeOnly)
+                ? $this->city->residences()->active()->get(['id', 'name'])
+                : $this->city->residences()->get(['id', 'name']),
         ]);
     }
 }
