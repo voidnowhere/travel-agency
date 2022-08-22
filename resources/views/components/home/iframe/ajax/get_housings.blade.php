@@ -14,10 +14,10 @@
                 const housing_select = $('#housing');
                 if (response.length !== 0) {
                     housing_select.empty().append('<option selected disabled class="hidden" value="">Select One</option>');
+                    response.forEach(housing => {
+                        housing_select.append(`<option value="${housing.id}">${housing.name}</option>`);
+                    });
                 }
-                response.forEach(housing => {
-                    housing_select.append(`<option value="${housing.id}">${housing.name}</option>`);
-                });
             },
         });
     }

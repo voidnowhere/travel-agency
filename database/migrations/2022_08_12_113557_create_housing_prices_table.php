@@ -19,8 +19,10 @@ return new class extends Migration {
             $table->foreignId('housing_formula_id')->constrained();
             $table->enum('type_SHML', SeasonTypes::values());
             $table->unsignedFloat('for_one_price');
-            $table->unsignedFloat('for_one_extra_price');
+            $table->unsignedFloat('extra_price');
+            $table->boolean('extra_price_is_active');
             $table->unsignedInteger('min_nights');
+            $table->string('weekends');
             $table->unsignedFloat('weekend_price');
             $table->boolean('weekend_is_active');
             $table->unsignedFloat('kid_bed_price');

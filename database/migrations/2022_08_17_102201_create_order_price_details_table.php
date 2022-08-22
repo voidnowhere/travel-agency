@@ -17,7 +17,7 @@ return new class extends Migration
         Schema::create('order_price_details', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id')->constrained();
-            $table->enum('type_SHML', SeasonTypes::values());
+            $table->string('type');
             $table->unsignedFloat('price');
             $table->timestamps();
         });

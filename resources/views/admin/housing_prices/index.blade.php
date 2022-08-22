@@ -1,5 +1,5 @@
 @php
-    $columns = ['Residence', 'Housing', 'Formula', 'Type', 'One price', 'One extra price', 'Min nights', 'Weekend', 'Kid bed', 'Extra bed'];
+    $columns = ['Residence', 'Housing', 'Formula', 'Type', 'Price', 'Extra Price', 'Min Nights', 'Weekends', 'Weekend Price', 'Kid bed', 'Extra bed'];
 @endphp
 <x-admin.iframe.layout title="Housing Prices">
     <x-table.layout>
@@ -15,8 +15,14 @@
                     <td class="py-3 px-6 text-center">{{ $housingPrice->formula->name }}</td>
                     <td class="py-3 px-6 text-center">{{ $housingPrice->type_SHML }}</td>
                     <td class="py-3 px-6 text-center">{{ $housingPrice->for_one_price }}</td>
-                    <td class="py-3 px-6 text-center">{{ $housingPrice->for_one_extra_price }}</td>
+                    <td class="py-3 px-6">
+                        <div class="flex justify-center items-center space-x-1">
+                            <span>{{ $housingPrice->extra_price }}</span>
+                            <input type="checkbox" class="w-4 h-4" disabled @checked($housingPrice->extra_price_is_active)>
+                        </div>
+                    </td>
                     <td class="py-3 px-6 text-center">{{ $housingPrice->min_nights }}</td>
+                    <td class="py-3 px-6 text-center">{{ $housingPrice->weekendsNames() }}</td>
                     <td class="py-3 px-6">
                         <div class="flex justify-center items-center space-x-1">
                             <span>{{ $housingPrice->weekend_price }}</span>

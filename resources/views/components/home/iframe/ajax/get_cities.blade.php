@@ -14,10 +14,10 @@
                 const city_select = $('#city');
                 if (response.length !== 0) {
                     city_select.empty().append('<option selected disabled class="hidden" value="">Select One</option>');
+                    response.forEach(city => {
+                        city_select.append(`<option value="${city.id}">${city.name}</option>`);
+                    });
                 }
-                response.forEach(city => {
-                    city_select.append(`<option value="${city.id}">${city.name}</option>`);
-                });
             },
         });
     }

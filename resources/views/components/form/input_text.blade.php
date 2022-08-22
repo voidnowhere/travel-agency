@@ -6,7 +6,7 @@
                name="{{ $name }}"
                @required($required)
                value="{{ ($name !== 'password' && $name !== 'password_confirmation') ? old($name) ?? $value : null }}"
-               class="ml-1 p-1 bg-gray-100 rounded-lg focus:bg-white grow">
+               class="p-1 bg-gray-100 rounded-lg focus:bg-white w-full">
     </div>
     <x-form.input_error :name="$name"/>
 </div>

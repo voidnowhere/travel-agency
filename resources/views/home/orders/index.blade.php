@@ -1,5 +1,5 @@
 @php
-    $columns = ['From', 'To', 'For', 'Residence', 'Housing', 'Formula', 'Price'];
+    $columns = ['From', 'To', 'Price'];
 @endphp
 <x-admin.iframe.layout title="Orders">
     <x-table.layout>
@@ -10,13 +10,6 @@
                 <tr @class(['border-b-2 border-b-blue-400 ', 'bg-blue-50' => $loop->even])>
                     <td class="text-center py-3 px-6">{{ $order->date_from->toDateString() }}</td>
                     <td class="text-center py-3 px-6">{{ $order->date_to->toDateString() }}</td>
-                    <td class="text-center py-3 px-6">{{ $order->for_count }}</td>
-                    <td class="py-3 px-6 text-center hover:cursor-pointer">
-                        <a class="underline" target="_blank"
-                           href="{{ $order->residence->website }}">{{ $order->residence->name }}</a>
-                    </td>
-                    <td class="text-center py-3 px-6">{{ $order->housing->name }}</td>
-                    <td class="text-center py-3 px-6">{{ $order->formula->name }}</td>
                     <td class="text-center py-3 px-6">
                         {{ (($order->status === \App\Enums\OrderStatuses::Unavailable->value) ? $order->status : $order->price()) }}
                     </td>

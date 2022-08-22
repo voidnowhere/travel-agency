@@ -1,13 +1,12 @@
-<x-admin.iframe.layout title="Edit Order" :load-jquery="true">
+<x-admin.iframe.layout title="Edit Order" :load-jquery="true" h-class-alternative="flex min-h-screen md:h-screen">
     <x-form.container
         title="Order"
+        h-class-alternative="grow"
         :iframe-id-to-close="\App\Iframes\OrderIframe::$iframeCUId">
         <x-form.layout :patch="true">
-            <div class="grid grid-cols-2">
+            <div class="grid grid-cols-1 md:grid-cols-2">
                 <x-form.input_text name="from" type="date" label="From" :value="$order->date_from->toDateString()"/>
                 <x-form.input_text name="to" type="date" label="To" :value="$order->date_to->toDateString()"/>
-            </div>
-            <div class="grid grid-cols-2">
                 <x-country-select on-change="getCities(); $('#residence').empty(); $('#housing').empty();"
                                   :active-only="true" :value="$order->residence->city->country_id"/>
                 <x-city-select :country="\App\Models\Country::find(old('country')) ?? $order->residence->city->country"
@@ -18,7 +17,7 @@
                     :residence="\App\Models\Residence::find(old('residence')) ?? $order->residence"
                     :active-only="true" :default="false"/>
             </div>
-            <div class="grid grid-cols-2 flex items-center">
+            <div class="grid grid-cols-1 md:grid-cols-2 flex items-center">
                 <x-housing-formula-select :value="old('formula') ?? $order->formula->id" :active-only="true"/>
                 <x-form.input_text name="for" type="text" label="For" :value="$order->for_count"/>
             </div>

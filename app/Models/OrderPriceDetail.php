@@ -11,7 +11,7 @@ class OrderPriceDetail extends Model
 
     protected $fillable = [
         'order_id',
-        'type_SHML',
+        'type',
         'price',
     ];
 }
