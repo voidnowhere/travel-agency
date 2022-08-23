@@ -13,7 +13,7 @@
                         <span>{{ $order->date_to->toDateString() }}</span>
                     </td>
                     <td class="text-center py-3 px-6">
-                        {{ (($order->status === \App\Enums\OrderStatuses::Unavailable->value) ? $order->status : $order->price()) }}
+                        {{ (($order->status === \App\Enums\OrderStatuses::Unavailable->value) ? $order->status : $order->price_details_sum_price) }}
                     </td>
                     <td class="w-[37px]">
                         <x-svg.crud.edit

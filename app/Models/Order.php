@@ -52,11 +52,6 @@ class Order extends Model
         return $this->hasMany(OrderStatusDetail::class, 'order_id');
     }
 
-    public function price()
-    {
-        return $this->priceDetails()->sum('price');
-    }
-
     public function setToProcessed()
     {
         $this->update([
