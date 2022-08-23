@@ -1,4 +1,4 @@
-<nav class="relative px-2 w-full md:px-0 md:w-2/3 lg:w-1/2 flex justify-center" x-data="{ showMenu: false }">
+<nav class="relative px-2 md:px-0 w-full md:w-2/3 lg:w-1/2 flex justify-center" x-data="{ showMenu: false }">
     <div class="flex sm:hidden items-center grow">
         <h1 class="grow text-center text-2xl pb-1">
             <span class="border-b-4 border-b-blue-400 rounded-xl">Cynab Trips</span>
@@ -12,7 +12,7 @@
         </svg>
     </div>
     <div :class="showMenu ? 'block' : 'hidden'"
-         class="absolute sm:static mt-14 sm:mt-0 w-11/12 p-2 sm:flex justify-between items-center rounded bg-blue-400 shadow-2xl font-mono">
+         class="absolute sm:static mt-14 sm:mt-0 w-11/12 sm:w-full p-2 sm:flex justify-between items-center rounded bg-blue-400 shadow-2xl font-mono">
         <ul class="flex flex-col sm:flex-row space-y-1 sm:space-y-0 sm:space-x-2 text-lg">
             <x-home.nav.item name="Home" :href="route('home')" :is-active="request()->routeIs('home')"/>
             @admin

@@ -161,7 +161,7 @@ class OrderService
             if (!$seasonDateToPlusOneDay->equalTo($forwardSeasonDateFrom)) {
                 OrderStatusDetail::create([
                     'order_id' => $orderId,
-                    'description' => "Unavailable Season From $seasonDateToPlusOneDay To " . $seasonDateToPlusOneDay->subDays(1),
+                    'description' => "Unavailable Season From " . $seasonDateToPlusOneDay->toDateString() . " To " . $seasonDateToPlusOneDay->subDays(1)->toDateString(),
                 ]);
                 return true;
             }
