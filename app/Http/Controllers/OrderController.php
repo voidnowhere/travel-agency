@@ -12,7 +12,7 @@ class OrderController extends Controller
     public function index()
     {
         return view('home.orders.index', [
-            'orders' => Order::with(['residence', 'housing', 'formula'])->latest()->get(),
+            'orders' => Order::withSum('priceDetails', 'price')->latest()->get(),
         ]);
     }
 
