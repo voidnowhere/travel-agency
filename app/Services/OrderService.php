@@ -131,12 +131,6 @@ class OrderService
             return false;
         }
 
-        // Count How Many Weekend Days Are In A
-        $weekendsCount = 0;
-        if ($housingPrice->weekend_is_active) {
-            $weekendsCount = static::countWeekends(CarbonPeriod::create($seasonDateFromStartByOrder, $seasonDateToEndByOrder)->toArray(), $housingPrice->weekendsArray());
-        }
-
         // Check If Order Days Are Not Enough
         if (static::orderDaysAreNotEnough($housingPrice->min_nights, $orderDaysCount, $orderId, $seasonType)) {
             return false;
@@ -147,7 +141,7 @@ class OrderService
             ? ($housingPrice->extra_price * $orderDaysCount * ($orderHousing->for_max - $orderForCount))
             : 0;
         $orderPrice += ($housingPrice->weekend_is_active)
-            ? $housingPrice->weekend_price * $orderForCount * $weekendsCount
+            ? $housingPrice->weekend_price * $orderForCount * static::countWeekends(CarbonPeriod::create($seasonDateFromStartByOrder, $seasonDateToEndByOrder)->toArray(), $housingPrice->weekendsArray())
             : 0;
 
         OrderPriceDetail::create([

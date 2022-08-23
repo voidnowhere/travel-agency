@@ -1,5 +1,5 @@
 <x-home.layout>
-    <div class="flex justify-center">
+    <div class="flex justify-center px-3 sm:px-0">
         <form method="post" class="mt-20 px-5 pt-5 pb-2 shadow-lg rounded-lg bg-blue-100">
             @csrf
             <x-form.input_text name="email" type="email" label="Email"/>
