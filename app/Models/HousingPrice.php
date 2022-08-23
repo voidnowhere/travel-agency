@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\WeekdayHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -15,8 +16,10 @@ class HousingPrice extends Model
         'housing_formula_id',
         'type_SHML',
         'for_one_price',
-        'for_one_extra_price',
+        'extra_price',
+        'extra_price_is_active',
         'min_nights',
+        'weekends',
         'weekend_price',
         'weekend_is_active',
         'kid_bed_price',
@@ -33,5 +36,17 @@ class HousingPrice extends Model
     public function formula(): BelongsTo
     {
         return $this->belongsTo(HousingFormula::class, 'housing_formula_id');
+    }
+
+    public function weekendsNames(): string
+    {
+        return implode(',', array_map(function ($day) {
+            return WeekdayHelper::$weekdays[$day];
+        }, explode(',', $this->weekends)));
+    }
+
+    public function weekendsArray(): array
+    {
+        return explode(',', $this->weekends);
     }
 }

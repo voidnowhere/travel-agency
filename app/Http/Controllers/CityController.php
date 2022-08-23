@@ -23,7 +23,14 @@ class CityController extends Controller
     {
         $country_id = $request->validate(['country_id' => 'required|int'])['country_id'];
 
-        return Country::findOrFail($country_id)->cities()->get(['id', 'name']);
+        return Country::findOrFail($country_id)->cities()->orderBy('order_by')->get(['id', 'name']);
+    }
+
+    public function getActive(Request $request)
+    {
+        $country_id = $request->validate(['country_id' => 'required|int'])['country_id'];
+
+        return Country::findOrFail($country_id)->cities()->active()->orderBy('order_by')->get(['id', 'name']);
     }
 
     public function create(Country $country)

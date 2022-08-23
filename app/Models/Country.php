@@ -26,4 +26,9 @@ class Country extends Model
     {
         return $this->hasManyThrough(Residence::class, City::class);
     }
+
+    public function scopeActive($query)
+    {
+        $query->where('is_active', true);
+    }
 }

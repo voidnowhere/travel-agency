@@ -1,4 +1,4 @@
-@props(['title', 'loadCSS' => true, 'loadJquery' => false])
+@props(['title', 'loadCSS' => true, 'loadJquery' => false, 'hClassAlternative' => 'h-screen'])
 <!doctype html>
 <html lang="en">
 <head>
@@ -13,7 +13,7 @@
         @vite('resources/js/jquery.js')
     @endif
 </head>
-<body class="h-screen">
+<body class="{{ $hClassAlternative }}">
 {{ $slot }}
 </body>
 </html>

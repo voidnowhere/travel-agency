@@ -4,21 +4,23 @@
     'required' => true, 'onChange' => null, 'areValuesArray' => false,
 ])
 <div class="p-2">
-    <x-form.label :label="$label"/>
-    <select id="{{ $name }}" name="{{ $name }}" @required($required) onchange="{{ $onChange }}"
-            class="p-2 bg-gray-100 rounded-lg border-2 border-blue-400 ring-blue-500 w-[189px]">
-        @if($default)
-            <option selected disabled class="hidden" value="">Select One</option>
-        @endif
-        @foreach($values as $val)
-            @if($areValuesArray)
-                <option
-                    value="{{ $val }}" @selected($returnOld && (old($name) ?? $value) == $val)>{{ ucfirst($val) }}</option>
-            @else
-                <option
-                    value="{{ $val->id }}" @selected($returnOld && (old($name) ?? $value) == $val->id)>{{ $val->name }}</option>
+    <div class="flex items-center">
+        <x-form.label :label="$label"/>
+        <select id="{{ $name }}" name="{{ $name }}" @required($required) onchange="{{ $onChange }}"
+                class="p-2 bg-gray-100 rounded-lg border-2 border-blue-400 ring-blue-500 grow">
+            @if($default)
+                <option selected disabled class="hidden" value="">Select One</option>
             @endif
-        @endforeach
-    </select>
+            @foreach($values as $val)
+                @if($areValuesArray)
+                    <option
+                        value="{{ $val }}" @selected($returnOld && (old($name) ?? $value) == $val)>{{ ucfirst($val) }}</option>
+                @else
+                    <option
+                        value="{{ $val->id }}" @selected($returnOld && (old($name) ?? $value) == $val->id)>{{ $val->name }}</option>
+                @endif
+            @endforeach
+        </select>
+    </div>
     <x-form.input_error :name="$name"/>
 </div>

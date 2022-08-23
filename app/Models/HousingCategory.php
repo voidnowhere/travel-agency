@@ -20,4 +20,9 @@ class HousingCategory extends Model
     {
         return $this->hasMany(Housing::class, 'housing_category_id');
     }
+
+    public function scopeActive($query)
+    {
+        $query->where('is_active', true);
+    }
 }

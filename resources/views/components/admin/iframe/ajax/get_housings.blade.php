@@ -12,10 +12,12 @@
             dataType: 'json',
             success: function (response) {
                 const housing_select = $('#housing');
-                housing_select.empty().append('<option selected disabled class="hidden" value="">Select One</option>');
-                response.forEach(housing => {
-                    housing_select.append(`<option value="${housing.id}">${housing.name}</option>`);
-                });
+                if (response.length > 0) {
+                    housing_select.empty().append('<option selected disabled class="hidden" value="">Select One</option>');
+                    response.forEach(housing => {
+                        housing_select.append(`<option value="${housing.id}">${housing.name}</option>`);
+                    });
+                }
             },
         });
     }

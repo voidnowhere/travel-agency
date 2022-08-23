@@ -3,17 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Enums\SeasonTypes;
+use App\Helpers\WeekdayHelper;
 use App\Iframes\HousingPriceIframe;
 use App\Models\HousingPrice;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 
 class HousingPriceController extends Controller
 {
     public function index()
     {
         return view('admin.housing_prices.index', [
-            'housingPrices' => HousingPrice::all(),
+            'housingPrices' => HousingPrice::with(['housing.residence', 'formula'])->get(),
         ]);
     }
 
@@ -59,7 +61,7 @@ class HousingPriceController extends Controller
 
     public function validateHousingPrice(Request $request, HousingPrice $price = null)
     {
-        $attributes = $request->validate([
+        $rules = [
             'country' => 'required|exists:countries,id',
             'city' => 'required|exists:cities,id',
             'residence' => 'required|exists:residences,id',
@@ -74,7 +76,8 @@ class HousingPriceController extends Controller
                     ->where('housing_formula_id', $request->input('formula') ?? $price?->housing_formula_id),
             ],
             'one_price' => 'required|numeric',
-            'one_extra_price' => 'required|numeric',
+            'extra_price' => 'required|numeric',
+            'extra_price_active' => 'nullable',
             'min_nights' => 'required|int',
             'weekend_price' => 'required|numeric',
             'weekend_active' => 'nullable',
@@ -82,8 +85,34 @@ class HousingPriceController extends Controller
             'kid_bed_active' => 'nullable',
             'extra_bed_price' => 'required|numeric',
             'extra_bed_active' => 'nullable',
-        ]);
+        ];
 
+        foreach (WeekdayHelper::weekdaysNames() as $name) {
+            $rules[$name] = 'nullable';
+        }
+
+
+        $attributes = $request->validate($rules);
+
+        $weekends = '';
+
+        $weekdaysFlipped = WeekdayHelper::weekdaysFlipped();
+
+        foreach (WeekdayHelper::$weekdays as $num => $name) {
+            if (isset($attributes[$name]) && isset($weekdaysFlipped[$attributes[$name]])) {
+                $weekends .= $num . ',';
+            }
+        }
+
+        if ($weekends === '') {
+            throw ValidationException::withMessages([
+                'weekends' => 'At least one weekend is required',
+            ]);
+        }
+
+        $weekends = rtrim($weekends, ',');
+
+        $attributes['extra_price_active'] = (bool)($attributes['extra_price_active'] ?? false);
         $attributes['weekend_active'] = (bool)($attributes['weekend_active'] ?? false);
         $attributes['kid_bed_active'] = (bool)($attributes['kid_bed_active'] ?? false);
         $attributes['extra_bed_active'] = (bool)($attributes['extra_bed_active'] ?? false);
@@ -93,8 +122,10 @@ class HousingPriceController extends Controller
             'housing_formula_id' => $attributes['formula'],
             'type_SHML' => $attributes['type'],
             'for_one_price' => $attributes['one_price'],
-            'for_one_extra_price' => $attributes['one_extra_price'],
+            'extra_price' => $attributes['extra_price'],
+            'extra_price_is_active' => $attributes['extra_price_active'],
             'min_nights' => $attributes['min_nights'],
+            'weekends' => $weekends,
             'weekend_price' => $attributes['weekend_price'],
             'weekend_is_active' => $attributes['weekend_active'],
             'kid_bed_price' => $attributes['kid_bed_price'],

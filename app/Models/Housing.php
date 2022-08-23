@@ -35,4 +35,9 @@ class Housing extends Model
     {
         return $this->hasMany(HousingPrice::class, 'housing_id');
     }
+
+    public function scopeActive($query)
+    {
+        $query->where('is_active', true);
+    }
 }

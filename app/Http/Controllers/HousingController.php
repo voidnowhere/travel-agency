@@ -14,7 +14,7 @@ class HousingController extends Controller
     public function index()
     {
         return view('admin.housings.index', [
-            'housings' => Housing::with('residence', 'category')->orderBy('order_by')->get(),
+            'housings' => Housing::with(['residence', 'category'])->orderBy('order_by')->get(),
         ]);
     }
 
@@ -22,7 +22,14 @@ class HousingController extends Controller
     {
         $residence_id = $request->validate(['residence_id' => 'required|int'])['residence_id'];
 
-        return Residence::findOrFail($residence_id)->housings()->get(['id', 'name']);
+        return Residence::findOrFail($residence_id)->housings()->orderBy('order_by')->get(['id', 'name']);
+    }
+
+    public function getActive(Request $request)
+    {
+        $residence_id = $request->validate(['residence_id' => 'required|int'])['residence_id'];
+
+        return Residence::findOrFail($residence_id)->housings()->active()->orderBy('order_by')->get(['id', 'name']);
     }
 
     public function create()

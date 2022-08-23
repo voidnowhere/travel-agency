@@ -16,4 +16,14 @@ class Season extends Model
         'type_SHML',
         'is_active',
     ];
+
+    protected $casts = [
+        'date_from' => 'date',
+        'date_to' => 'date',
+    ];
+
+    public function scopeActive($query)
+    {
+        $query->where('is_active', true);
+    }
 }

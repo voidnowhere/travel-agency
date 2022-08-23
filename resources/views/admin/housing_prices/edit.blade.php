@@ -14,7 +14,7 @@
                     :value="$housingPrice->housing->residence_id" :default="false" on-change="getHousings()"/>
                 <x-housing-select
                     :residence="\App\Models\Residence::find(old('residence')) ?? $housingPrice->housing->residence"
-                    :value="$housingPrice->housing->residence_id" :default="false"/>
+                    :value="$housingPrice->housing_id" :default="false"/>
             </div>
             <div class="grid grid-cols-2">
                 <x-housing-formula-select :value="old('formula') ?? $housingPrice->housing_formula_id"/>
@@ -22,10 +22,16 @@
                                :value="$housingPrice->type_SHML" :are-values-array="true"/>
             </div>
             <div class="grid grid-cols-2 flex items-center">
-                <x-form.input_text name="one_price" type="text" label="One price"
+                <x-form.input_text name="one_price" type="text" label="Price"
                                    :value="$housingPrice->for_one_price"/>
-                <x-form.input_text name="one_extra_price" type="text" label="One extra price"
-                                   :value="$housingPrice->for_one_extra_price"/>
+                <div class="flex">
+                    <x-form.input_text name="extra_price" type="text" label="Extra price"
+                                       :value="$housingPrice->extra_price"/>
+                    <div class="mt-[13px]">
+                        <x-form.input_check_only name="extra_price_active" type="checkbox" :required="false"
+                                                 :value="$housingPrice->extra_price_is_active"/>
+                    </div>
+                </div>
             </div>
             <div class="grid grid-cols-2">
                 <div class="flex mr-5">
@@ -55,6 +61,25 @@
                     </div>
                 </div>
                 <x-form.input_text name="min_nights" type="text" label="Min nights" :value="$housingPrice->min_nights"/>
+            </div>
+            <div>
+                <div class="p-2 flex flex-row items-center">
+                    <x-form.label label="Weekends"/>
+                    <div class="ml-1 flex justify-between grow">
+                        @php
+                            $weekends = explode(',', $housingPrice->weekends);
+                            $weekendsNames = \App\Helpers\WeekdayHelper::weekdaysNames();
+                        @endphp
+                        @foreach(\App\Helpers\WeekdayHelper::$weekdays as $num => $name)
+                            <div>
+                                <span>{{ $name }}</span>
+                                <input type="checkbox" name="{{ $name }}" class="hover:cursor-pointer"
+                                       value="{{ $name }}" @checked(((old($name) !== null) ? in_array(old($name), $weekendsNames) : null) ?? in_array($num, $weekends))>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+                <x-form.input_error name="weekends"/>
             </div>
             <x-form.submit>Edit</x-form.submit>
         </x-form.layout>

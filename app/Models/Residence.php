@@ -38,4 +38,9 @@ class Residence extends Model
     {
         return $this->hasMany(Housing::class, 'residence_id');
     }
+
+    public function scopeActive($query)
+    {
+        $query->where('is_active', true);
+    }
 }

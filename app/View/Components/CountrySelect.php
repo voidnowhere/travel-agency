@@ -15,8 +15,9 @@ class CountrySelect extends Component
     public function __construct(
         public string $value = '',
         public string $onChange = '',
-        public bool $required = true,
-        public bool $returnOld = true,
+        public bool   $required = true,
+        public bool   $returnOld = true,
+        public bool   $activeOnly = false,
     )
     {
         //
@@ -30,7 +31,7 @@ class CountrySelect extends Component
     public function render()
     {
         return view('components.country-select', [
-            'countries' => Country::all(),
+            'countries' => ($this->activeOnly) ? Country::active()->get(['id', 'name']) : Country::get(['id', 'name']),
         ]);
     }
 }

@@ -4,10 +4,10 @@ namespace App\Enums;
 
 enum SeasonTypes: string
 {
-    case Special = 'special';
-    case High = 'high';
-    case Medium = 'medium';
-    case Low = 'low';
+    case Special = 'Special';
+    case High = 'High';
+    case Medium = 'Medium';
+    case Low = 'Low';
 
     public static function values(): array
     {
