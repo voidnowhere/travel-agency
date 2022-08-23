@@ -14,7 +14,9 @@ class HousingController extends Controller
     public function index()
     {
         return view('admin.housings.index', [
-            'housings' => Housing::with(['residence', 'category'])->orderBy('order_by')->get(),
+            'housings' => Housing::with(['residence:id,name', 'category:id,name'])
+                ->orderBy('order_by')
+                ->get(['id', 'residence_id', 'housing_category_id', 'name', 'description', 'for_max', 'order_by', 'is_active']),
         ]);
     }
 

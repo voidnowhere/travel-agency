@@ -15,7 +15,19 @@ class HousingPriceController extends Controller
     public function index()
     {
         return view('admin.housing_prices.index', [
-            'housingPrices' => HousingPrice::with(['housing.residence', 'formula'])->get(),
+            'housingPrices' => HousingPrice
+                ::with(['housing:id,residence_id,name', 'housing.residence:id,name', 'formula:id,name'])
+                ->get([
+                    'id',
+                    'housing_id', 'housing_formula_id',
+                    'type_SHML',
+                    'for_one_price',
+                    'extra_price', 'extra_price_is_active',
+                    'min_nights',
+                    'weekends', 'weekend_is_active',
+                    'kid_bed_price', 'kid_bed_is_active',
+                    'extra_bed_price', 'extra_bed_is_active',
+                ]),
         ]);
     }
 

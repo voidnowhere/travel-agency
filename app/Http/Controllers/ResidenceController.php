@@ -14,7 +14,20 @@ class ResidenceController extends Controller
     public function index()
     {
         return view('admin.residences.index', [
-            'residences' => Residence::with(['city.country', 'category'])->orderBy('order_by')->get(),
+            'residences' => Residence
+                ::with(['city:id,country_id,name', 'city.country:id,name', 'category:id,name'])
+                ->orderBy('order_by')
+                ->get([
+                    'id',
+                    'city_id', 'residence_category_id',
+                    'name',
+                    'description',
+                    'email',
+                    'contact',
+                    'tax',
+                    'order_by',
+                    'is_active',
+                ]),
         ]);
     }
 

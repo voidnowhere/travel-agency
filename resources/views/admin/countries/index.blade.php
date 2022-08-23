@@ -7,9 +7,7 @@
                        :route-create="route('admin.countries.create')"/>
         <x-table.tbody :count="$countries->count()" :columns-count="count($columns)">
             @foreach($countries as $country)
-                <tr class="border-b-2 border-b-blue-400 hover:bg-blue-50"
-                    tabindex="{{ $country->id }}"
-                >
+                <tr class="border-b-2 border-b-blue-400 hover:bg-blue-50" tabindex="{{ $country->id }}">
                     <td class="py-3 px-6 hover:cursor-pointer"
                         onclick="focusTableTr({{ $country->id }}); loadCitiesIframe('{{ route('admin.cities', ['country' => $country]) }}');"
                     >{{ $country->name }}</td>

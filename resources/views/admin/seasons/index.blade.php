@@ -14,8 +14,8 @@
                         @if($loop->first)
                             <th rowspan="{{ $loop->count }}">{{ $name }}</th>
                         @endif
-                        <td class="py-3 px-6 text-center">{{ $season->date_from }}</td>
-                        <td class="py-3 px-6 text-center">{{ $season->date_to }}</td>
+                        <td class="py-3 px-6 text-center">{{ $season->date_from->toDateString() }}</td>
+                        <td class="py-3 px-6 text-center">{{ $season->date_to->toDateString() }}</td>
                         <td class="py-3 px-6">{{ $season->description }}</td>
                         <td class="text-center py-3 px-6">
                             <input type="checkbox" class="w-4 h-4" disabled @checked($season->is_active)>

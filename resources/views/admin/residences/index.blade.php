@@ -19,7 +19,9 @@
                     <td class="py-3 px-6">{{ $residence->city->country->name . ', ' . $residence->city->name }}</td>
                     <td class="py-3 px-6">{{ $residence->category->name }}</td>
                     <td class="py-3 px-6 min-w-[450px]">{{ $residence->description }}</td>
-                    <td class="py-3 px-6">{{ $residence->email }}</td>
+                    <td class="py-3 px-6">
+                        <a href="mailto:{{ $residence->email }}">{{ $residence->email }}</a>
+                    </td>
                     <td class="py-3 px-6">{{ $residence->contact }}</td>
                     <td class="py-3 px-6">{{ $residence->tax }}</td>
                     <td class="py-3 px-6 text-center">{{ $residence->order_by }}</td>

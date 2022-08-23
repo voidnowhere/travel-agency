@@ -14,7 +14,7 @@ class CityController extends Controller
     public function index(Country $country)
     {
         return view('admin.cities.index', [
-            'cities' => $country->cities()->orderBy('order_by')->get(),
+            'cities' => $country->cities()->orderBy('order_by')->get(['id', 'name', 'order_by', 'is_active']),
             'country_id' => $country->id,
         ]);
     }

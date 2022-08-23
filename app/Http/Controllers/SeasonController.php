@@ -15,10 +15,18 @@ class SeasonController extends Controller
         return view('admin.seasons.index', [
             'seasonsCount' => Season::count(),
             'fourSeasons' => [
-                SeasonTypes::Special->name => Season::where('type_SHML', '=', SeasonTypes::Special->value)->get(),
-                SeasonTypes::High->name => Season::where('type_SHML', '=', SeasonTypes::High->value)->get(),
-                SeasonTypes::Medium->name => Season::where('type_SHML', '=', SeasonTypes::Medium->value)->get(),
-                SeasonTypes::Low->name => Season::where('type_SHML', '=', SeasonTypes::Low->value)->get(),
+                SeasonTypes::Special->name =>
+                    Season::where('type_SHML', '=', SeasonTypes::Special->value)
+                        ->get(['id', 'type_SHML', 'date_from', 'date_to', 'description', 'is_active']),
+                SeasonTypes::High->name =>
+                    Season::where('type_SHML', '=', SeasonTypes::High->value)
+                        ->get(['id', 'type_SHML', 'date_from', 'date_to', 'description', 'is_active']),
+                SeasonTypes::Medium->name =>
+                    Season::where('type_SHML', '=', SeasonTypes::Medium->value)
+                        ->get(['id', 'type_SHML', 'date_from', 'date_to', 'description', 'is_active']),
+                SeasonTypes::Low->name =>
+                    Season::where('type_SHML', '=', SeasonTypes::Low->value)
+                        ->get(['id', 'type_SHML', 'date_from', 'date_to', 'description', 'is_active']),
             ],
         ]);
     }

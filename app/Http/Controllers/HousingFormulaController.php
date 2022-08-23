@@ -13,7 +13,7 @@ class HousingFormulaController extends Controller
     public function index()
     {
         return view('admin.housing_formulas.index', [
-            'housingFormulas' => HousingFormula::orderBy('order_by')->get(),
+            'housingFormulas' => HousingFormula::orderBy('order_by')->get(['id', 'name', 'order_by', 'is_active']),
         ]);
     }
 
