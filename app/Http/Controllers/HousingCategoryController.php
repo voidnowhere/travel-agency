@@ -13,7 +13,7 @@ class HousingCategoryController extends Controller
     public function index()
     {
         return view('admin.housing_categories.index', [
-            'housingCategories' => HousingCategory::orderBy('order_by')->get(),
+            'housingCategories' => HousingCategory::orderBy('order_by')->get(['id', 'name', 'order_by', 'is_active']),
         ]);
     }
 

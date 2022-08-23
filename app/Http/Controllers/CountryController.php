@@ -14,7 +14,7 @@ class CountryController extends Controller
     public function index()
     {
         return view('admin.countries.index', [
-            'countries' => Country::orderBy('order_by')->get(),
+            'countries' => Country::orderBy('order_by')->get(['id', 'name', 'order_by', 'is_active']),
         ]);
     }
 
