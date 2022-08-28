@@ -1,7 +1,5 @@
-<x-admin.iframe.layout title="Add Residence Category">
-    <x-form.container
-        title="City"
-        :iframe-id-to-close="\App\Iframes\CityIframe::$iframeCUId">
+<x-admin.iframe.layout title="Add City">
+    <x-form.container title="City" :iframe-id-to-close="\App\Iframes\CityIframe::$iframeCUId">
         <x-form.layout>
             <x-form.input_text name="name" type="text" label="Name"/>
             <x-form.input_text name="order" type="text" label="Order"/>

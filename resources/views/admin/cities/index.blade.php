@@ -1,7 +1,7 @@
 @php
     $columns = ['Name', 'Order', 'Active'];
 @endphp
-<x-admin.iframe.layout title="Countries">
+<x-admin.iframe.layout title="Cities">
     <x-table.layout>
         <x-table.thead :columns="$columns" :iframe-c-u-id="\App\Iframes\CityIframe::$iframeCUId"
                        :route-create="route('admin.cities.create', ['country' => $country_id])"/>

@@ -10,7 +10,8 @@
                 <x-country-select on-change="getCities(); $('#residence').empty(); $('#housing').empty();"
                                   :active-only="true" :value="$order->residence->city->country_id"/>
                 <x-city-select :country="\App\Models\Country::find(old('country')) ?? $order->residence->city->country"
-                               :active-only="true" :default="false" on-change="getResidences()"/>
+                               :active-only="true" :default="false" :value="$order->residence->city_id"
+                               on-change="getResidences()"/>
                 <x-residence-select :city="\App\Models\City::find(old('city')) ?? $order->residence->city"
                                     :active-only="true" :default="false" on-change="getHousings()"/>
                 <x-housing-select

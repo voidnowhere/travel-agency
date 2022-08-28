@@ -57,7 +57,7 @@
         <li class="flex items-center justify-center rounded cursor-pointer selection:bg-transparent hover:text-white transition-colors duration-150"
             @click="openProfile = !openProfile">
             <span class="bg-blue-400 rounded flex px-4 py-2 space-x-2">
-                <span>{{ Auth::user()->name }}</span>
+                <span>{{ Auth::user()->full_name }}</span>
                 <x-svg.user/>
             </span>
         </li>

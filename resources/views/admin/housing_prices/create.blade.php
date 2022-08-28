@@ -1,7 +1,5 @@
 <x-admin.iframe.layout title="Add Housing Price" :load-jquery="true">
-    <x-form.container
-        title="Housing Price"
-        :iframe-id-to-close="\App\Iframes\HousingPriceIframe::$iframeCUId">
+    <x-form.container title="Housing Price" :iframe-id-to-close="\App\Iframes\HousingPriceIframe::$iframeCUId">
         <x-form.layout>
             <div class="grid grid-cols-2">
                 <x-country-select on-change="getCities(); $('#residence').empty(); $('#housing').empty();"/>
@@ -14,7 +12,7 @@
                     :default="false"/>
             </div>
             <div class="grid grid-cols-2">
-                <x-housing-formula-select :value="old('formula') ?? ''"/>
+                <x-housing-formula-select/>
                 <x-form.select name="type" label="Type" :values="\App\Enums\SeasonTypes::values()"
                                :are-values-array="true"/>
             </div>
