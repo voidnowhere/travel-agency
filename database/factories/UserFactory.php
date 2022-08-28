@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Country;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
 
 /**
@@ -18,10 +20,22 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'name' => fake()->name(),
+            'city_id' => Country::create([
+                'name' => fake()->country(),
+                'order_by' => fake()->randomDigit(),
+                'is_active' => true,
+            ])->cities()->create([
+                'name' => fake()->city(),
+                'order_by' => fake()->randomDigit(),
+                'is_active' => true,
+            ])->id,
+            'last_name' => fake()->lastName(),
+            'first_name' => fake()->firstName(),
+            'address' => fake()->address(),
+            'phone_number' => fake()->phoneNumber(),
             'email' => fake()->freeEmail(),
             'email_verified_at' => now(),
-            'password' => '123', // password
+            'password' => (App::isProduction()) ? 'Abcd-1234' : '123',
             'remember_token' => Str::random(10),
         ];
     }
