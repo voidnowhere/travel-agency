@@ -1,7 +1,5 @@
 <x-admin.iframe.layout title="Add Residence" :load-jquery="true">
-    <x-form.container
-        title="Residence"
-        :iframe-id-to-close="\App\Iframes\ResidenceIframe::$iframeCUId">
+    <x-form.container title="Residence" :iframe-id-to-close="\App\Iframes\ResidenceIframe::$iframeCUId">
         <x-form.layout>
             <div class="grid grid-cols-2">
                 <div class="mt-2">

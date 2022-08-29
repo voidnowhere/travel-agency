@@ -1,7 +1,5 @@
 <x-admin.iframe.layout title="Edit Season">
-    <x-form.container
-        title="Season"
-        :iframe-id-to-close="\App\Iframes\SeasonIframe::$iframeCUId">
+    <x-form.container title="Season" :iframe-id-to-close="\App\Iframes\SeasonIframe::$iframeCUId">
         <x-form.layout :patch="true">
             <div class="grid grid-cols-2">
                 <x-form.input_text name="from" type="date" label="From" :value="$season->date_from"/>

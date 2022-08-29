@@ -1,7 +1,5 @@
 <x-admin.iframe.layout title="Add Housing Formula">
-    <x-form.container
-        title="Housing Formula"
-        :iframe-id-to-close="\App\Iframes\HousingFormulaIframe::$iframeCUId">
+    <x-form.container title="Housing Formula" :iframe-id-to-close="\App\Iframes\HousingFormulaIframe::$iframeCUId">
         <x-form.layout>
             <x-form.input_text name="name" type="text" label="Name"/>
             <x-form.input_text name="order" type="text" label="Order"/>

@@ -1,7 +1,5 @@
 <x-admin.iframe.layout title="Add Housing" :load-jquery="true">
-    <x-form.container
-        title="Housing"
-        :iframe-id-to-close="\App\Iframes\HousingIframe::$iframeCUId">
+    <x-form.container title="Housing" :iframe-id-to-close="\App\Iframes\HousingIframe::$iframeCUId">
         <x-form.layout>
             <div class="grid grid-cols-2 flex items-center">
                 <x-form.input_text name="name" type="text" label="Name"/>

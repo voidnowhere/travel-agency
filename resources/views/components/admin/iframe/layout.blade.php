@@ -1,4 +1,4 @@
-@props(['title', 'loadCSS' => true, 'loadJquery' => false, 'hClassAlternative' => 'h-screen'])
+@props(['title', 'loadCSS' => true, 'loadJquery' => false, 'loadNotiflix' => false, 'hClassAlternative' => 'h-screen'])
 <!doctype html>
 <html lang="en">
 <head>
@@ -11,6 +11,9 @@
     @if($loadJquery)
         <meta name="csrf-token" content="{{ csrf_token() }}">
         @vite('resources/js/jquery.js')
+    @endif
+    @if($loadNotiflix)
+        @vite('resources/js/notiflix.js')
     @endif
 </head>
 <body class="{{ $hClassAlternative }}">

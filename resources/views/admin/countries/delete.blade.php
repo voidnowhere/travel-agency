@@ -1,4 +1,4 @@
-<x-admin.iframe.layout title="Delete Residence Category">
+<x-admin.iframe.layout title="Delete Country">
     <x-form.layout :delete="true">
         <x-form.submit on-click="confirmDeleteSubmit(event)">Delete</x-form.submit>
     </x-form.layout>

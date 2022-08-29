@@ -28,7 +28,7 @@ class ResidenceCategorySelect extends Component
     public function render()
     {
         return view('components.residence-category-select', [
-            'residenceCategories' => ResidenceCategory::all(),
+            'residenceCategories' => ResidenceCategory::get(['id', 'name']),
         ]);
     }
 }

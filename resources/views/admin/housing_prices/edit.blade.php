@@ -1,7 +1,5 @@
 <x-admin.iframe.layout title="Edit Housing Price" :load-jquery="true">
-    <x-form.container
-        title="Housing Price"
-        :iframe-id-to-close="\App\Iframes\HousingPriceIframe::$iframeCUId">
+    <x-form.container title="Housing Price" :iframe-id-to-close="\App\Iframes\HousingPriceIframe::$iframeCUId">
         <x-form.layout :patch="true">
             <div class="grid grid-cols-2">
                 <x-country-select on-change="getCities(); $('#residence').empty(); $('#housing').empty();"

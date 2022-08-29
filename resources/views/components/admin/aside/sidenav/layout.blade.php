@@ -14,6 +14,8 @@
     <ul class="bg-blue-400 rounded p-2 shadow-2xl space-y-2"
         x-data="{ residenceOpen: '{{ $residenceOpen }}', housingOpen: '{{ $housingOpen }}' }">
         <x-admin.aside.sidenav.item name="Dashboard" :href="route('admin')" :is-active="request()->routeIs('admin')"/>
+        <x-admin.aside.sidenav.item name="Users" :href="route('admin.users.layout')"
+                                    :is-active="request()->routeIs('admin.users.layout')"/>
         <x-admin.aside.sidenav.item
             name="Residence" href="#" click="residenceOpen = !residenceOpen"
             :is-active="$residenceOpen"/>
@@ -44,7 +46,7 @@
             :href="route('admin.countries-cities')"/>
     </ul>
     <ul class="mb-5" x-data="{ openProfile: false }" @click.outside="openProfile = false">
-        <ul class="selection:bg-transparent flex justify-center mb-3" x-show="openProfile" >
+        <ul class="selection:bg-transparent flex justify-center mb-3" x-show="openProfile">
             <li class="hover:text-white transition-colors duration-150">
                 <form method="post" action="{{ route('logout') }}">
                     @csrf
@@ -55,7 +57,7 @@
         <li class="flex items-center justify-center rounded cursor-pointer selection:bg-transparent hover:text-white transition-colors duration-150"
             @click="openProfile = !openProfile">
             <span class="bg-blue-400 rounded flex px-4 py-2 space-x-2">
-                <span>{{ Auth::user()->name }}</span>
+                <span>{{ Auth::user()->full_name }}</span>
                 <x-svg.user/>
             </span>
         </li>

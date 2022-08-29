@@ -1,7 +1,5 @@
 <x-admin.iframe.layout title="Add Housing Category">
-    <x-form.container
-        title="Housing Category"
-        :iframe-id-to-close="\App\Iframes\HousingCategoryIframe::$iframeCUId">
+    <x-form.container title="Housing Category" :iframe-id-to-close="\App\Iframes\HousingCategoryIframe::$iframeCUId">
         <x-form.layout>
             <x-form.input_text name="name" type="text" label="Name"/>
             <x-form.input_text name="order" type="text" label="Order"/>

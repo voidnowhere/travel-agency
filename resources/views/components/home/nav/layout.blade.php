@@ -28,7 +28,7 @@
                 @click.outside="showProfile = false">
                 <li class="flex items-center px-3 py-1 rounded cursor-pointer selection:bg-transparent space-x-2 hover:text-white transition-colors duration-150"
                     @click="showProfile = !showProfile">
-                    <span>{{ Auth::user()->name }}</span>
+                    <span>{{ Auth::user()->full_name }}</span>
                     <x-svg.user/>
                 </li>
                 <ul class="absolute w-full flex justify-center mt-14"

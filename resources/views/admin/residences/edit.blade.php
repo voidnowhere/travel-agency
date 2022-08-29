@@ -1,7 +1,5 @@
 <x-admin.iframe.layout title="Edit Residence" :load-jquery="true">
-    <x-form.container
-        title="Residence"
-        :iframe-id-to-close="\App\Iframes\ResidenceIframe::$iframeCUId">
+    <x-form.container title="Residence" :iframe-id-to-close="\App\Iframes\ResidenceIframe::$iframeCUId">
         <x-form.layout :patch="true">
             <div class="grid grid-cols-2">
                 <div class="mt-2">
@@ -33,26 +31,5 @@
             <x-form.submit>Edit</x-form.submit>
         </x-form.layout>
     </x-form.container>
-    <script>
-        function getCities() {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: '{{ route('admin.cities.get') }}',
-                type: 'POST',
-                data: {'country_id': $('#country').val()},
-                dataType: 'json',
-                success: function (response) {
-                    const city_select = $('#city');
-                    city_select.empty().append('<option selected disabled class="hidden" value="">Select One</option>');
-                    response.forEach(city => {
-                        city_select.append(`<option value="${city.id}">${city.name}</option>`);
-                    });
-                },
-            });
-        }
-    </script>
+    <x-admin.iframe.ajax.get_cities/>
 </x-admin.iframe.layout>
