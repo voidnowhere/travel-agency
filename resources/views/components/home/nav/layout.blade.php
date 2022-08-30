@@ -1,7 +1,7 @@
 <nav class="relative px-2 md:px-0 w-full md:w-2/3 lg:w-1/2 flex justify-center" x-data="{ showMenu: false }">
     <div class="flex sm:hidden items-center grow">
         <h1 class="grow text-center text-2xl pb-1">
-            <span class="border-b-4 border-b-blue-400 rounded-xl">Cynab Trips</span>
+            <a class="border-b-4 border-b-blue-400 rounded-xl" href="{{ route('home') }}">Cynab Trips</a>
         </h1>
         <svg @click="showMenu = !showMenu"
              class="w-8 h-8 mr-2" fill="none" stroke="currentColor"

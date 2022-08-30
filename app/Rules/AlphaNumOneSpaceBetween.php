@@ -17,7 +17,7 @@ class AlphaNumOneSpaceBetween implements InvokableRule
     public function __invoke($attribute, $value, $fail)
     {
         if (!preg_match('/^[a-zA-Z0-9]+( [a-zA-Z0-9]+)*$/', $value)) {
-            $fail('The :attribute must be valid.');
+            $fail('The :attribute must only contain letters and numbers.');
         }
     }
 }
