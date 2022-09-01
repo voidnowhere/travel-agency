@@ -9,6 +9,7 @@ use App\Http\Controllers\HousingController;
 use App\Http\Controllers\HousingFormulaController;
 use App\Http\Controllers\HousingPriceController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResidenceCategoryController;
 use App\Http\Controllers\ResidenceController;
@@ -44,15 +45,26 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/logout', 'destroy')->name('logout')->middleware('auth');
 });
 
+Route::controller(PasswordResetController::class)->group(function () {
+    Route::middleware('guest')->group(function () {
+        Route::get('/forgot-password', 'create')->name('password.request');
+        Route::post('/forgot-password', 'store')->name('password.email');
+        Route::get('/reset-password/{token}', 'index')->name('password.reset');
+        Route::post('/reset-password', 'update')->name('password.update');
+    });
+});
+
 // Maybe I should separate this route to set one for registration with throttle and another one for orders without throttle
 Route::post('/cities/get', [CityController::class, 'getActive'])->name('cities.get');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/email/verify', [EmailVerificationController::class, 'create'])->name('verification.notice');
-    Route::post('/email/verification-notification', [EmailVerificationController::class, 'store'])
-        ->middleware('throttle:6,1')->name('verification.send');
-    Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 'update'])
-        ->middleware('signed')->name('verification.verify');
+    Route::controller(EmailVerificationController::class)->group(function () {
+        Route::get('/email/verify', 'create')->name('verification.notice');
+        Route::post('/email/verification-notification', 'store')
+            ->middleware('throttle:6,1')->name('verification.send');
+        Route::get('/email/verify/{id}/{hash}', 'update')
+            ->middleware('signed')->name('verification.verify');
+    });
 
     Route::middleware('verified')->group(function () {
         Route::middleware('can:user')->group(function () {

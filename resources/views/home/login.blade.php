@@ -4,6 +4,11 @@
             @csrf
             <x-form.input_text name="email" type="email" label="Email"/>
             <x-form.input_text name="password" type="password" label="Password"/>
+            <div class="text-center mt-2">
+                <a href="{{ route('password.request') }}" class="underline text-gray-600 hover:text-gray-900">
+                    Forgot your password?
+                </a>
+            </div>
             <x-form.submit>Login</x-form.submit>
         </form>
     </div>

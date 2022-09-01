@@ -37,11 +37,15 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
 
-        if ($user->is_admin) {
-            return redirect()->intended(route('admin'))->with('success', 'Successful Login');
+        if (!$user->hasVerifiedEmail()) {
+            return redirect()->route('verification.notice')->with('success', 'Successful login.');
         }
 
-        return redirect()->intended(route('home'))->with('success', 'Successful Login');
+        if ($user->is_admin) {
+            return redirect()->intended(route('admin'))->with('success', 'Successful login.');
+        }
+
+        return redirect()->intended(route('home'))->with('success', 'Successful login.');
     }
 
     public function destroy(Request $request)
@@ -52,6 +56,6 @@ class AuthController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect()->route('home')->with('success', 'Successful Logout');
+        return redirect()->route('home')->with('success', 'Successful logout.');
     }
 }
