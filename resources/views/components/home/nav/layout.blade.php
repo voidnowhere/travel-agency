@@ -1,7 +1,7 @@
 <nav class="relative px-2 md:px-0 w-full md:w-2/3 lg:w-1/2 flex justify-center" x-data="{ showMenu: false }">
     <div class="flex sm:hidden items-center grow">
         <h1 class="grow text-center text-2xl pb-1">
-            <span class="border-b-4 border-b-blue-400 rounded-xl">Cynab Trips</span>
+            <a class="border-b-4 border-b-blue-400 rounded-xl" href="{{ route('home') }}">Cynab Trips</a>
         </h1>
         <svg @click="showMenu = !showMenu"
              class="w-8 h-8 mr-2" fill="none" stroke="currentColor"
@@ -31,13 +31,19 @@
                     <span>{{ Auth::user()->full_name }}</span>
                     <x-svg.user/>
                 </li>
-                <ul class="absolute w-full flex justify-center mt-14"
+                <ul class="absolute w-full flex flex-col items-center justify-center space-y-1 mt-14"
                     x-show="showProfile" style="display: none">
-                    <li class="hover:text-white transition-colors duration-150 bg-blue-400 rounded px-2 py-1">
+                    <li class="w-[150px] hover:text-white transition-colors duration-150 bg-blue-400 rounded px-2 py-1">
                         <form method="post" action="{{ route('logout') }}">
                             @csrf
-                            <button>Logout</button>
+                            <button class="w-full">Logout</button>
                         </form>
+                    </li>
+                    <li class="w-[150px] hover:text-white transition-colors duration-150 bg-blue-400 rounded px-2 py-1">
+                        <a href="{{ route('user-profile') }}" class="block text-center w-full">Profile</a>
+                    </li>
+                    <li class="w-[150px] hover:text-white transition-colors duration-150 bg-blue-400 rounded px-2 py-1">
+                        <a href="{{ route('password-change') }}" class="block text-center w-full">Change password</a>
                     </li>
                 </ul>
             </ul>

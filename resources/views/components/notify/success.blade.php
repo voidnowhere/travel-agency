@@ -5,7 +5,7 @@
                 cssAnimationStyle: 'from-bottom',
                 position: 'center-bottom',
                 fontFamily: 'mono',
-                fontSize: '18px',
+                fontSize: '17px',
             });
         });
     </script>
