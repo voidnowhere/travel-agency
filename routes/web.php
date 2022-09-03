@@ -9,12 +9,14 @@ use App\Http\Controllers\HousingController;
 use App\Http\Controllers\HousingFormulaController;
 use App\Http\Controllers\HousingPriceController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PasswordChangeController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResidenceCategoryController;
 use App\Http\Controllers\ResidenceController;
 use App\Http\Controllers\SeasonController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -58,6 +60,16 @@ Route::controller(PasswordResetController::class)->group(function () {
 Route::post('/cities/get', [CityController::class, 'getActive'])->name('cities.get');
 
 Route::middleware('auth')->group(function () {
+    Route::controller(UserProfileController::class)->group(function () {
+        Route::get('/profile', 'index')->name('user-profile');
+        Route::post('/profile', 'update');
+    });
+
+    Route::controller(PasswordChangeController::class)->group(function () {
+        Route::get('/change-password', 'create')->name('password-change');
+        Route::post('/change-password', 'update');
+    });
+
     Route::controller(EmailVerificationController::class)->group(function () {
         Route::get('/email/verify', 'create')->name('verification.notice');
         Route::post('/email/verification-notification', 'store')

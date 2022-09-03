@@ -23,6 +23,10 @@ class EmailVerificationController extends Controller
     {
         $request->fulfill();
 
+        if ($request->user()->is_admin) {
+            return redirect()->route('admin')->with('success', 'Email verified successfully.');
+        }
+
         return redirect()->route('home')->with('success', 'Email verified successfully.');
     }
 }

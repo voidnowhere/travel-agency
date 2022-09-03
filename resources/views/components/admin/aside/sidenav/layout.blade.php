@@ -46,12 +46,18 @@
             :href="route('admin.countries-cities')"/>
     </ul>
     <ul class="mb-5" x-data="{ openProfile: false }" @click.outside="openProfile = false">
-        <ul class="selection:bg-transparent flex justify-center mb-3" x-show="openProfile">
-            <li class="hover:text-white transition-colors duration-150">
+        <ul class="selection:bg-transparent flex flex-col items-center justify-center mb-3 space-y-1" x-show="openProfile">
+            <li class="w-[150px] hover:text-white transition-colors duration-150 bg-blue-400 rounded py-1">
                 <form method="post" action="{{ route('logout') }}">
                     @csrf
-                    <button class="rounded px-4 py-1 mt-5 bg-blue-400">Logout</button>
+                    <button class="w-full">Logout</button>
                 </form>
+            </li>
+            <li class="w-[150px] text-center hover:text-white transition-colors duration-150 bg-blue-400 rounded py-1">
+                <a href="{{ route('user-profile') }}" class="block w-full">Profile</a>
+            </li>
+            <li class="w-[150px] text-center hover:text-white transition-colors duration-150 bg-blue-400 rounded py-1">
+                <a href="{{ route('password-change') }}" class="block w-full">Change password</a>
             </li>
         </ul>
         <li class="flex items-center justify-center rounded cursor-pointer selection:bg-transparent hover:text-white transition-colors duration-150"
