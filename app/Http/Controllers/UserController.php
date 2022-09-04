@@ -42,7 +42,7 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
-        $user->update($this->validateUser($request, $user, false));
+        $user->update($this->validateUser($request, $user));
 
         return UserIframe::iframeCUClose() . '<br>' . UserIframe::reloadParent();
     }
@@ -54,7 +54,7 @@ class UserController extends Controller
         return json_encode($user->is_active);
     }
 
-    protected function validateUser(Request $request, User $user = null, bool $is_new = true)
+    protected function validateUser(Request $request, User $user = null)
     {
         $attributes = $request->validate([
             'city' => 'required|exists:cities,id',
@@ -69,8 +69,8 @@ class UserController extends Controller
             'address' => ['required', new AlphaNumOneSpaceBetween],
         ]);
 
-        if ($is_new) {
-            $attributes['password'] = Str::random(8);
+        if (!isset($user)) {
+            $attributes['password'] = Str::random();
         }
 
         $attributes['city_id'] = $attributes['city'];
