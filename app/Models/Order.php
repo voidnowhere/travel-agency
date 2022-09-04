@@ -52,6 +52,11 @@ class Order extends Model
         return $this->hasMany(OrderStatusDetail::class, 'order_id');
     }
 
+    public function client(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
     public function setToProcessed()
     {
         $this->update([

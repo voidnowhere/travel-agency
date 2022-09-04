@@ -2,7 +2,7 @@
 
 namespace App\Iframes;
 
-class OrderIframe
+class UserOrderIframe
 {
     public static string $iframeCUId = 'iframe_order_cu';
     public static string $iframeDId = 'iframe_order_d';

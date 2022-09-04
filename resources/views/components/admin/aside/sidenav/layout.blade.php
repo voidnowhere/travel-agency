@@ -14,7 +14,7 @@
     <ul class="bg-blue-400 rounded p-2 shadow-2xl space-y-2"
         x-data="{ residenceOpen: '{{ $residenceOpen }}', housingOpen: '{{ $housingOpen }}' }">
         <x-admin.aside.sidenav.item name="Dashboard" :href="route('admin')" :is-active="request()->routeIs('admin')"/>
-        <x-admin.aside.sidenav.item name="Users" :href="route('admin.users.layout')"
+        <x-admin.aside.sidenav.item name="Clients" :href="route('admin.users.layout')"
                                     :is-active="request()->routeIs('admin.users.layout')"/>
         <x-admin.aside.sidenav.item
             name="Residence" href="#" click="residenceOpen = !residenceOpen"
@@ -25,7 +25,7 @@
             <x-admin.aside.sub_sidenav.item name="Categories" :href="route('admin.residence.categories.layout')"
                                             :is-active="$isResidenceCategories"/>
         </x-admin.aside.sub_sidenav.layout>
-        <x-admin.aside.sidenav.item name="Season" :href="route('admin.seasons.layout')"
+        <x-admin.aside.sidenav.item name="Seasons" :href="route('admin.seasons.layout')"
                                     :is-active="request()->routeIs('admin.seasons.layout')"/>
         <x-admin.aside.sidenav.item
             name="Housing" href="#" click="housingOpen = !housingOpen"

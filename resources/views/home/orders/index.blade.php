@@ -3,7 +3,7 @@
 @endphp
 <x-admin.iframe.layout title="Orders">
     <x-table.layout>
-        <x-table.thead :columns="$columns" :iframe-c-u-id="\App\Iframes\OrderIframe::$iframeCUId"
+        <x-table.thead :columns="$columns" :iframe-c-u-id="\App\Iframes\UserOrderIframe::$iframeCUId"
                        :route-create="route('orders.create')"/>
         <x-table.tbody :count="$orders->count()" :columns-count="count($columns)">
             @foreach($orders as $order)
@@ -17,7 +17,7 @@
                     </td>
                     <td class="w-[37px]">
                         <x-svg.crud.edit
-                            :iframe-c-u-id="\App\Iframes\OrderIframe::$iframeCUId"
+                            :iframe-c-u-id="\App\Iframes\UserOrderIframe::$iframeCUId"
                             :route-u="route('orders.order.edit', ['order' => $order->id])"/>
                     </td>
                 </tr>

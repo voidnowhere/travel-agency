@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Iframes\OrderIframe;
+use App\Iframes\UserOrderIframe;
 use App\Models\Order;
 use App\Services\OrderService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class OrderController extends Controller
+class UserOrderController extends Controller
 {
     public function index()
     {
         return view('home.orders.index', [
-            'orders' => Order::withSum('priceDetails', 'price')->latest()->get(),
+            'orders' => Auth::user()->orders()->withSum('priceDetails', 'price')->latest()->get(),
         ]);
     }
 
@@ -23,14 +24,14 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
-        $order = Order::create($this->validateOrder($request));
+        $order = $request->user()->orders()->create($this->validateOrder($request));
 
         OrderService::processPrice($order, true);
 
         return
-            OrderIframe::iframeCUClose()
+            UserOrderIframe::iframeCUClose()
             . '<br>' .
-            OrderIframe::reloadParent();
+            UserOrderIframe::reloadParent();
     }
 
     public function edit(Order $order)
@@ -47,9 +48,9 @@ class OrderController extends Controller
         OrderService::processPrice($order);
 
         return
-            OrderIframe::iframeCUClose()
+            UserOrderIframe::iframeCUClose()
             . '<br>' .
-            OrderIframe::reloadParent();
+            UserOrderIframe::reloadParent();
     }
 
     public function validateOrder(Request $request)

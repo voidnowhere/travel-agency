@@ -8,7 +8,7 @@ use App\Http\Controllers\HousingCategoryController;
 use App\Http\Controllers\HousingController;
 use App\Http\Controllers\HousingFormulaController;
 use App\Http\Controllers\HousingPriceController;
-use App\Http\Controllers\OrderController;
+use App\Http\Controllers\UserOrderController;
 use App\Http\Controllers\PasswordChangeController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\RegisterController;
@@ -84,7 +84,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/housings/get', [HousingController::class, 'getActive'])->name('housings.get');
             Route::prefix('/orders')->group(function () {
                 Route::get('', fn() => view('home.orders.layout'))->name('orders.layout');
-                Route::controller(OrderController::class)->group(function () {
+                Route::controller(UserOrderController::class)->group(function () {
                     Route::get('/all', 'index')->name('orders');
                     Route::get('/create', 'create')->name('orders.create');
                     Route::post('/create', 'store');
