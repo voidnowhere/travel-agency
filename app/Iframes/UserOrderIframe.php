@@ -2,7 +2,7 @@
 
 namespace App\Iframes;
 
-class OrderIframe
+class UserOrderIframe
 {
     public static string $iframeCUId = 'iframe_order_cu';
     public static string $iframeDId = 'iframe_order_d';
@@ -16,10 +16,10 @@ class OrderIframe
         return $script;
     }
 
-    public static function reloadParent(int $userId): string
+    public static function reloadParent(): string
     {
         $script = '<script>';
-        $script .= "parent.document.getElementById('" . self::$parentIframeId . "').src = '" . route('admin.orders', ['user' => $userId]) . "'";
+        $script .= "parent.document.getElementById('" . self::$parentIframeId . "').src = '" . route('orders') . "'";
         $script .= '</script>';
         return $script;
     }

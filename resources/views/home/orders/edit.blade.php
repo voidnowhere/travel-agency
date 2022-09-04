@@ -2,7 +2,7 @@
     <x-form.container
         title="Order"
         h-class-alternative="grow"
-        :iframe-id-to-close="\App\Iframes\OrderIframe::$iframeCUId">
+        :iframe-id-to-close="\App\Iframes\UserOrderIframe::$iframeCUId">
         <x-form.layout :patch="true">
             <div class="grid grid-cols-1 md:grid-cols-2">
                 <x-form.input_text name="from" type="date" label="From" :value="$order->date_from->toDateString()"/>

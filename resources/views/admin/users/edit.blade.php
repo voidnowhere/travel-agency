@@ -1,5 +1,5 @@
-<x-admin.iframe.layout title="Edit User" :load-jquery="true">
-    <x-form.container title="User" :iframe-id-to-close="\App\Iframes\UserIframe::$iframeCUId">
+<x-admin.iframe.layout title="Edit Client" :load-jquery="true">
+    <x-form.container title="Client" :iframe-id-to-close="\App\Iframes\UserIframe::$iframeCUId">
         <x-form.layout :patch="true">
             <div class="grid grid-cols-2">
                 <x-form.input_text name="last_name" type="text" label="Last name" :value="$user->last_name"/>

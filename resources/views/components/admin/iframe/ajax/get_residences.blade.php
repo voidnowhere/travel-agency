@@ -1,10 +1,5 @@
 <script>
     function getResidences() {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
         $.ajax({
             url: '{{ route('admin.residences.get') }}',
             type: 'POST',

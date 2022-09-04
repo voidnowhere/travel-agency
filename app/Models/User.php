@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
@@ -58,12 +59,12 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 
     protected function lastName(): Attribute
     {
-        return Attribute::make(set: fn($value) => ucwords($value));
+        return Attribute::make(set: fn($value) => ucfirst($value));
     }
 
     protected function firstName(): Attribute
     {
-        return Attribute::make(set: fn($value) => ucwords($value));
+        return Attribute::make(set: fn($value) => ucfirst($value));
     }
 
     protected function fullName(): Attribute
@@ -81,8 +82,27 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         return $query->where('is_admin', '=', false);
     }
 
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($filters['email'] ?? false, function ($query, $email) {
+            $query->where('email', 'like', "%$email%");
+        });
+
+        $query->when($filters['last_name'] ?? false, function ($query, $last_name) {
+            $query->where('last_name', 'like', "%$last_name%");
+        });
+        $query->when($filters['first_name'] ?? false, function ($query, $first_name) {
+            $query->where('first_name', 'like', "%$first_name%");
+        });
+    }
+
     public function city(): BelongsTo
     {
         return $this->belongsTo(City::class);
+    }
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class, 'user_id');
     }
 }

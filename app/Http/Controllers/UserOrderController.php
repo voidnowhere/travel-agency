@@ -2,22 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Iframes\OrderIframe;
+use App\Iframes\UserOrderIframe;
 use App\Models\Order;
-use App\Models\User;
 use App\Services\OrderService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class OrderController extends Controller
+class UserOrderController extends Controller
 {
-    public function index(User $user)
+    public function index()
     {
-        return view('admin.orders.index', [
-            'user_id' => $user->id,
-            'orders' => $user->orders()
-                ->withSum('priceDetails', 'price')
-                ->with(['residence:id,name', 'housing:id,name,for_max', 'formula:id,name'])
-                ->get(['id', 'residence_id', 'housing_id', 'housing_formula_id', 'date_from', 'date_to', 'for_count', 'status']),
+        return view('home.orders.index', [
+            'orders' => Auth::user()->orders()->withSum('priceDetails', 'price')->latest()->get(),
         ]);
     }
 
@@ -26,16 +22,16 @@ class OrderController extends Controller
         return view('home.orders.create');
     }
 
-    public function store(Request $request, User $user)
+    public function store(Request $request)
     {
-        $order = $user->orders()->create($this->validateOrder($request));
+        $order = $request->user()->orders()->create($this->validateOrder($request));
 
         OrderService::processPrice($order, true);
 
         return
-            OrderIframe::iframeCUClose()
+            UserOrderIframe::iframeCUClose()
             . '<br>' .
-            OrderIframe::reloadParent($user->id);
+            UserOrderIframe::reloadParent();
     }
 
     public function edit(Order $order)
@@ -52,9 +48,9 @@ class OrderController extends Controller
         OrderService::processPrice($order);
 
         return
-            OrderIframe::iframeCUClose()
+            UserOrderIframe::iframeCUClose()
             . '<br>' .
-            OrderIframe::reloadParent($order->user_id);
+            UserOrderIframe::reloadParent();
     }
 
     public function validateOrder(Request $request)
@@ -63,6 +59,7 @@ class OrderController extends Controller
             'from' => 'required|date',
             'to' => 'required|after:from',
             'for' => 'required|int',
+            'country' => 'required|exists:countries,id',
             'city' => 'required|exists:cities,id',
             'residence' => 'required|exists:residences,id',
             'housing' => 'required|exists:housings,id',

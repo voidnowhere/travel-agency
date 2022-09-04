@@ -21,6 +21,22 @@ class UserController extends Controller
         ]);
     }
 
+    public function get(Request $request)
+    {
+        if ($request->has('email')) {
+            return User::notAdmin()
+                ->filter(['email' => $request->validate(['email' => 'required|string'])['email']])
+                ->get(['id', 'last_name', 'first_name', 'email']);
+        }
+        if ($request->has('last_name')) {
+            return User::notAdmin()->filter($request->validate([
+                'last_name' => 'required|string',
+                'first_name' => 'nullable|string',
+            ]))->get(['id', 'last_name', 'first_name', 'email']);
+        }
+        return null;
+    }
+
     public function create()
     {
         return view('admin.users.create');
@@ -42,7 +58,7 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
-        $user->update($this->validateUser($request, $user, false));
+        $user->update($this->validateUser($request, $user));
 
         return UserIframe::iframeCUClose() . '<br>' . UserIframe::reloadParent();
     }
@@ -54,7 +70,7 @@ class UserController extends Controller
         return json_encode($user->is_active);
     }
 
-    protected function validateUser(Request $request, User $user = null, bool $is_new = true)
+    protected function validateUser(Request $request, User $user = null)
     {
         $attributes = $request->validate([
             'city' => 'required|exists:cities,id',
@@ -69,8 +85,8 @@ class UserController extends Controller
             'address' => ['required', new AlphaNumOneSpaceBetween],
         ]);
 
-        if ($is_new) {
-            $attributes['password'] = Str::random(8);
+        if (!isset($user)) {
+            $attributes['password'] = Str::random();
         }
 
         $attributes['city_id'] = $attributes['city'];

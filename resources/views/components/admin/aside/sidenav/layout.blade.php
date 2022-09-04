@@ -14,18 +14,19 @@
     <ul class="bg-blue-400 rounded p-2 shadow-2xl space-y-2"
         x-data="{ residenceOpen: '{{ $residenceOpen }}', housingOpen: '{{ $housingOpen }}' }">
         <x-admin.aside.sidenav.item name="Dashboard" :href="route('admin')" :is-active="request()->routeIs('admin')"/>
-        <x-admin.aside.sidenav.item name="Users" :href="route('admin.users.layout')"
+        <x-admin.aside.sidenav.item name="Clients" :href="route('admin.users.layout')"
                                     :is-active="request()->routeIs('admin.users.layout')"/>
-        <x-admin.aside.sidenav.item
-            name="Residence" href="#" click="residenceOpen = !residenceOpen"
-            :is-active="$residenceOpen"/>
+        <x-admin.aside.sidenav.item name="Orders" :href="route('admin.orders.layout')"
+                                    :is-active="request()->routeIs('admin.orders.layout')"/>
+        <x-admin.aside.sidenav.item name="Residence" href="#" click="residenceOpen = !residenceOpen"
+                                    :is-active="$residenceOpen"/>
         <x-admin.aside.sub_sidenav.layout x-show="residenceOpen">
             <x-admin.aside.sub_sidenav.item name="All" :href="route('admin.residences.layout')"
                                             :is-active="$isResidences"/>
             <x-admin.aside.sub_sidenav.item name="Categories" :href="route('admin.residence.categories.layout')"
                                             :is-active="$isResidenceCategories"/>
         </x-admin.aside.sub_sidenav.layout>
-        <x-admin.aside.sidenav.item name="Season" :href="route('admin.seasons.layout')"
+        <x-admin.aside.sidenav.item name="Seasons" :href="route('admin.seasons.layout')"
                                     :is-active="request()->routeIs('admin.seasons.layout')"/>
         <x-admin.aside.sidenav.item
             name="Housing" href="#" click="housingOpen = !housingOpen"
@@ -46,7 +47,8 @@
             :href="route('admin.countries-cities')"/>
     </ul>
     <ul class="mb-5" x-data="{ openProfile: false }" @click.outside="openProfile = false">
-        <ul class="selection:bg-transparent flex flex-col items-center justify-center mb-3 space-y-1" x-show="openProfile">
+        <ul class="selection:bg-transparent flex flex-col items-center justify-center mb-3 space-y-1"
+            x-show="openProfile">
             <li class="w-[150px] hover:text-white transition-colors duration-150 bg-blue-400 rounded py-1">
                 <form method="post" action="{{ route('logout') }}">
                     @csrf

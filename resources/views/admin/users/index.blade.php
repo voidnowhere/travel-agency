@@ -1,7 +1,7 @@
 @php
     $columns = ['Name', 'Email', 'Phone number', 'Address', 'Active'];
 @endphp
-<x-admin.iframe.layout title="Users" :load-jquery="true" :load-notiflix="true">
+<x-admin.iframe.layout title="Clients" :load-jquery="true" :load-notiflix="true">
     <x-table.layout>
         <x-table.thead :columns="$columns" :iframe-c-u-id="\App\Iframes\UserIframe::$iframeCUId"
                        :route-create="route('admin.users.create')"/>

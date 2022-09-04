@@ -7,7 +7,7 @@
     <div class="flex items-center">
         <x-form.label :label="$label"/>
         <select id="{{ $name }}" name="{{ $name }}" @required($required) onchange="{{ $onChange }}"
-                class="p-2 bg-gray-100 rounded-lg border-2 border-blue-400 ring-blue-500 grow">
+                class="p-2 bg-gray-100 rounded-lg border-2 border-blue-400 ring-blue-500 grow max-w-[210px]">
             @if($default)
                 <option selected disabled class="hidden" value="">Select One</option>
             @endif
