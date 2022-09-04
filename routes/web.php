@@ -8,6 +8,7 @@ use App\Http\Controllers\HousingCategoryController;
 use App\Http\Controllers\HousingController;
 use App\Http\Controllers\HousingFormulaController;
 use App\Http\Controllers\HousingPriceController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserOrderController;
 use App\Http\Controllers\PasswordChangeController;
 use App\Http\Controllers\PasswordResetController;
@@ -79,9 +80,9 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::middleware('verified')->group(function () {
+        Route::post('/residences/get', [ResidenceController::class, 'getActive'])->name('residences.get');
+        Route::post('/housings/get', [HousingController::class, 'getActive'])->name('housings.get');
         Route::middleware('can:user')->group(function () {
-            Route::post('/residences/get', [ResidenceController::class, 'getActive'])->name('residences.get');
-            Route::post('/housings/get', [HousingController::class, 'getActive'])->name('housings.get');
             Route::prefix('/orders')->group(function () {
                 Route::get('', fn() => view('home.orders.layout'))->name('orders.layout');
                 Route::controller(UserOrderController::class)->group(function () {
@@ -221,11 +222,23 @@ Route::middleware('auth')->group(function () {
                 Route::get('', fn() => view('admin.users.layout'))->name('admin.users.layout');
                 Route::controller(UserController::class)->group(function () {
                     Route::get('/all', 'index')->name('admin.users');
+                    Route::post('/get', 'get')->name('admin.users.get');
                     Route::post('/set', 'updateIsActive')->name('admin.users.set');
                     Route::get('/create', 'create')->name('admin.users.create');
                     Route::post('/create', 'store');
                     Route::get('/{user}/edit', 'edit')->name('admin.users.user.edit');
                     Route::patch('/{user}/edit', 'update');
+                });
+            });
+
+            Route::prefix('/admin/orders')->group(function () {
+                Route::get('', fn() => view('admin.orders.layout'))->name('admin.orders.layout');
+                Route::controller(OrderController::class)->group(function () {
+                    Route::get('/{user?}', 'index')->name('admin.orders');
+                    Route::get('/{user}/create', 'create')->name('admin.orders.create');
+                    Route::post('/{user}/create', 'store');
+                    Route::get('/{order}/edit', 'edit')->name('admin.orders.order.edit');
+                    Route::patch('/{order}/edit', 'update');
                 });
             });
         });

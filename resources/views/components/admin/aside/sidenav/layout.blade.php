@@ -16,9 +16,10 @@
         <x-admin.aside.sidenav.item name="Dashboard" :href="route('admin')" :is-active="request()->routeIs('admin')"/>
         <x-admin.aside.sidenav.item name="Clients" :href="route('admin.users.layout')"
                                     :is-active="request()->routeIs('admin.users.layout')"/>
-        <x-admin.aside.sidenav.item
-            name="Residence" href="#" click="residenceOpen = !residenceOpen"
-            :is-active="$residenceOpen"/>
+        <x-admin.aside.sidenav.item name="Orders" :href="route('admin.orders.layout')"
+                                    :is-active="request()->routeIs('admin.orders.layout')"/>
+        <x-admin.aside.sidenav.item name="Residence" href="#" click="residenceOpen = !residenceOpen"
+                                    :is-active="$residenceOpen"/>
         <x-admin.aside.sub_sidenav.layout x-show="residenceOpen">
             <x-admin.aside.sub_sidenav.item name="All" :href="route('admin.residences.layout')"
                                             :is-active="$isResidences"/>
@@ -46,7 +47,8 @@
             :href="route('admin.countries-cities')"/>
     </ul>
     <ul class="mb-5" x-data="{ openProfile: false }" @click.outside="openProfile = false">
-        <ul class="selection:bg-transparent flex flex-col items-center justify-center mb-3 space-y-1" x-show="openProfile">
+        <ul class="selection:bg-transparent flex flex-col items-center justify-center mb-3 space-y-1"
+            x-show="openProfile">
             <li class="w-[150px] hover:text-white transition-colors duration-150 bg-blue-400 rounded py-1">
                 <form method="post" action="{{ route('logout') }}">
                     @csrf

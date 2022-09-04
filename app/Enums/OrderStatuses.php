@@ -4,8 +4,8 @@ namespace App\Enums;
 
 enum OrderStatuses: string
 {
-    case Unavailable = 'unavailable';
-    case Processed = 'processed';
+    case Unavailable = 'Unavailable';
+    case Processed = 'Processed';
 
     public static function values(): array
     {
