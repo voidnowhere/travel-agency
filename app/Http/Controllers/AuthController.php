@@ -21,6 +21,7 @@ class AuthController extends Controller
         $credentials = $request->validate([
             'email' => 'required|email:rfc,dns',
             'password' => ['required', Password::defaults()],
+            'g-recaptcha-response' => 'required|captcha',
         ]);
 
         $throttleKey = Str::transliterate($credentials['email'] . '|' . $request->ip());

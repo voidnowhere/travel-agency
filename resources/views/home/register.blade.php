@@ -12,6 +12,7 @@
             <x-form.input_text name="email" type="email" label="Email"/>
             <x-form.input_text name="password" type="password" label="Password"/>
             <x-form.input_text name="password_confirmation" type="password" label="Confirm"/>
+            <x-form.recaptcha/>
             <x-form.submit>Register</x-form.submit>
         </form>
     </div>
