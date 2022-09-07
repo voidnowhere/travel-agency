@@ -26,7 +26,7 @@ class UserOrderController extends Controller
     {
         $order = $request->user()->orders()->create($this->validateOrder($request));
 
-        OrderService::processPrice($order, true);
+        OrderService::processPrice($order);
 
         return UserOrderIframe::iframeCUClose() . '<br>' . UserOrderIframe::reloadParent();
     }

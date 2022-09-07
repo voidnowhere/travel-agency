@@ -30,7 +30,7 @@ class OrderController extends Controller
     {
         $order = $user->orders()->create($this->validateOrder($request));
 
-        OrderService::processPrice($order, true);
+        OrderService::processPrice($order);
 
         return OrderIframe::iframeCUClose() . '<br>' . OrderIframe::reloadParent($user->id);
     }
