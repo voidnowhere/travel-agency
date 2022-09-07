@@ -35,6 +35,7 @@ class RegisterController extends Controller
             'phone_number' => 'required|numeric',
             'email' => 'required|email:rfc,dns|unique:users',
             'password' => ['required', 'confirmed', Password::defaults()],
+            'g-recaptcha-response' => 'required|captcha',
         ]);
 
         $attributes['city_id'] = $attributes['city'];
