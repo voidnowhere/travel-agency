@@ -59,7 +59,7 @@ class CityController extends Controller
 
     public function update(Request $request, City $city)
     {
-        $city->update($this->validateCountry($request, $city));
+        $city->update($this->validateCountry($request, $city, $city->country));
 
         return
             CityIframe::iframeCUClose()
