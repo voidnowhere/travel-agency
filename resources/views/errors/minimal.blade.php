@@ -21,7 +21,7 @@
                 color: #3b82f6;
             }
             .border-b-bg{
-                border-right: 1px solid #3b82f6;
+                border-right: 2px solid #3b82f6;
             }
         </style>
     </head>
