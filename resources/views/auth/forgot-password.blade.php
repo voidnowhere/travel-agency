@@ -8,7 +8,8 @@
               class="px-5 pt-5 pb-2 shadow-lg rounded-lg bg-blue-100 flex flex-col">
             @csrf
             <x-form.input_text name="email" label="Email" type="email"/>
-            <x-form.submit>Reset Password</x-form.submit>
+            <x-form.recaptcha/>
+            <x-form.submit>Email Password Reset Link</x-form.submit>
         </form>
     </div>
 </x-home.layout>
