@@ -28,10 +28,7 @@ class UserOrderController extends Controller
 
         OrderService::processPrice($order, true);
 
-        return
-            UserOrderIframe::iframeCUClose()
-            . '<br>' .
-            UserOrderIframe::reloadParent();
+        return UserOrderIframe::iframeCUClose() . '<br>' . UserOrderIframe::reloadParent();
     }
 
     public function edit(Order $order)
@@ -47,10 +44,7 @@ class UserOrderController extends Controller
 
         OrderService::processPrice($order);
 
-        return
-            UserOrderIframe::iframeCUClose()
-            . '<br>' .
-            UserOrderIframe::reloadParent();
+        return UserOrderIframe::iframeCUClose() . '<br>' . UserOrderIframe::reloadParent();
     }
 
     public function validateOrder(Request $request)

@@ -26,10 +26,7 @@ class HousingFormulaController extends Controller
     {
         HousingFormula::create($this->validateHousingFormula($request));
 
-        return
-            HousingFormulaIframe::iframeCUClose()
-            . '<br>' .
-            HousingFormulaIframe::reloadParent();
+        return HousingFormulaIframe::iframeCUClose() . '<br>' . HousingFormulaIframe::reloadParent();
     }
 
     public function edit(HousingFormula $formula)
@@ -43,10 +40,7 @@ class HousingFormulaController extends Controller
     {
         $formula->update($this->validateHousingFormula($request, $formula));
 
-        return
-            HousingFormulaIframe::iframeCUClose()
-            . '<br>' .
-            HousingFormulaIframe::reloadParent();
+        return HousingFormulaIframe::iframeCUClose() . '<br>' . HousingFormulaIframe::reloadParent();
     }
 
     public function delete(HousingFormula $formula)

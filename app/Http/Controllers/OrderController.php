@@ -32,10 +32,7 @@ class OrderController extends Controller
 
         OrderService::processPrice($order, true);
 
-        return
-            OrderIframe::iframeCUClose()
-            . '<br>' .
-            OrderIframe::reloadParent($user->id);
+        return OrderIframe::iframeCUClose() . '<br>' . OrderIframe::reloadParent($user->id);
     }
 
     public function edit(Order $order)
@@ -51,10 +48,7 @@ class OrderController extends Controller
 
         OrderService::processPrice($order);
 
-        return
-            OrderIframe::iframeCUClose()
-            . '<br>' .
-            OrderIframe::reloadParent($order->user_id);
+        return OrderIframe::iframeCUClose() . '<br>' . OrderIframe::reloadParent($order->user_id);
     }
 
     public function validateOrder(Request $request)
