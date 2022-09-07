@@ -101,7 +101,6 @@ class ResidenceController extends Controller
                 'min:3',
                 'max:50',
             ],
-            'country' => 'required|exists:countries,id',
             'city' => 'required|exists:cities,id',
             'category' => 'required|exists:residence_categories,id',
             'description' => 'required|string',

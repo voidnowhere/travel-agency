@@ -6,6 +6,7 @@ use App\Helpers\JavaScriptHelper;
 use App\Iframes\HousingIframe;
 use App\Models\Housing;
 use App\Models\Residence;
+use App\Rules\AlphaOneSpaceBetween;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -87,12 +88,10 @@ class HousingController extends Controller
                     ->ignore($housing->name ?? '', 'name')
                     ->where('residence_id', $request->input('residence') ?? $housing?->residence_id)
                     ->where('housing_category_id', $request->input('category') ?? $housing?->housing_category_id),
-                'regex:/^[a-zA-Z]+[a-zA-Z\s]*[a-zA-Z]+$/',
+                new AlphaOneSpaceBetween,
                 'min:3',
                 'max:50',
             ],
-            'country' => 'required|exists:countries,id',
-            'city' => 'required|exists:cities,id',
             'residence' => 'required|exists:residences,id',
             'category' => 'required|exists:housing_categories,id',
             'description' => 'required|string',

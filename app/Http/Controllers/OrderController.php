@@ -63,8 +63,7 @@ class OrderController extends Controller
             'from' => 'required|date',
             'to' => 'required|after:from',
             'for' => 'required|int',
-            'city' => 'required|exists:cities,id',
-            'residence' => 'required|exists:residences,id',
+            'residence' => 'required|int',
             'housing' => 'required|exists:housings,id',
             'formula' => 'required|exists:housing_formulas,id',
         ]);

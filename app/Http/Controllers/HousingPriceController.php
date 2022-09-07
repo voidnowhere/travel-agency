@@ -74,9 +74,6 @@ class HousingPriceController extends Controller
     public function validateHousingPrice(Request $request, HousingPrice $price = null)
     {
         $rules = [
-            'country' => 'required|exists:countries,id',
-            'city' => 'required|exists:cities,id',
-            'residence' => 'required|exists:residences,id',
             'housing' => 'required|exists:housings,id',
             'formula' => 'required|exists:housing_formulas,id',
             'type' => [
@@ -102,7 +99,6 @@ class HousingPriceController extends Controller
         foreach (WeekdayHelper::weekdaysNames() as $name) {
             $rules[$name] = 'nullable';
         }
-
 
         $attributes = $request->validate($rules);
 
