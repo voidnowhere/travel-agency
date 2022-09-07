@@ -26,13 +26,14 @@ class UserController extends Controller
         if ($request->has('email')) {
             return User::notAdmin()
                 ->filter(['email' => $request->validate(['email' => 'required|string'])['email']])
+                ->limit(10)
                 ->get(['id', 'last_name', 'first_name', 'email']);
         }
         if ($request->has('last_name')) {
             return User::notAdmin()->filter($request->validate([
                 'last_name' => 'required|string',
                 'first_name' => 'nullable|string',
-            ]))->get(['id', 'last_name', 'first_name', 'email']);
+            ]))->limit(10)->get(['id', 'last_name', 'first_name', 'email']);
         }
         return null;
     }
