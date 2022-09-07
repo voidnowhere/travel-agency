@@ -16,7 +16,10 @@ class PasswordResetController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate(['email' => 'required|email:rfc,dns']);
+        $request->validate([
+            'email' => 'required|email:rfc,dns',
+            'g-recaptcha-response' => 'required|captcha',
+        ]);
 
         $status = Password::sendResetLink(
             $request->only('email')

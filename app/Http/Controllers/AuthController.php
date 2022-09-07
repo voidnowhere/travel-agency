@@ -33,10 +33,7 @@ class AuthController extends Controller
             ])->onlyInput('email');
         }
 
-        if (!Auth::attempt([
-            'email' => $attributes['email'],
-            'password' => $attributes['password'],
-        ])) {
+        if (!Auth::attempt($request->only(['email', 'password']))) {
             RateLimiter::hit($throttleKey);
 
             return back()->withErrors([
