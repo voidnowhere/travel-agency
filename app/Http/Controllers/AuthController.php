@@ -18,13 +18,13 @@ class AuthController extends Controller
 
     public function store(Request $request)
     {
-        $credentials = $request->validate([
+        $attributes = $request->validate([
             'email' => 'required|email:rfc,dns',
             'password' => ['required', Password::defaults()],
             'g-recaptcha-response' => 'required|captcha',
         ]);
 
-        $throttleKey = Str::transliterate($credentials['email'] . '|' . $request->ip());
+        $throttleKey = Str::transliterate($attributes['email'] . '|' . $request->ip());
 
         if (RateLimiter::tooManyAttempts($throttleKey, 5)) {
             $availableIn = RateLimiter::availableIn($throttleKey);
@@ -33,7 +33,10 @@ class AuthController extends Controller
             ])->onlyInput('email');
         }
 
-        if (!Auth::attempt($credentials)) {
+        if (!Auth::attempt([
+            'email' => $attributes['email'],
+            'password' => $attributes['password'],
+        ])) {
             RateLimiter::hit($throttleKey);
 
             return back()->withErrors([
@@ -47,7 +50,7 @@ class AuthController extends Controller
 
         if (Hash::needsRehash($user->password)) {
             $user->update([
-                'password' => $credentials['password'],
+                'password' => $attributes['password'],
             ]);
         }
 
