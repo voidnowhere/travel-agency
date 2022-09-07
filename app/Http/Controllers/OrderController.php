@@ -30,12 +30,9 @@ class OrderController extends Controller
     {
         $order = $user->orders()->create($this->validateOrder($request));
 
-        OrderService::processPrice($order, true);
+        OrderService::processPrice($order);
 
-        return
-            OrderIframe::iframeCUClose()
-            . '<br>' .
-            OrderIframe::reloadParent($user->id);
+        return OrderIframe::iframeCUClose() . '<br>' . OrderIframe::reloadParent($user->id);
     }
 
     public function edit(Order $order)
@@ -51,10 +48,7 @@ class OrderController extends Controller
 
         OrderService::processPrice($order);
 
-        return
-            OrderIframe::iframeCUClose()
-            . '<br>' .
-            OrderIframe::reloadParent($order->user_id);
+        return OrderIframe::iframeCUClose() . '<br>' . OrderIframe::reloadParent($order->user_id);
     }
 
     public function validateOrder(Request $request)
@@ -63,8 +57,7 @@ class OrderController extends Controller
             'from' => 'required|date',
             'to' => 'required|after:from',
             'for' => 'required|int',
-            'city' => 'required|exists:cities,id',
-            'residence' => 'required|exists:residences,id',
+            'residence' => 'required|int',
             'housing' => 'required|exists:housings,id',
             'formula' => 'required|exists:housing_formulas,id',
         ]);

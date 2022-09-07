@@ -44,10 +44,7 @@ class CityController extends Controller
     {
         $country->cities()->create($this->validateCountry($request, country: $country));
 
-        return
-            CityIframe::iframeCUClose()
-            . '<br>' .
-            CityIframe::reloadParent($country->id);
+        return CityIframe::iframeCUClose() . '<br>' . CityIframe::reloadParent($country->id);
     }
 
     public function edit(City $city)
@@ -59,12 +56,9 @@ class CityController extends Controller
 
     public function update(Request $request, City $city)
     {
-        $city->update($this->validateCountry($request, $city));
+        $city->update($this->validateCountry($request, $city, $city->country));
 
-        return
-            CityIframe::iframeCUClose()
-            . '<br>' .
-            CityIframe::reloadParent($city->country_id);
+        return CityIframe::iframeCUClose() . '<br>' . CityIframe::reloadParent($city->country_id);
     }
 
     public function delete(City $city)

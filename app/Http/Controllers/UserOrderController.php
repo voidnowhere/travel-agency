@@ -26,12 +26,9 @@ class UserOrderController extends Controller
     {
         $order = $request->user()->orders()->create($this->validateOrder($request));
 
-        OrderService::processPrice($order, true);
+        OrderService::processPrice($order);
 
-        return
-            UserOrderIframe::iframeCUClose()
-            . '<br>' .
-            UserOrderIframe::reloadParent();
+        return UserOrderIframe::iframeCUClose() . '<br>' . UserOrderIframe::reloadParent();
     }
 
     public function edit(Order $order)
@@ -47,10 +44,7 @@ class UserOrderController extends Controller
 
         OrderService::processPrice($order);
 
-        return
-            UserOrderIframe::iframeCUClose()
-            . '<br>' .
-            UserOrderIframe::reloadParent();
+        return UserOrderIframe::iframeCUClose() . '<br>' . UserOrderIframe::reloadParent();
     }
 
     public function validateOrder(Request $request)
@@ -59,9 +53,7 @@ class UserOrderController extends Controller
             'from' => 'required|date',
             'to' => 'required|after:from',
             'for' => 'required|int',
-            'country' => 'required|exists:countries,id',
-            'city' => 'required|exists:cities,id',
-            'residence' => 'required|exists:residences,id',
+            'residence' => 'required|int',
             'housing' => 'required|exists:housings,id',
             'formula' => 'required|exists:housing_formulas,id',
         ]);

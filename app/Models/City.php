@@ -12,7 +12,6 @@ class City extends Model
     use HasFactory;
 
     protected $fillable = [
-        'country_id',
         'name',
         'order_by',
         'is_active',

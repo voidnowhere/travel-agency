@@ -14,10 +14,10 @@ use Illuminate\Support\Carbon;
 
 class OrderService
 {
-    public static function processPrice(Order $order, bool $isOrderNew = false): bool
+    public static function processPrice(Order $order): bool
     {
         // Clean Order Details
-        if (!$isOrderNew) {
+        if (!$order->wasRecentlyCreated) {
             $order->statusDetails()->delete();
             $order->priceDetails()->delete();
             $order->setToUnavailable();

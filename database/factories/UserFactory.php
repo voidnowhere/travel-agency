@@ -20,15 +20,7 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'city_id' => Country::create([
-                'name' => fake()->country(),
-                'order_by' => fake()->randomDigit(),
-                'is_active' => true,
-            ])->cities()->create([
-                'name' => fake()->city(),
-                'order_by' => fake()->randomDigit(),
-                'is_active' => true,
-            ])->id,
+            'city_id' => 1,
             'last_name' => fake()->lastName(),
             'first_name' => fake()->firstName(),
             'address' => fake()->address(),

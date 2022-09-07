@@ -28,13 +28,9 @@ class CountryController extends Controller
         $country = Country::create($this->validateCountry($request));
 
         return
-            CountryIframe::iframeCUClose()
+            CountryIframe::iframeCUClose() . '<br>' . CountryIframe::reloadParent()
             . '<br>' .
-            CountryIframe::reloadParent()
-            . '<br>' .
-            CountryIframe::parentFocusRow($country->id)
-            . '<br>' .
-            CityIframe::reloadParent($country->id);
+            CountryIframe::parentFocusRow($country->id) . '<br>' . CityIframe::reloadParent($country->id);
     }
 
     public function edit(Country $country)
@@ -53,13 +49,9 @@ class CountryController extends Controller
         $country->update($attributes);
 
         return
-            CountryIframe::iframeCUClose()
+            CountryIframe::iframeCUClose() . '<br>' . CountryIframe::reloadParent()
             . '<br>' .
-            CountryIframe::reloadParent()
-            . '<br>' .
-            CountryIframe::parentFocusRow($country->id)
-            . '<br>' .
-            CityIframe::reloadParent($country->id);
+            CountryIframe::parentFocusRow($country->id) . '<br>' . CityIframe::reloadParent($country->id);
     }
 
     public function delete(Country $country)
@@ -78,10 +70,7 @@ class CountryController extends Controller
         $country->cities()->delete();
         $country->delete();
 
-        return
-            CityIframe::unloadParent()
-            . '<br>' .
-            CountryIframe::reloadParent();
+        return CityIframe::unloadParent() . '<br>' . CountryIframe::reloadParent();
     }
 
     public function validateCountry(Request $request, Country $country = null)

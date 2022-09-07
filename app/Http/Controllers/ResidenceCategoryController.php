@@ -26,10 +26,7 @@ class ResidenceCategoryController extends Controller
     {
         ResidenceCategory::create($this->validateResidenceCategory($request));
 
-        return
-            ResidenceCategoryIframe::iframeCUClose()
-            . '<br>' .
-            ResidenceCategoryIframe::reloadParent();
+        return ResidenceCategoryIframe::iframeCUClose() . '<br>' . ResidenceCategoryIframe::reloadParent();
     }
 
     public function edit(ResidenceCategory $category)
@@ -43,10 +40,7 @@ class ResidenceCategoryController extends Controller
     {
         $category->update($this->validateResidenceCategory($request, $category));
 
-        return
-            ResidenceCategoryIframe::iframeCUClose()
-            . '<br>' .
-            ResidenceCategoryIframe::reloadParent();
+        return ResidenceCategoryIframe::iframeCUClose() . '<br>' . ResidenceCategoryIframe::reloadParent();
     }
 
     public function delete(ResidenceCategory $category)

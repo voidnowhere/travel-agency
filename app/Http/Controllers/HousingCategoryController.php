@@ -26,10 +26,7 @@ class HousingCategoryController extends Controller
     {
         HousingCategory::create($this->validateHousingCategory($request));
 
-        return
-            HousingCategoryIframe::iframeCUClose()
-            . '<br>' .
-            HousingCategoryIframe::reloadParent();
+        return HousingCategoryIframe::iframeCUClose() . '<br>' . HousingCategoryIframe::reloadParent();
     }
 
     public function edit(HousingCategory $category)
@@ -43,10 +40,7 @@ class HousingCategoryController extends Controller
     {
         $category->update($this->validateHousingCategory($request, $category));
 
-        return
-            HousingCategoryIframe::iframeCUClose()
-            . '<br>' .
-            HousingCategoryIframe::reloadParent();
+        return HousingCategoryIframe::iframeCUClose() . '<br>' . HousingCategoryIframe::reloadParent();
     }
 
     public function delete(HousingCategory $category)
