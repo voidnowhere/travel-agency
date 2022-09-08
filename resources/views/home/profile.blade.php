@@ -11,6 +11,11 @@
             <x-form.input_text name="phone_number" type="text" label="Phone number" :value="$user->phone_number"/>
             <x-form.input_text name="email" type="email" label="Email" :value="$user->email"/>
             <x-form.input_text name="password" type="password" label="Password"/>
+            <div class="text-center mt-1">
+                <a href="{{ route('password-change') }}" class="underline text-gray-600 hover:text-gray-900">
+                    Change password?
+                </a>
+            </div>
             <x-form.submit>Edit</x-form.submit>
         </form>
     </div>
