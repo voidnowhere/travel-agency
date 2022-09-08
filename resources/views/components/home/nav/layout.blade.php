@@ -42,9 +42,6 @@
                     <li class="w-[150px] hover:text-white transition-colors duration-150 bg-blue-400 rounded px-2 py-1">
                         <a href="{{ route('user-profile') }}" class="block text-center w-full">Profile</a>
                     </li>
-                    <li class="w-[150px] hover:text-white transition-colors duration-150 bg-blue-400 rounded px-2 py-1">
-                        <a href="{{ route('password-change') }}" class="block text-center w-full">Change password</a>
-                    </li>
                 </ul>
             </ul>
         @else
