@@ -41,9 +41,17 @@ class AuthController extends Controller
             ])->onlyInput('email');
         }
 
-        RateLimiter::clear($throttleKey);
-
         $user = Auth::user();
+
+        if (!$user->is_active) {
+            $this->logout($request);
+
+            return back()
+                ->with('error', 'Please contact the administration for further information!')
+                ->onlyInput('email');
+        }
+
+        RateLimiter::clear($throttleKey);
 
         if (Hash::needsRehash($user->password)) {
             $user->update([
@@ -66,12 +74,17 @@ class AuthController extends Controller
 
     public function destroy(Request $request)
     {
+        $this->logout($request);
+
+        return redirect()->route('home')->with('success', 'Successful logout.');
+    }
+
+    protected function logout(Request $request)
+    {
         Auth::logout();
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
-
-        return redirect()->route('home')->with('success', 'Successful logout.');
     }
 }

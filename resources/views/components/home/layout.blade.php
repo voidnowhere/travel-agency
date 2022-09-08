@@ -34,6 +34,7 @@
         {{ $slot }}
     </main>
 </div>
-<x-notify.success/>
+<x-notiflix.notify.success/>
+<x-notiflix.report.error/>
 </body>
 </html>
