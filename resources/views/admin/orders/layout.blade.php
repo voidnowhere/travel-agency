@@ -116,7 +116,7 @@
                 if (user_id !== '') {
                     $('#{{ \App\Iframes\OrderIframe::$parentIframeId }}').attr('src', url + `/${user_id}`);
                 } else {
-                    Notiflix.Report.failure(
+                    Report.failure(
                         'Error',
                         'Fill in email and full name',
                         'Okay',
