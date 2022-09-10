@@ -31,7 +31,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', fn() => view('home.index'))->name('home');
+Route::view('/', 'home.index')->name('home');
 
 Route::controller(RegisterController::class)->group(function () {
     Route::middleware('guest')->group(function () {
@@ -84,7 +84,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/housings/get', [HousingController::class, 'getActive'])->name('housings.get');
         Route::middleware('can:user')->group(function () {
             Route::prefix('/orders')->group(function () {
-                Route::get('', fn() => view('home.orders.layout'))->name('orders.layout');
+                Route::view('', 'home.orders.layout')->name('orders.layout');
                 Route::controller(UserOrderController::class)->group(function () {
                     Route::get('/all', 'index')->name('orders');
                     Route::get('/create', 'create')->name('orders.create');
@@ -96,9 +96,9 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::middleware('can:admin')->group(function () {
-            Route::get('/admin', fn() => view('admin.dashboard.index'))->name('admin');
+            Route::view('/admin', 'admin.dashboard.index')->name('admin');
 
-            Route::get('/admin/countries-cities', fn() => view('admin.countries_cities.index'))->name('admin.countries-cities');
+            Route::view('/admin/countries-cities', 'admin.countries_cities.index')->name('admin.countries-cities');
 
             Route::prefix('/admin/countries')->group(function () {
                 Route::controller(CountryController::class)->group(function () {
@@ -126,7 +126,7 @@ Route::middleware('auth')->group(function () {
             });
 
             Route::prefix('/admin/residences')->group(function () {
-                Route::get('', fn() => view('admin.residences.layout'))->name('admin.residences.layout');
+                Route::view('', 'admin.residences.layout')->name('admin.residences.layout');
                 Route::controller(ResidenceController::class)->group(function () {
                     Route::get('/all', 'index')->name('admin.residences');
                     Route::post('/get', 'get')->name('admin.residences.get');
@@ -140,7 +140,7 @@ Route::middleware('auth')->group(function () {
             });
 
             Route::prefix('/admin/residence/categories')->group(function () {
-                Route::get('', fn() => view('admin.residence_categories.layout'))->name('admin.residence.categories.layout');
+                Route::view('', 'admin.residence_categories.layout')->name('admin.residence.categories.layout');
                 Route::controller(ResidenceCategoryController::class)->group(function () {
                     Route::get('/all', 'index')->name('admin.residence.categories');
                     Route::get('/create', 'create')->name('admin.residence.categories.create');
@@ -153,7 +153,7 @@ Route::middleware('auth')->group(function () {
             });
 
             Route::prefix('/admin/housings')->group(function () {
-                Route::get('', fn() => view('admin.housings.layout'))->name('admin.housings.layout');
+                Route::view('', 'admin.housings.layout')->name('admin.housings.layout');
                 Route::controller(HousingController::class)->group(function () {
                     Route::get('/all', 'index')->name('admin.housings');
                     Route::post('/get', 'get')->name('admin.housings.get');
@@ -167,7 +167,7 @@ Route::middleware('auth')->group(function () {
             });
 
             Route::prefix('/admin/housing/categories')->group(function () {
-                Route::get('', fn() => view('admin.housing_categories.layout'))->name('admin.housing.categories.layout');
+                Route::view('', 'admin.housing_categories.layout')->name('admin.housing.categories.layout');
                 Route::controller(HousingCategoryController::class)->group(function () {
                     Route::get('/all', 'index')->name('admin.housing.categories');
                     Route::get('/create', 'create')->name('admin.housing.categories.create');
@@ -180,7 +180,7 @@ Route::middleware('auth')->group(function () {
             });
 
             Route::prefix('/admin/housing/formulas')->group(function () {
-                Route::get('', fn() => view('admin.housing_formulas.layout'))->name('admin.housing.formulas.layout');
+                Route::view('', 'admin.housing_formulas.layout')->name('admin.housing.formulas.layout');
                 Route::controller(HousingFormulaController::class)->group(function () {
                     Route::get('/all', 'index')->name('admin.housing.formulas');
                     Route::get('/create', 'create')->name('admin.housing.formulas.create');
@@ -193,7 +193,7 @@ Route::middleware('auth')->group(function () {
             });
 
             Route::prefix('/admin/housing/prices')->group(function () {
-                Route::get('', fn() => view('admin.housing_prices.layout'))->name('admin.housing.prices.layout');
+                Route::view('', 'admin.housing_prices.layout')->name('admin.housing.prices.layout');
                 Route::controller(HousingPriceController::class)->group(function () {
                     Route::get('/all', 'index')->name('admin.housing.prices');
                     Route::get('/create', 'create')->name('admin.housing.prices.create');
@@ -206,7 +206,7 @@ Route::middleware('auth')->group(function () {
             });
 
             Route::prefix('/admin/seasons')->group(function () {
-                Route::get('', fn() => view('admin.seasons.layout'))->name('admin.seasons.layout');
+                Route::view('', 'admin.seasons.layout')->name('admin.seasons.layout');
                 Route::controller(SeasonController::class)->group(function () {
                     Route::get('/all', 'index')->name('admin.seasons');
                     Route::get('/create', 'create')->name('admin.seasons.create');
@@ -219,7 +219,7 @@ Route::middleware('auth')->group(function () {
             });
 
             Route::prefix('/admin/users')->group(function () {
-                Route::get('', fn() => view('admin.users.layout'))->name('admin.users.layout');
+                Route::view('', 'admin.users.layout')->name('admin.users.layout');
                 Route::controller(UserController::class)->group(function () {
                     Route::get('/all', 'index')->name('admin.users');
                     Route::post('/get', 'get')->name('admin.users.get');
@@ -232,7 +232,7 @@ Route::middleware('auth')->group(function () {
             });
 
             Route::prefix('/admin/orders')->group(function () {
-                Route::get('', fn() => view('admin.orders.layout'))->name('admin.orders.layout');
+                Route::view('', 'admin.orders.layout')->name('admin.orders.layout');
                 Route::controller(OrderController::class)->group(function () {
                     Route::get('/{user?}', 'index')->name('admin.orders');
                     Route::get('/{user}/create', 'create')->name('admin.orders.create');
