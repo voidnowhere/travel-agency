@@ -14,10 +14,10 @@
             @foreach($values as $val)
                 @if($areValuesArray)
                     <option
-                        value="{{ $val }}" @selected($returnOld && (old($name) ?? $value) == $val)>{{ ucfirst($val) }}</option>
+                        value="{{ $val }}" @selected($returnOld && old($name, $value) == $val)>{{ ucfirst($val) }}</option>
                 @else
                     <option
-                        value="{{ $val->id }}" @selected($returnOld && (old($name) ?? $value) == $val->id)>{{ $val->name }}</option>
+                        value="{{ $val->id }}" @selected($returnOld && old($name, $value) == $val->id)>{{ $val->name }}</option>
                 @endif
             @endforeach
         </select>
