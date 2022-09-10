@@ -1,32 +1,14 @@
 @props(['loadJquery' => false, 'loadJqueryUI' => false])
-    <!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cynab Trips</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     @vite(['resources/css/app.css', 'resources/js/all.js'])
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.10.3/cdn.min.js"
-            integrity="sha512-P0Ms+SM3w8aSbPa5U/nFoprxlUzG2FSz9h/A+2xhhE1hcH6RmGYK3dImFCvcSYuioM3UbbAtMbAopAuHLr94pA=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdn.jsdelivr.net/npm/notiflix@3.2.5/dist/notiflix-aio-3.2.5.min.js"
-            integrity="sha256-LQj8h+SKqntnw8M/FP7QM+3dTqgHvB1JzZMVPD868Rg=" crossorigin="anonymous"></script>
-    @if($loadJquery)
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-        <script src="https://code.jquery.com/jquery-3.6.1.min.js"
-                integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-        <script>
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-        </script>
-    @endif
-    @if($loadJqueryUI && $loadJquery)
-        <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"
-                integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0=" crossorigin="anonymous"></script>
+    @if($loadJqueryUI)
+        @vite('resources/css/jquery-ui.css')
     @endif
 </head>
 <body class="bg-blue-100">
@@ -43,6 +25,14 @@
         {{ $slot }}
     </main>
 </div>
+@vite(['resources/js/alpinejs.js', 'resources/js/notiflix.js'])
 <x-notiflix.notify.success/>
+@if($loadJquery)
+    @vite('resources/js/jquery.js')
+    <x-js.ajax_setup_csrf_token/>
+    @if($loadJqueryUI)
+        @vite('resources/js/jquery-ui.js')
+    @endif
+@endif
 </body>
 </html>

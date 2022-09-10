@@ -5,7 +5,7 @@
         <textarea name="{{ $name }}"
                   @required($required)
                   rows="4" cols="69"
-                  class="p-1 ml-1 bg-gray-100 rounded-lg focus:bg-white grow">{{ old($name) ?? $value }}</textarea>
+                  class="p-1 ml-1 bg-gray-100 rounded-lg focus:bg-white grow">{{ old($name, $value) }}</textarea>
     </div>
     <x-form.input_error :name="$name"/>
 </div>
