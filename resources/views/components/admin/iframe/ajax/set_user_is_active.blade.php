@@ -1,7 +1,7 @@
 <script>
     function setUserIsActive(id, checkbox) {
         let checked = checkbox.checked;
-        Notiflix.Confirm.show(
+        Confirm.show(
             'Confirmation',
             'Do you want to ' + ((checked) ? 'activate' : 'deactivate') + ' client account?',
             'Yes',
@@ -13,7 +13,7 @@
                     data: {'user_id': id},
                     dataType: 'json',
                     success: function (response) {
-                        Notiflix.Report.success(
+                        Report.success(
                             'Report',
                             'Client account ' + ((response) ? 'activated' : 'deactivated') + ' successfully.',
                             'Okay',

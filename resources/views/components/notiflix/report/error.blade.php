@@ -1,7 +1,7 @@
 @if(session('error'))
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            Notiflix.Report.failure(
+            Report.failure(
                 'Error',
                 '{{ session('error') }}',
                 'Okay',
