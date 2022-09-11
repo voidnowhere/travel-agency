@@ -60,7 +60,7 @@ Route::controller(PasswordResetController::class)->group(function () {
 // Maybe I should separate this route to set one for registration with throttle and another one for orders without throttle
 Route::post('/cities/get', [CityController::class, 'getActive'])->name('cities.get');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::controller(UserProfileController::class)->group(function () {
         Route::get('/profile', 'index')->name('user-profile');
         Route::post('/profile', 'update');
