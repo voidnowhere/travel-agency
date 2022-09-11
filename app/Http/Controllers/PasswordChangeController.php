@@ -17,9 +17,13 @@ class PasswordChangeController extends Controller
     {
         $user = Auth::user();
 
+        $newPassword = $this->validatePassword($request);
+
         $user->update([
-            'password' => $this->validatePassword($request),
+            'password' => $newPassword,
         ]);
+
+        Auth::logoutOtherDevices($newPassword);
 
         if ($user->is_admin) {
             return redirect()->route('admin')->with('success', 'Password changed successfully.');
