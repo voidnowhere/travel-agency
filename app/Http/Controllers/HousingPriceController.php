@@ -68,10 +68,10 @@ class HousingPriceController extends Controller
     {
         $price->delete();
 
-        return HousingPriceIframe::reloadParent();
+        return HousingPriceIframe::hideIframeD() . '<br>' . HousingPriceIframe::reloadParent();
     }
 
-    public function validateHousingPrice(Request $request, HousingPrice $price = null)
+    protected function validateHousingPrice(Request $request, HousingPrice $price = null)
     {
         $rules = [
             'housing' => 'required|exists:housings,id',

@@ -51,7 +51,7 @@ class OrderController extends Controller
         return OrderIframe::iframeCUClose() . '<br>' . OrderIframe::reloadParent($order->user_id);
     }
 
-    public function validateOrder(Request $request)
+    protected function validateOrder(Request $request)
     {
         $attributes = $request->validate([
             'from' => 'required|date',

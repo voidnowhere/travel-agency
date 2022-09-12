@@ -31,4 +31,12 @@ class CityIframe
         $script .= '</script>';
         return $script;
     }
+
+    public static function hideIframeD()
+    {
+        $script = '<script>';
+        $script .= "parent.document.getElementById('" . static::$iframeDId . "').classList.add('hidden')";
+        $script .= '</script>';
+        return $script;
+    }
 }

@@ -1,10 +1,22 @@
-@props(['message'])
+@props(['message', 'iframeDId'])
 <script>
-    function confirmDeleteSubmit(event) {
-        if (!confirm('Do you really want to delete ' + '{{ $message }}' + '?')) {
-            event.preventDefault();
-        }
-    }
-
-    document.querySelector('button').click();
+    let iframeD = parent.document.getElementById('{{ $iframeDId }}');
+    iframeD.classList.remove('hidden');
+    document.addEventListener('DOMContentLoaded', function () {
+        Confirm.show(
+            'Confirm',
+            'Do you really want to delete ' + '{{ $message }}' + '?',
+            'Yes',
+            'No',
+            () => {
+                document.querySelector('button').click();
+            },
+            () => {
+                iframeD.classList.add('hidden');
+            },
+            {
+                backOverlay: false,
+            },
+        );
+    });
 </script>

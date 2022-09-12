@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\JavaScriptHelper;
+use App\Helpers\NotiflixHelper;
 use App\Iframes\HousingIframe;
 use App\Models\Housing;
 use App\Models\Residence;
@@ -71,15 +71,19 @@ class HousingController extends Controller
     public function destroy(Housing $housing)
     {
         if ($housing->prices()->count() > 0) {
-            return JavaScriptHelper::alert("You can't delete $housing->name housing it has linked prices!");
+            return NotiflixHelper::report(
+                "You can\'t delete $housing->name housing it has linked prices!",
+                'failure',
+                HousingIframe::$iframeDId,
+            );
         }
 
         $housing->delete();
 
-        return HousingIframe::reloadParent();
+        return HousingIframe::hideIframeD() . '<br>' . HousingIframe::reloadParent();
     }
 
-    public function validateHousing(Request $request, Housing $housing = null)
+    protected function validateHousing(Request $request, Housing $housing = null)
     {
         $attributes = $request->validate([
             'name' => [
