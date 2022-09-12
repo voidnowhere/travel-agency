@@ -71,7 +71,7 @@ class SeasonController extends Controller
         return SeasonIframe::reloadParent();
     }
 
-    public function validateSeason(Request $request, Season $season = null)
+    protected function validateSeason(Request $request, Season $season = null)
     {
         $attributes = $request->validate([
             'from' => 'required|date',

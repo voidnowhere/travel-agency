@@ -47,7 +47,7 @@ class UserOrderController extends Controller
         return UserOrderIframe::iframeCUClose() . '<br>' . UserOrderIframe::reloadParent();
     }
 
-    public function validateOrder(Request $request)
+    protected function validateOrder(Request $request)
     {
         $attributes = $request->validate([
             'from' => 'required|date',

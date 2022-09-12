@@ -79,7 +79,7 @@ class CityController extends Controller
         return CityIframe::reloadParent($city->country_id);
     }
 
-    public function validateCountry(Request $request, City $city = null, Country $country = null)
+    protected function validateCountry(Request $request, City $city = null, Country $country = null)
     {
         $attributes = $request->validate([
             'name' => [

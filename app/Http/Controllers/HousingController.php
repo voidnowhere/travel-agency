@@ -79,7 +79,7 @@ class HousingController extends Controller
         return HousingIframe::reloadParent();
     }
 
-    public function validateHousing(Request $request, Housing $housing = null)
+    protected function validateHousing(Request $request, Housing $housing = null)
     {
         $attributes = $request->validate([
             'name' => [

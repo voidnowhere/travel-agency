@@ -73,7 +73,7 @@ class CountryController extends Controller
         return CityIframe::unloadParent() . '<br>' . CountryIframe::reloadParent();
     }
 
-    public function validateCountry(Request $request, Country $country = null)
+    protected function validateCountry(Request $request, Country $country = null)
     {
         $attributes = $request->validate([
             'name' => [

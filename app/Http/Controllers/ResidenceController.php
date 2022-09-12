@@ -89,7 +89,7 @@ class ResidenceController extends Controller
         return ResidenceIframe::reloadParent();
     }
 
-    public function validateResidence(Request $request, Residence $residence = null)
+    protected function validateResidence(Request $request, Residence $residence = null)
     {
         $attributes = $request->validate([
             'name' => [
