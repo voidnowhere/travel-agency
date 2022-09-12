@@ -3,5 +3,5 @@
             src="{{ route('admin.housing.formulas') }}"></iframe>
     <x-admin.iframe.cu.layout :id="\App\Iframes\HousingFormulaIframe::$iframeCUId"
                               width-class="w-96" height-class="h-96"/>
-    <iframe id="{{ \App\Iframes\HousingFormulaIframe::$iframeDId }}" class="hidden"></iframe>
+    <x-admin.iframe.d.layout :id="\App\Iframes\HousingFormulaIframe::$iframeDId"/>
 </x-admin.layout.management>

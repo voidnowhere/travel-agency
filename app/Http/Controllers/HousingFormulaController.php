@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\JavaScriptHelper;
+use App\Helpers\NotiflixHelper;
 use App\Iframes\HousingFormulaIframe;
 use App\Models\HousingFormula;
 use Illuminate\Http\Request;
@@ -53,12 +53,16 @@ class HousingFormulaController extends Controller
     public function destroy(HousingFormula $formula)
     {
         if ($formula->prices()->count() > 0) {
-            return JavaScriptHelper::alert("You can't delete $formula->name formula it has linked prices!");
+            return NotiflixHelper::report(
+                "You can\'t delete $formula->name formula it has linked prices!",
+                'failure',
+                HousingFormulaIframe::$iframeDId,
+            );
         }
 
         $formula->delete();
 
-        return HousingFormulaIframe::reloadParent();
+        return HousingFormulaIframe::hideIframeD() . '<br>' . HousingFormulaIframe::reloadParent();
     }
 
     protected function validateHousingFormula(Request $request, HousingFormula $formula = null)

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\JavaScriptHelper;
+use App\Helpers\NotiflixHelper;
 use App\Iframes\ResidenceIframe;
 use App\Models\City;
 use App\Models\Residence;
@@ -81,12 +81,16 @@ class ResidenceController extends Controller
     public function destroy(Residence $residence)
     {
         if ($residence->housings()->count() > 0) {
-            return JavaScriptHelper::alert("You can't delete $residence->name residence it has linked housings!");
+            return NotiflixHelper::report(
+                "You can\'t delete $residence->name residence it has linked housings!",
+                'failure',
+                ResidenceIframe::$iframeDId,
+            );
         }
 
         $residence->delete();
 
-        return ResidenceIframe::reloadParent();
+        return ResidenceIframe::hideIframeD() . '<br>' . ResidenceIframe::reloadParent();
     }
 
     protected function validateResidence(Request $request, Residence $residence = null)

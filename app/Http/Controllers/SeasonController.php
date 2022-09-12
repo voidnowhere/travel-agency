@@ -60,7 +60,7 @@ class SeasonController extends Controller
     public function delete(Season $season)
     {
         return view('admin.seasons.delete', [
-            'seasonDetails' => "$season->date_from to $season->date_to $season->type_SHML",
+            'seasonDetails' => $season->date_from->toDateString() . ' to ' . $season->date_to->toDateString() . ' ' . $season->type_SHML,
         ]);
     }
 
@@ -68,7 +68,7 @@ class SeasonController extends Controller
     {
         $season->delete();
 
-        return SeasonIframe::reloadParent();
+        return SeasonIframe::hideIframeD() . '<br>' . SeasonIframe::reloadParent();
     }
 
     protected function validateSeason(Request $request, Season $season = null)

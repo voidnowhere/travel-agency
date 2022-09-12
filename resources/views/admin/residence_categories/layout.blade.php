@@ -3,5 +3,5 @@
             src="{{ route('admin.residence.categories') }}"></iframe>
     <x-admin.iframe.cu.layout :id="\App\Iframes\ResidenceCategoryIframe::$iframeCUId"
                               width-class="w-96" height-class="h-96"/>
-    <iframe id="{{ \App\Iframes\ResidenceCategoryIframe::$iframeDId }}" class="hidden"></iframe>
+    <x-admin.iframe.d.layout :id="\App\Iframes\ResidenceCategoryIframe::$iframeDId"/>
 </x-admin.layout.management>

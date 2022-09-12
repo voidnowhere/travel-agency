@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\JavaScriptHelper;
+use App\Helpers\NotiflixHelper;
 use App\Iframes\CityIframe;
 use App\Models\City;
 use App\Models\Country;
@@ -71,12 +71,16 @@ class CityController extends Controller
     public function destroy(City $city)
     {
         if ($city->residences()->count() > 0) {
-            return JavaScriptHelper::alert("You can't delete $city->name city it has linked residences!");
+            return NotiflixHelper::report(
+                "You can\'t delete $city->name city it has linked residences!",
+                'failure',
+                CityIframe::$iframeDId,
+            );
         }
 
         $city->delete();
 
-        return CityIframe::reloadParent($city->country_id);
+        return CityIframe::hideIframeD() . '<br>' . CityIframe::reloadParent($city->country_id);
     }
 
     protected function validateCountry(Request $request, City $city = null, Country $country = null)

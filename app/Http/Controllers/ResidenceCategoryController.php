@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\JavaScriptHelper;
+use App\Helpers\NotiflixHelper;
 use App\Iframes\ResidenceCategoryIframe;
 use App\Models\ResidenceCategory;
 use \Illuminate\Http\Request;
@@ -53,12 +53,16 @@ class ResidenceCategoryController extends Controller
     public function destroy(ResidenceCategory $category)
     {
         if ($category->residences()->count() > 0) {
-            return JavaScriptHelper::alert("You can't delete $category->name category it has linked residences!");
+            return NotiflixHelper::report(
+                "You can\'t delete $category->name category it has linked residences!",
+                'failure',
+                ResidenceCategoryIframe::$iframeDId,
+            );
         }
 
         $category->delete();
 
-        return ResidenceCategoryIframe::reloadParent();
+        return ResidenceCategoryIframe::hideIframeD() . '<br>' . ResidenceCategoryIframe::reloadParent();
     }
 
     protected function validateResidenceCategory(Request $request, ResidenceCategory $category = null)
