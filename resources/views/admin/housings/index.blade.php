@@ -20,7 +20,7 @@
                     <td class="py-3 px-6 text-center">{{ $housing->for_max }}</td>
                     <td class="py-3 px-6 text-center">{{ $housing->order_by }}</td>
                     <td class="py-3 px-6">
-                        <div class="flex">
+                        <div class="flex justify-center">
                             <x-svg.crud.edit
                                 :iframe-c-u-id="\App\Iframes\HousingIframe::$iframeCUId"
                                 :route-u="route('admin.housings.housing.edit', ['housing' => $housing->id])"/>
