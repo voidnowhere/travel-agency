@@ -9,7 +9,6 @@
                 <x-form.label label="Email"/>
                 <x-form.input_text_only type="email" name="email"/>
             </div>
-            <x-form.submit on-click="search()">Search</x-form.submit>
         </div>
         <script>
             function search() {
