@@ -17,7 +17,6 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('residence_id')->constrained();
             $table->foreignId('housing_id')->constrained();
             $table->foreignId('housing_formula_id')->constrained();
             $table->date('date_from');

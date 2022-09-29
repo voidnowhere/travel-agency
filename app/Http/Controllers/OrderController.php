@@ -15,9 +15,10 @@ class OrderController extends Controller
         return view('admin.orders.index', [
             'user_id' => $user->id,
             'orders' => $user->orders()
+                ->latest()
                 ->withSum('priceDetails', 'price')
-                ->with(['residence:id,name', 'housing:id,name,for_max', 'formula:id,name'])
-                ->get(['id', 'residence_id', 'housing_id', 'housing_formula_id', 'date_from', 'date_to', 'for_count', 'status']),
+                ->with(['housing:id,residence_id,name,for_max', 'housing.residence:id,name', 'formula:id,name'])
+                ->get(['id', 'housing_id', 'housing_formula_id', 'date_from', 'date_to', 'for_count', 'status']),
         ]);
     }
 
@@ -57,13 +58,11 @@ class OrderController extends Controller
             'from' => 'required|date',
             'to' => 'required|after:from',
             'for' => 'required|int',
-            'residence' => 'required|int',
             'housing' => 'required|exists:housings,id',
             'formula' => 'required|exists:housing_formulas,id',
         ]);
 
         return [
-            'residence_id' => $attributes['residence'],
             'housing_id' => $attributes['housing'],
             'housing_formula_id' => $attributes['formula'],
             'date_from' => $attributes['from'],

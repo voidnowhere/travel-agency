@@ -17,7 +17,7 @@
                     @else
                         <td class="text-center py-3 px-6" colspan="2">{{ $order->status }}</td>
                     @endif
-                    <td class="text-center py-3 px-6">{{ $order->residence->name }}</td>
+                    <td class="text-center py-3 px-6">{{ $order->housing->residence->name }}</td>
                     <td class="text-center py-3 px-6">{{ $order->housing->name }}</td>
                     <td class="text-center py-3 px-6">{{ $order->housing->for_max }}</td>
                     <td class="text-center py-3 px-6">{{ $order->formula->name }}</td>

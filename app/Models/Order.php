@@ -13,7 +13,6 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable = [
-        'residence_id',
         'housing_id',
         'housing_formula_id',
         'date_from',
@@ -26,11 +25,6 @@ class Order extends Model
         'date_from' => 'date',
         'date_to' => 'date',
     ];
-
-    public function residence(): BelongsTo
-    {
-        return $this->belongsTo(Residence::class);
-    }
 
     public function housing(): BelongsTo
     {
