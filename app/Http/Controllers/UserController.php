@@ -12,12 +12,13 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         return view('admin.users.index', [
             'users' => User::notAdmin()
+                ->filter($request->only(['last_name', 'first_name', 'email']))
                 ->with(['city:id,country_id,name', 'city.country:id,name'])
-                ->get(['id', 'city_id', 'first_name', 'last_name', 'email', 'phone_number', 'address', 'is_active']),
+                ->simplePaginate(10, ['id', 'city_id', 'first_name', 'last_name', 'email', 'phone_number', 'address', 'is_active']),
         ]);
     }
 
