@@ -23,7 +23,7 @@
                             <div class="relative">
                                 <span>{{ $order->status }}</span>
                                 <span x-show="open" style="display: none;"
-                                      class="mt-12 py-2 w-[400px] border-2 border-blue-400 rounded-xl bg-blue-100 shadow-lg absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                      class="mt-3 py-2 w-[400px] border-2 border-blue-400 rounded-xl bg-blue-100 shadow-lg absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                                     {{ $order->statusDetails->first()->description }}
                                 </span>
                             </div>
