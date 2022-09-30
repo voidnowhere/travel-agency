@@ -12,6 +12,8 @@ class OrderPriceDetail extends Model
     protected $fillable = [
         'order_id',
         'type',
+        'date_from',
+        'date_to',
         'price',
     ];
 }

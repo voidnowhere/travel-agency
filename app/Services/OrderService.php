@@ -151,6 +151,8 @@ class OrderService
         OrderPriceDetail::create([
             'order_id' => $orderId,
             'type' => "$seasonType Season",
+            'date_from' => $seasonDateFromStartByOrder,
+            'date_to' => $seasonDateToEndByOrder,
             'price' => $orderPrice,
         ]);
 

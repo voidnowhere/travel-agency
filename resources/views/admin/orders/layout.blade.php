@@ -128,4 +128,6 @@
     </x-slot:search>
     <iframe id="{{ \App\Iframes\OrderIframe::$parentIframeId }}" class="w-full"></iframe>
     <x-admin.iframe.cu.layout :id="\App\Iframes\OrderIframe::$iframeCUId" width-class="w-2/3" height-class="h-2/3"/>
+    <iframe id="{{ \App\Iframes\OrderIframe::$priceDetailIframeId }}"
+            class="absolute w-5/12 h-2/4 hidden top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></iframe>
 </x-admin.layout.management>

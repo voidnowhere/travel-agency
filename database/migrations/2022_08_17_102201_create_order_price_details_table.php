@@ -18,6 +18,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('order_id')->constrained();
             $table->string('type');
+            $table->date('date_from');
+            $table->date('date_to');
             $table->unsignedFloat('price');
             $table->timestamps();
         });

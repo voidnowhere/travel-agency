@@ -17,6 +17,13 @@ class UserOrderController extends Controller
         ]);
     }
 
+    public function details(Order $order)
+    {
+        return view('admin.orders.details', [
+            'priceDetails' => $order->priceDetails()->get(['type', 'date_from', 'date_to', 'price'])
+        ]);
+    }
+
     public function create()
     {
         return view('home.orders.create');

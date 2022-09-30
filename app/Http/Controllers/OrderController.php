@@ -17,8 +17,15 @@ class OrderController extends Controller
             'orders' => $user->orders()
                 ->latest()
                 ->withSum('priceDetails', 'price')
-                ->with(['housing:id,residence_id,name,for_max', 'housing.residence:id,name', 'formula:id,name'])
+                ->with(['statusDetails:order_id,description', 'housing:id,residence_id,name,for_max', 'housing.residence:id,name', 'formula:id,name'])
                 ->get(['id', 'housing_id', 'housing_formula_id', 'date_from', 'date_to', 'for_count', 'status']),
+        ]);
+    }
+
+    public function details(Order $order)
+    {
+        return view('admin.orders.details', [
+            'priceDetails' => $order->priceDetails()->get(['type', 'date_from', 'date_to', 'price'])
         ]);
     }
 

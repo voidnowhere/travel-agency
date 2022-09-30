@@ -12,9 +12,14 @@
                         <span>{{ $order->date_from->toDateString() }}</span>
                         <span>{{ $order->date_to->toDateString() }}</span>
                     </td>
-                    <td class="text-center py-3 px-6">
-                        {{ (($order->status === \App\Enums\OrderStatuses::Unavailable->value) ? $order->status : $order->price_details_sum_price) }}
-                    </td>
+                    @if($order->status === \App\Enums\OrderStatuses::Unavailable->value)
+                        <td class="text-center py-3 px-6">{{ $order->status }}</td>
+                    @else
+                        <td class="text-center py-3 px-6 cursor-pointer"
+                            onclick="showCUIframe('{{ \App\Iframes\OrderIframe::$priceDetailIframeId }}', '{{ route('orders.order.details', ['order' => $order]) }}')">
+                            <span class="border-b-blue-400 border-b-2">{{ $order->price_details_sum_price }}</span>
+                        </td>
+                    @endif
                     <td class="w-[37px]">
                         <x-svg.crud.edit
                             :iframe-c-u-id="\App\Iframes\UserOrderIframe::$iframeCUId"

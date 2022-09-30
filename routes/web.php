@@ -91,6 +91,7 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
                     Route::post('/create', 'store');
                     Route::get('/{order}/edit', 'edit')->name('orders.order.edit');
                     Route::patch('/{order}/edit', 'update');
+                    Route::get('/{order}/details', 'details')->name('orders.order.details');
                 });
             });
         });
@@ -239,6 +240,7 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
                     Route::post('/{user}/create', 'store');
                     Route::get('/{order}/edit', 'edit')->name('admin.orders.order.edit');
                     Route::patch('/{order}/edit', 'update');
+                    Route::get('/{order}/details', 'details')->name('admin.orders.order.details');
                 });
             });
         });
