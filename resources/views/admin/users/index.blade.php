@@ -27,6 +27,9 @@
             @endforeach
         </x-table.tbody>
     </x-table.layout>
+    <div class="mt-1">
+        {{ $users->onEachSide(1)->links() }}
+    </div>
     <x-admin.iframe.js.show_cu_iframe/>
     <x-admin.iframe.ajax.set_user_is_active/>
 </x-admin.iframe.layout>

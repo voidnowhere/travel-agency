@@ -37,7 +37,8 @@ class OrderService
             return false;
         }
 
-        $orderHousing = $order->housing()->get(['id', 'for_max'])->first();
+        $orderHousing = $order->housing()->first(['id', 'residence_id', 'for_max']);
+        $orderFormulaId = $order->housing_formula_id;
 
         // Check If Housing Capacity Exceeded
         if (static::housingCapacityExceeded($order->for_count, $orderHousing->for_max, $order->id)) {
@@ -49,12 +50,13 @@ class OrderService
 //            return false;
 //        }
 
-        $residenceTax = $order->residence()->get(['tax'])->first()->tax;
+        $residenceTax = $orderHousing->residence()->first(['tax'])->tax;
 
         // Order Will Be In One Season
         if ($seasons->count() === 1) {
             if (!static::processPriceForASeason(
                 orderHousing: $orderHousing,
+                orderFormulaId: $orderFormulaId,
                 seasonDateFromStartByOrder: $order->date_from,
                 seasonDateToEndByOrder: $order->date_to->subDays(1),
                 seasonType: $seasons[0]->type_SHML,
@@ -92,6 +94,7 @@ class OrderService
 
             if (!static::processPriceForASeason(
                 orderHousing: $orderHousing,
+                orderFormulaId: $orderFormulaId,
                 seasonDateFromStartByOrder: $dateFrom,
                 seasonDateToEndByOrder: $dateTo,
                 seasonType: $seasons[$i]->type_SHML,
@@ -112,6 +115,7 @@ class OrderService
 
     protected static function processPriceForASeason(
         Housing $orderHousing,
+        int     $orderFormulaId,
         Carbon  $seasonDateFromStartByOrder,
         Carbon  $seasonDateToEndByOrder,
         string  $seasonType,
@@ -123,8 +127,8 @@ class OrderService
     {
         $housingPrice = $orderHousing->prices()
             ->where('type_SHML', '=', $seasonType)
-            ->get(['min_nights', 'for_one_price', 'extra_price', 'extra_price_is_active', 'weekends', 'weekend_price', 'weekend_is_active'])
-            ->first();
+            ->where('housing_formula_id', '=', $orderFormulaId)
+            ->first(['min_nights', 'for_one_price', 'extra_price', 'extra_price_is_active', 'weekends', 'weekend_price', 'weekend_is_active']);
 
         // Check If Housing Price Has No Price
         if (static::housingHasNoPrice($housingPrice, $orderId, $seasonType)) {
@@ -147,6 +151,8 @@ class OrderService
         OrderPriceDetail::create([
             'order_id' => $orderId,
             'type' => "$seasonType Season",
+            'date_from' => $seasonDateFromStartByOrder,
+            'date_to' => $seasonDateToEndByOrder,
             'price' => $orderPrice,
         ]);
 

@@ -17,6 +17,13 @@ class UserOrderController extends Controller
         ]);
     }
 
+    public function details(Order $order)
+    {
+        return view('admin.orders.details', [
+            'priceDetails' => $order->priceDetails()->get(['type', 'date_from', 'date_to', 'price'])
+        ]);
+    }
+
     public function create()
     {
         return view('home.orders.create');
@@ -53,13 +60,11 @@ class UserOrderController extends Controller
             'from' => 'required|date',
             'to' => 'required|after:from',
             'for' => 'required|int',
-            'residence' => 'required|int',
             'housing' => 'required|exists:housings,id',
             'formula' => 'required|exists:housing_formulas,id',
         ]);
 
         return [
-            'residence_id' => $attributes['residence'],
             'housing_id' => $attributes['housing'],
             'housing_formula_id' => $attributes['formula'],
             'date_from' => $attributes['from'],

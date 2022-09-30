@@ -1,4 +1,4 @@
-@props(['title', 'loadCSS' => true, 'loadJquery' => false, 'loadNotiflix' => false, 'hClassAlternative' => 'h-screen'])
+@props(['title', 'loadCSS' => true, 'loadJquery' => false, 'loadNotiflix' => false, 'loadAlpinejs' => false, 'hClassAlternative' => 'h-screen'])
 <!doctype html>
 <html lang="en">
 <head>
@@ -18,6 +18,9 @@
 @if($loadJquery)
     @vite('resources/js/jquery.js')
     <x-js.ajax_setup_csrf_token/>
+@endif
+@if($loadAlpinejs)
+    @vite('resources/js/alpinejs.js')
 @endif
 </body>
 </html>

@@ -6,6 +6,7 @@ class OrderIframe
 {
     public static string $iframeCUId = 'iframe_order_cu';
     public static string $iframeDId = 'iframe_order_d';
+    public static string $priceDetailIframeId = 'iframe_order_price_details';
     public static string $parentIframeId = 'iframe_orders';
 
     public static function iframeCUClose(): string
