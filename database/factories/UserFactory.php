@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Country;
+use App\Models\City;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
@@ -20,7 +20,7 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'city_id' => 1,
+            'city_id' => City::factory()->create()->id,
             'last_name' => fake()->lastName(),
             'first_name' => fake()->firstName(),
             'address' => fake()->address(),
@@ -42,6 +42,15 @@ class UserFactory extends Factory
         return $this->state(function (array $attributes) {
             return [
                 'email_verified_at' => null,
+            ];
+        });
+    }
+
+    public function admin()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'is_admin' => true,
             ];
         });
     }
