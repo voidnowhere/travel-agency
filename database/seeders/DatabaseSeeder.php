@@ -48,15 +48,16 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Cologne', 'order_by' => 4, 'is_active' => false],
         ]);
 
-        // Users should be seeded after at least after one city is created
-        User::factory()->create([
+        User::factory()->admin()->create([
+            'city_id' => $marrakechCity->id,
             'last_name' => 'admin',
             'first_name' => 'cynab',
             'email' => 'admin@admin.com',
-            'is_admin' => true,
         ]);
 
-        User::factory(50)->create();
+        User::factory(2)->create([
+            'city_id' => $agadirCity->id,
+        ]);
 
         $hotelCategoryId = ResidenceCategory::create(['name' => 'Hotel', 'order_by' => 1, 'is_active' => true])->id;
         $riadCategoryId = ResidenceCategory::create(['name' => 'Riad', 'order_by' => 2, 'is_active' => true])->id;

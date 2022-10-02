@@ -27,6 +27,11 @@ class City extends Model
         return $this->hasMany(Residence::class, 'city_id');
     }
 
+    public function users(): HasMany
+    {
+        return $this->hasMany(User::class, 'city_id');
+    }
+
     public function scopeActive($query)
     {
         $query->where('is_active', true);

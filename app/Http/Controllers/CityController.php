@@ -77,6 +77,13 @@ class CityController extends Controller
                 CityIframe::$iframeDId,
             );
         }
+        if ($city->users()->count() > 0) {
+            return NotiflixHelper::report(
+                "You can\'t delete $city->name city it has linked users!",
+                'failure',
+                CityIframe::$iframeDId,
+            );
+        }
 
         $city->delete();
 

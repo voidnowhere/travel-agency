@@ -63,15 +63,14 @@ class CountryController extends Controller
 
     public function destroy(Country $country)
     {
-        if ($country->residences()->count() > 0) {
+        if ($country->cities()->count() > 0) {
             return NotiflixHelper::report(
-                "You can\'t delete $country->name country it has linked residences!",
+                "You can\'t delete $country->name country it has linked cities!",
                 'failure',
                 CountryIframe::$iframeDId,
             );
         }
 
-        $country->cities()->delete();
         $country->delete();
 
         return CountryIframe::hideIframeD() . '<br>' . CityIframe::unloadParent() . '<br>' . CountryIframe::reloadParent();
