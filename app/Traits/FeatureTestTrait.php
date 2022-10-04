@@ -8,15 +8,11 @@ trait FeatureTestTrait
 {
     public function actingAsAdmin()
     {
-        $user = User::factory()->admin()->create();
-
-        return $this->actingAs($user);
+        return $this->actingAs(User::factory()->admin()->create());
     }
 
     public function actingAsClient()
     {
-        $user = User::factory()->create();
-
-        return $this->actingAs($user);
+        return $this->actingAs(User::factory()->create());
     }
 }

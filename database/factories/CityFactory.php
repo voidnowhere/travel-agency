@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Country;
+use App\Traits\FactoryActiveStatusTrait;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -10,6 +11,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class CityFactory extends Factory
 {
+    use FactoryActiveStatusTrait;
+
     /**
      * Define the model's default state.
      *
@@ -23,23 +26,5 @@ class CityFactory extends Factory
             'order_by' => fake()->randomDigitNotZero(),
             'is_active' => fake()->boolean(),
         ];
-    }
-
-    public function inActive()
-    {
-        return $this->state(function (array $attributes) {
-            return [
-                'is_active' => false,
-            ];
-        });
-    }
-
-    public function active()
-    {
-        return $this->state(function (array $attributes) {
-            return [
-                'is_active' => true,
-            ];
-        });
     }
 }
