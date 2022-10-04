@@ -2,16 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Traits\FactoryActiveStatusTrait;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Country>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\HousingCategory>
  */
-class CountryFactory extends Factory
+class HousingCategoryFactory extends Factory
 {
-    use FactoryActiveStatusTrait;
-
     /**
      * Define the model's default state.
      *
@@ -20,7 +17,7 @@ class CountryFactory extends Factory
     public function definition()
     {
         return [
-            'name' => fake()->unique()->country(),
+            'name' => fake()->unique()->word(),
             'order_by' => fake()->randomDigitNotZero(),
             'is_active' => fake()->boolean(),
         ];

@@ -25,7 +25,7 @@ class ResidenceFactory extends Factory
             'description' => fake()->sentence(),
             'website' => fake()->url(),
             'email' => fake()->freeEmail(),
-            'contact' => fake()->name(),
+            'contact' => fake()->firstName(),
             'tax' => fake()->randomFloat(),
             'order_by' => fake()->randomDigitNotZero(),
             'is_active' => fake()->boolean(),

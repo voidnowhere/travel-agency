@@ -6,6 +6,7 @@ use App\Helpers\NotiflixHelper;
 use App\Iframes\ResidenceIframe;
 use App\Models\City;
 use App\Models\Residence;
+use App\Rules\AlphaOneSpaceBetween;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -101,16 +102,14 @@ class ResidenceController extends Controller
                 Rule::unique('residences')
                     ->ignore($residence->name ?? '', 'name')
                     ->where('city_id', $request->input('city') ?? $residence?->city_id),
-                'regex:/^[a-zA-Z]+[a-zA-Z\s]*[a-zA-Z]+$/',
-                'min:3',
-                'max:50',
+                new AlphaOneSpaceBetween,
             ],
             'city' => 'required|exists:cities,id',
             'category' => 'required|exists:residence_categories,id',
-            'description' => 'required|string',
-            'website' => 'required|active_url',
-            'email' => 'required|email',
-            'contact' => 'required|regex:/^[a-zA-Z]+[a-zA-Z\s]*[a-zA-Z]+$/',
+            'description' => 'required',
+            'website' => 'required|url',
+            'email' => 'required|email:rfc,dns',
+            'contact' => ['required', new AlphaOneSpaceBetween],
             'tax' => 'required|numeric',
             'order' => 'required|int',
             'active' => 'nullable',
