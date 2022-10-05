@@ -15,7 +15,7 @@ class CityController extends Controller
     {
         return view('admin.cities.index', [
             'cities' => $country->cities()->orderBy('order_by')->get(['id', 'name', 'order_by', 'is_active']),
-            'country_id' => $country->id,
+            'countryId' => $country->id,
         ]);
     }
 
@@ -30,14 +30,18 @@ class CityController extends Controller
     {
         $country_id = $request->validate(['country_id' => 'required|int'])['country_id'];
 
-        return Country::findOrFail($country_id)->cities()->active()->orderBy('order_by')->get(['id', 'name']);
+        $country = Country::findOrFail($country_id);
+
+        if (!$country->is_active) {
+            return null;
+        }
+
+        return $country->cities()->active()->orderBy('order_by')->get(['id', 'name']);
     }
 
-    public function create(Country $country)
+    public function create()
     {
-        return view('admin.cities.create', [
-            'countryIsActive' => $country->is_active,
-        ]);
+        return view('admin.cities.create');
     }
 
     public function store(Request $request, Country $country)
@@ -95,8 +99,6 @@ class CityController extends Controller
         $attributes = $request->validate([
             'name' => [
                 'required',
-                'min:2',
-                'max:255',
                 'alpha',
                 Rule::unique('cities')
                     ->ignore($city->name ?? '', 'name')
@@ -106,11 +108,7 @@ class CityController extends Controller
             'active' => 'nullable',
         ]);
 
-        if (!$country?->is_active) {
-            $attributes['active'] = false;
-        } else {
-            $attributes['active'] = (bool)($attributes['active'] ?? false);
-        }
+        $attributes['active'] = (bool)($attributes['active'] ?? false);
 
         return [
             'name' => $attributes['name'],
