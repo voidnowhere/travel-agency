@@ -76,25 +76,6 @@ class CountryControllerTest extends TestCase
         ]);
     }
 
-    public function test_that_country_cities_are_inactive_if_country_active_is_set_to_inactive()
-    {
-        $this->actingAsAdmin();
-
-        $country = City::factory()->create()->country;
-
-        $response = $this->patch(route('admin.countries.country.edit', ['country' => $country]), [
-            'name' => $country->name,
-            'order' => $country->order_by,
-            'active' => false,
-        ]);
-        $response->assertOk();
-
-        $this->assertDatabaseHas('cities', [
-            'country_id' => $country->id,
-            'is_active' => false,
-        ]);
-    }
-
     public function test_if_create_update_iframe_is_closed_and_county_in_parent_iframe_is_focused_and_parent_iframe_and_cities_iframe_are_reloaded_after_country_is_updated()
     {
         $this->actingAsAdmin();
