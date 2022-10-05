@@ -24,13 +24,15 @@ class CountryControllerTest extends TestCase
         $data = [
             'name' => 'Morocco',
             'order' => 1,
+            'active' => true,
         ];
 
-        $this->post(route('admin.countries.create'), $data);
+        $this->post(route('admin.countries.create'), $data)->assertOk();
 
         $this->assertDatabaseHas('countries', [
             'name' => $data['name'],
             'order_by' => $data['order'],
+            'is_active' => $data['active'],
         ]);
     }
 
@@ -40,7 +42,8 @@ class CountryControllerTest extends TestCase
 
         $data = ['name' => 'Morocco', 'order' => 1];
 
-        $responseContent = $this->post(route('admin.countries.create'), $data)->content();
+        $response = $this->post(route('admin.countries.create'), $data);
+        $response->assertOk();
 
         $countryId = Country::where('name', '=', $data['name'])->firstOrFail()->id;
 
@@ -48,7 +51,7 @@ class CountryControllerTest extends TestCase
             CountryIframe::iframeCUClose() . '<br>' . CountryIframe::reloadParent()
             . '<br>' .
             CountryIframe::parentFocusRow($countryId) . '<br>' . CityIframe::reloadParent($countryId),
-            $responseContent
+            $response->content()
         );
     }
 
@@ -56,7 +59,7 @@ class CountryControllerTest extends TestCase
     {
         $this->actingAsAdmin();
 
-        $country = Country::factory()->create();
+        $country = Country::factory()->inActive()->create();
 
         $data = [
             'name' => 'Morocco',
@@ -64,12 +67,31 @@ class CountryControllerTest extends TestCase
             'active' => true,
         ];
 
-        $this->patch(route('admin.countries.country.edit', ['country' => $country]), $data);
+        $this->patch(route('admin.countries.country.edit', ['country' => $country]), $data)->assertOk();
 
         $this->assertDatabaseHas('countries', [
             'name' => $data['name'],
             'order_by' => $data['order'],
             'is_active' => $data['active'],
+        ]);
+    }
+
+    public function test_that_country_cities_are_inactive_if_country_active_is_set_to_inactive()
+    {
+        $this->actingAsAdmin();
+
+        $country = City::factory()->create()->country;
+
+        $response = $this->patch(route('admin.countries.country.edit', ['country' => $country]), [
+            'name' => $country->name,
+            'order' => $country->order_by,
+            'active' => false,
+        ]);
+        $response->assertOk();
+
+        $this->assertDatabaseHas('cities', [
+            'country_id' => $country->id,
+            'is_active' => false,
         ]);
     }
 
@@ -79,13 +101,16 @@ class CountryControllerTest extends TestCase
 
         $country = Country::factory()->create();
 
+        $response = $this->patch(
+            route('admin.countries.country.edit', ['country' => $country]), ['name' => 'Morocco', 'order' => 2]
+        );
+        $response->assertOk();
+
         $this->assertEquals(
             CountryIframe::iframeCUClose() . '<br>' . CountryIframe::reloadParent()
             . '<br>' .
             CountryIframe::parentFocusRow($country->id) . '<br>' . CityIframe::reloadParent($country->id),
-            $this->patch(
-                route('admin.countries.country.edit', ['country' => $country]), ['name' => 'Morocco', 'order' => 2]
-            )->content()
+            $response->content()
         );
     }
 
@@ -95,9 +120,12 @@ class CountryControllerTest extends TestCase
 
         $country = Country::factory()->create();
 
+        $response = $this->delete(route('admin.countries.country.delete', ['country' => $country]));
+        $response->assertOk();
+
         $this->assertEquals(
             CountryIframe::hideIframeD() . '<br>' . CityIframe::unloadParent() . '<br>' . CountryIframe::reloadParent(),
-            $this->delete(route('admin.countries.country.delete', ['country' => $country]))->content()
+            $response->content()
         );
 
         $this->assertDatabaseMissing('countries', $country->toArray());
@@ -107,9 +135,12 @@ class CountryControllerTest extends TestCase
     {
         $this->actingAsAdmin();
 
+        $response = $this->delete(route('admin.countries.country.delete', ['country' => Country::factory()->create()]));
+        $response->assertOk();
+
         $this->assertEquals(
             CountryIframe::hideIframeD() . '<br>' . CityIframe::unloadParent() . '<br>' . CountryIframe::reloadParent(),
-            $this->delete(route('admin.countries.country.delete', ['country' => Country::factory()->create()]))->content()
+            $response->content()
         );
     }
 
@@ -119,13 +150,16 @@ class CountryControllerTest extends TestCase
 
         $country = City::factory()->create()->country;
 
+        $response = $this->delete(route('admin.countries.country.delete', ['country' => $country]));
+        $response->assertOk();
+
         $this->assertEquals(
             NotiflixHelper::report(
                 "You can\'t delete $country->name country it has linked cities!",
                 'failure',
                 CountryIframe::$iframeDId,
             ),
-            $this->delete(route('admin.countries.country.delete', ['country' => $country]))->content()
+            $response->content()
         );
     }
 

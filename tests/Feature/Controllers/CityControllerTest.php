@@ -22,15 +22,15 @@ class CityControllerTest extends TestCase
     {
         $this->actingAsAdmin();
 
-        $country = Country::factory()->create();
+        $countryId = Country::factory()->create()->id;
 
         $data = [
             'name' => 'Marrakech',
             'order' => 1,
-            'active' => $country->is_active,
+            'active' => true,
         ];
 
-        $this->post(route('admin.cities.create', ['country' => $country]), $data);
+        $this->post(route('admin.cities.create', ['country' => $countryId]), $data)->assertOk();
 
         $this->assertDatabaseHas('cities', [
             'name' => $data['name'],
@@ -43,14 +43,17 @@ class CityControllerTest extends TestCase
     {
         $this->actingAsAdmin();
 
-        $country = Country::factory()->create();
+        $countryId = Country::factory()->create()->id;
+
+        $response = $this->post(
+            route('admin.cities.create', ['country' => $countryId]),
+            ['name' => 'Marrakech', 'order' => 1, 'active' => true]
+        );
+        $response->assertOk();
 
         $this->assertEquals(
-            CityIframe::iframeCUClose() . '<br>' . CityIframe::reloadParent($country->id),
-            $this->post(
-                route('admin.cities.create', ['country' => $country]),
-                ['name' => 'Marrakech', 'order' => 1, 'active' => $country->is_active]
-            )->content()
+            CityIframe::iframeCUClose() . '<br>' . CityIframe::reloadParent($countryId),
+            $response->content()
         );
     }
 
@@ -63,10 +66,10 @@ class CityControllerTest extends TestCase
         $data = [
             'name' => 'Marrakech',
             'order' => 2,
-            'active' => $city->country->is_active,
+            'active' => false,
         ];
 
-        $this->patch(route('admin.cities.city.edit', ['city' => $city]), $data);
+        $this->patch(route('admin.cities.city.edit', ['city' => $city]), $data)->assertOk();
 
         $this->assertDatabaseHas('cities', [
             'name' => $data['name'],
@@ -81,12 +84,15 @@ class CityControllerTest extends TestCase
 
         $city = City::factory()->create();
 
+        $response = $this->patch(
+            route('admin.cities.city.edit', ['city' => $city]),
+            ['name' => 'Marrakech', 'order' => 2, 'active' => true]
+        );
+        $response->assertOk();
+
         $this->assertEquals(
             CityIframe::iframeCUClose() . '<br>' . CityIframe::reloadParent($city->country_id),
-            $this->patch(
-                route('admin.cities.city.edit', ['city' => $city]),
-                ['name' => 'Marrakech', 'order' => 2, 'active' => $city->country->is_active]
-            )->content()
+            $response->content()
         );
     }
 
@@ -96,7 +102,7 @@ class CityControllerTest extends TestCase
 
         $city = City::factory()->create();
 
-        $this->delete(route('admin.cities.city.delete', ['city' => $city]));
+        $this->delete(route('admin.cities.city.delete', ['city' => $city]))->assertOk();
 
         $this->assertDatabaseMissing('countries', $city->toArray());
     }
@@ -107,9 +113,12 @@ class CityControllerTest extends TestCase
 
         $city = City::factory()->create();
 
+        $response = $this->delete(route('admin.cities.city.delete', ['city' => $city]));
+        $response->assertOk();
+
         $this->assertEquals(
             CityIframe::hideIframeD() . '<br>' . CityIframe::reloadParent($city->country_id),
-            $this->delete(route('admin.cities.city.delete', ['city' => $city]))->content()
+            $response->content()
         );
     }
 
@@ -119,13 +128,16 @@ class CityControllerTest extends TestCase
 
         $city = Residence::factory()->create()->city;
 
+        $response = $this->delete(route('admin.cities.city.delete', ['city' => $city]));
+        $response->assertOk();
+
         $this->assertEquals(
             NotiflixHelper::report(
                 "You can\'t delete $city->name city it has linked residences!",
                 'failure',
                 CityIframe::$iframeDId,
             ),
-            $this->delete(route('admin.cities.city.delete', ['city' => $city]))->content()
+            $response->content()
         );
     }
 
@@ -135,13 +147,16 @@ class CityControllerTest extends TestCase
 
         $city = User::factory()->create()->city;
 
+        $response = $this->delete(route('admin.cities.city.delete', ['city' => $city]));
+        $response->assertOk();
+
         $this->assertEquals(
             NotiflixHelper::report(
                 "You can\'t delete $city->name city it has linked users!",
                 'failure',
                 CityIframe::$iframeDId,
             ),
-            $this->delete(route('admin.cities.city.delete', ['city' => $city]))->content()
+            $response->content()
         );
     }
 
@@ -153,9 +168,12 @@ class CityControllerTest extends TestCase
 
         City::factory(1)->create(['country_id' => $country->id]);
 
+        $response = $this->post(route('admin.cities.get'), ['country_id' => $country->id]);
+        $response->assertOk();
+
         $this->assertEquals(
             $country->cities()->orderBy('order_by')->get(['id', 'name'])->toJson(),
-            $this->post(route('admin.cities.get'), ['country_id' => $country->id])->content()
+            $response->content()
         );
     }
 
@@ -169,10 +187,29 @@ class CityControllerTest extends TestCase
 
         City::factory()->active()->create(['country_id' => $country]);
 
+        $response = $this->post(route('cities.get'), ['country_id' => $country->id]);
+        $response->assertOk();
+
         $this->assertEquals(
             $country->cities()->active()->orderBy('order_by')->get(['id', 'name']),
-            $this->post(route('cities.get'), ['country_id' => $country->id])->content()
+            $response->content()
         );
+    }
+
+    public function test_that_get_only_active_cities_return_null_when_country_is_inactive()
+    {
+        $this->actingAsAdmin();
+
+        $country = Country::factory()->inActive()->create();
+
+        City::factory()->inActive()->create(['country_id' => $country]);
+
+        City::factory()->active()->create(['country_id' => $country]);
+
+        $response = $this->post(route('cities.get'), ['country_id' => $country->id]);
+        $response->assertOk();
+
+        $this->assertEquals(null, $response->content());
     }
 
     public function test_that_city_cannot_be_stored_or_updated_with_an_existing_name_for_the_same_county()
@@ -180,15 +217,14 @@ class CityControllerTest extends TestCase
         $this->actingAsAdmin();
 
         $city = City::factory()->create();
-        $countryId = $city->country->id;
 
-        $this->post(route('admin.cities.create', ['country' => $countryId]), [
+        $this->post(route('admin.cities.create', ['country' => $city->country_id]), [
             'name' => $city->name,
             'order' => $city->order_by,
         ])->assertInvalid(['name']);
 
         $this->patch(route('admin.cities.city.edit', ['city' => $city]), [
-            'name' => City::factory()->create(['country_id' => $countryId])->name,
+            'name' => City::factory()->create(['country_id' => $city->country_id])->name,
             'order' => $city->order_by,
         ])->assertInvalid(['name']);
     }

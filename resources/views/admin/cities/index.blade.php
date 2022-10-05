@@ -4,7 +4,7 @@
 <x-admin.iframe.layout title="Cities">
     <x-table.layout>
         <x-table.thead :columns="$columns" :iframe-c-u-id="\App\Iframes\CityIframe::$iframeCUId"
-                       :route-create="route('admin.cities.create', ['country' => $country_id])"/>
+                       :route-create="route('admin.cities.create', ['country' => $countryId])"/>
         <x-table.tbody :count="$cities->count()" :columns-count="count($columns)">
             @foreach($cities as $city)
                 <tr class="border-b-2 border-b-blue-400 hover:bg-blue-50">

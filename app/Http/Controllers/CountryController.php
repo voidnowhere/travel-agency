@@ -44,8 +44,6 @@ class CountryController extends Controller
     {
         $attributes = $this->validateCountry($request, $country);
 
-        $country->cities()->update(['is_active' => $attributes['is_active']]);
-
         $country->update($attributes);
 
         return
@@ -81,8 +79,6 @@ class CountryController extends Controller
         $attributes = $request->validate([
             'name' => [
                 'required',
-                'min:2',
-                'max:255',
                 'alpha',
                 Rule::unique('countries')->ignore($country->name ?? '', 'name'),
             ],
@@ -90,7 +86,7 @@ class CountryController extends Controller
             'active' => 'nullable',
         ]);
 
-        $attributes['active'] = ($country === null) || (bool)($attributes['active'] ?? false);
+        $attributes['active'] = (bool)($attributes['active'] ?? false);
 
         return [
             'name' => $attributes['name'],
