@@ -6,6 +6,7 @@ use App\Helpers\NotiflixHelper;
 use App\Iframes\CityIframe;
 use App\Iframes\CountryIframe;
 use App\Models\Country;
+use App\Rules\AlphaOneSpaceBetween;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -79,7 +80,7 @@ class CountryController extends Controller
         $attributes = $request->validate([
             'name' => [
                 'required',
-                'alpha',
+                new AlphaOneSpaceBetween,
                 Rule::unique('countries')->ignore($country->name ?? '', 'name'),
             ],
             'order' => 'required|int',
