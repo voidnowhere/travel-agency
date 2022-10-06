@@ -4,8 +4,10 @@ namespace Tests\Feature\Controllers;
 
 use App\Helpers\NotiflixHelper;
 use App\Iframes\ResidenceIframe;
+use App\Models\City;
 use App\Models\Housing;
 use App\Models\Residence;
+use App\Models\ResidenceCategory;
 use App\Traits\FeatureTestTrait;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -37,6 +39,39 @@ class ResidenceControllerTest extends TestCase
         ])->assertOk();
 
         $this->assertDatabaseHas('residences', $residence->makeHidden(['id', 'created_at', 'updated_at'])->toArray());
+    }
+
+    public function test_get_residences_as_json()
+    {
+        $this->actingAsAdmin();
+
+        $city = Residence::factory()->create()->city;
+
+        $response = $this->post(route('admin.residences.get'), ['city_id' => $city->id]);
+        $response->assertOk();
+
+        $this->assertEquals(
+            $city->residences()->orderBy('order_by')->get(['id', 'name']),
+            $response->content()
+        );
+    }
+
+    public function test_get_only_active_residences_as_json()
+    {
+        $this->actingAsAdmin();
+
+        $city = City::factory()->create();
+
+        Residence::factory()->inActive()->create(['city_id' => $city->id]);
+        Residence::factory()->active()->create(['city_id' => $city->id]);
+
+        $response = $this->post(route('residences.get'), ['city_id' => $city->id]);
+        $response->assertOk();
+
+        $this->assertEquals(
+            $city->residences()->active()->orderBy('order_by')->get(['id', 'name']),
+            $response->content()
+        );
     }
 
     public function test_that_residence_cannot_be_stored_or_updated_with_an_existing_name_in_the_same_city()
@@ -213,7 +248,7 @@ class ResidenceControllerTest extends TestCase
             ->assertInvalid(['name', 'city', 'category', 'description', 'website', 'email', 'contact', 'tax', 'order']);
     }
 
-    public function test_that_name_field_should_be_alpha_one_space_between()
+    public function test_that_name_field_should_be_an_alpha_one_space_between()
     {
         $this->actingAsAdmin();
 
@@ -253,7 +288,7 @@ class ResidenceControllerTest extends TestCase
         )->assertInvalid(['name']);
     }
 
-    public function test_that_city_field_should_exists_in_database()
+    public function test_that_city_field_should_exists()
     {
         $this->actingAsAdmin();
 
@@ -264,7 +299,7 @@ class ResidenceControllerTest extends TestCase
             route('admin.residences.create'),
             [
                 'name' => $residence->name,
-                'city' => 5,
+                'city' => City::max('id') + 1,
                 'category' => $residence->residence_category_id,
                 'description' => $residence->description,
                 'website' => $residence->website,
@@ -280,7 +315,7 @@ class ResidenceControllerTest extends TestCase
             route('admin.residences.residence.edit', ['residence' => Residence::factory()->create()]),
             [
                 'name' => $residence->name,
-                'city' => 10,
+                'city' => City::max('id') + 1,
                 'category' => $residence->residence_category_id,
                 'description' => $residence->description,
                 'website' => $residence->website,
@@ -293,7 +328,7 @@ class ResidenceControllerTest extends TestCase
         )->assertInvalid(['city']);
     }
 
-    public function test_that_category_field_should_exists_in_database()
+    public function test_that_category_field_should_exists()
     {
         $this->actingAsAdmin();
 
@@ -305,7 +340,7 @@ class ResidenceControllerTest extends TestCase
             [
                 'name' => $residence->name,
                 'city' => $residence->city_id,
-                'category' => 5,
+                'category' => ResidenceCategory::max('id') + 1,
                 'description' => $residence->description,
                 'website' => $residence->website,
                 'email' => $residence->email,
@@ -321,7 +356,7 @@ class ResidenceControllerTest extends TestCase
             [
                 'name' => $residence->name,
                 'city' => $residence->city_id,
-                'category' => 5,
+                'category' => ResidenceCategory::max('id') + 1,
                 'description' => $residence->description,
                 'website' => $residence->website,
                 'email' => $residence->email,
@@ -413,7 +448,7 @@ class ResidenceControllerTest extends TestCase
         )->assertInvalid(['email']);
     }
 
-    public function test_that_contact_field_should_be_alpha_one_space_between()
+    public function test_that_contact_field_should_be_an_alpha_one_space_between()
     {
         $this->actingAsAdmin();
 

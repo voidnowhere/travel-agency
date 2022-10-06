@@ -162,7 +162,7 @@ class ResidenceCategoryControllerTest extends TestCase
         )->assertInvalid(['name', 'order']);
     }
 
-    public function test_that_name_field_should_be_an_alpha()
+    public function test_that_name_field_should_be_an_alpha_one_space_between()
     {
         $this->actingAsAdmin();
 

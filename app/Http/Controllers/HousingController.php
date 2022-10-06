@@ -88,17 +88,15 @@ class HousingController extends Controller
         $attributes = $request->validate([
             'name' => [
                 'required',
+                new AlphaOneSpaceBetween(),
                 Rule::unique('housings')
                     ->ignore($housing->name ?? '', 'name')
                     ->where('residence_id', $request->input('residence') ?? $housing?->residence_id)
                     ->where('housing_category_id', $request->input('category') ?? $housing?->housing_category_id),
-                new AlphaOneSpaceBetween,
-                'min:3',
-                'max:50',
             ],
             'residence' => 'required|exists:residences,id',
             'category' => 'required|exists:housing_categories,id',
-            'description' => 'required|string',
+            'description' => 'required',
             'max' => 'required|int',
             'order' => 'required|int',
             'active' => 'nullable',

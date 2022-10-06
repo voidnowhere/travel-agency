@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\City;
 use App\Models\ResidenceCategory;
+use App\Traits\FactoryActiveStatusTrait;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -11,6 +12,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class ResidenceFactory extends Factory
 {
+    use FactoryActiveStatusTrait;
+
     /**
      * Define the model's default state.
      *

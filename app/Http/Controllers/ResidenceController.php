@@ -99,10 +99,10 @@ class ResidenceController extends Controller
         $attributes = $request->validate([
             'name' => [
                 'required',
+                new AlphaOneSpaceBetween(),
                 Rule::unique('residences')
                     ->ignore($residence->name ?? '', 'name')
                     ->where('city_id', $request->input('city') ?? $residence?->city_id),
-                new AlphaOneSpaceBetween,
             ],
             'city' => 'required|exists:cities,id',
             'category' => 'required|exists:residence_categories,id',
