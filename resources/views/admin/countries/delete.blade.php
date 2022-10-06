@@ -5,6 +5,6 @@
         </x-form.layout>
     </div>
     <x-admin.iframe.js.confirm_d_submit
-        :message="($country->name . ' country' . (($country->cities()->count() > 0) ? ' and its linked cities' : ''))"
+        :message="$country->name . ' country'"
         :iframe-d-id="\App\Iframes\CountryIframe::$iframeDId"/>
 </x-admin.iframe.layout>

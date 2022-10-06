@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\NotiflixHelper;
 use App\Iframes\ResidenceCategoryIframe;
 use App\Models\ResidenceCategory;
+use App\Rules\AlphaOneSpaceBetween;
 use \Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -70,9 +71,7 @@ class ResidenceCategoryController extends Controller
         $attributes = $request->validate([
             'name' => [
                 'required',
-                'min:2',
-                'max:25',
-                'alpha',
+                new AlphaOneSpaceBetween(),
                 Rule::unique('residence_categories')->ignore($category->name ?? '', 'name'),
             ],
             'order' => 'required|int',

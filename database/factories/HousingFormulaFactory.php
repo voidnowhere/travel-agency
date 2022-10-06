@@ -2,16 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Traits\FactoryActiveStatusTrait;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\HousingCategory>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\HousingFormula>
  */
-class HousingCategoryFactory extends Factory
+class HousingFormulaFactory extends Factory
 {
-    use FactoryActiveStatusTrait;
-
     /**
      * Define the model's default state.
      *

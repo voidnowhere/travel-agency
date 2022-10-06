@@ -36,7 +36,7 @@ class CountryControllerTest extends TestCase
         ]);
     }
 
-    public function test_if_create_update_iframe_is_closed_and_county_in_parent_iframe_is_focused_and_parent_iframe_and_cities_iframe_are_reloaded_after_country_is_added()
+    public function test_if_create_update_iframe_is_closed_and_county_in_parent_iframe_is_focused_and_parent_iframe_and_cities_iframe_are_reloaded_after_country_is_stored()
     {
         $this->actingAsAdmin();
 
