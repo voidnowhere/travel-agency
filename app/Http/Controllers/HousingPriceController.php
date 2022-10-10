@@ -73,7 +73,7 @@ class HousingPriceController extends Controller
 
     protected function validateHousingPrice(Request $request, HousingPrice $price = null)
     {
-        $rules = [
+        $attributes = $request->validate([
             'housing' => 'required|exists:housings,id',
             'formula' => 'required|exists:housing_formulas,id',
             'type' => [
@@ -88,27 +88,22 @@ class HousingPriceController extends Controller
             'extra_price' => 'required|numeric',
             'extra_price_active' => 'nullable',
             'min_nights' => 'required|int',
+            'weekends' => 'required|array',
             'weekend_price' => 'required|numeric',
             'weekend_active' => 'nullable',
             'kid_bed_price' => 'required|numeric',
             'kid_bed_active' => 'nullable',
             'extra_bed_price' => 'required|numeric',
             'extra_bed_active' => 'nullable',
-        ];
-
-        foreach (WeekdayHelper::weekdaysNames() as $name) {
-            $rules[$name] = 'nullable';
-        }
-
-        $attributes = $request->validate($rules);
+        ]);
 
         $weekends = '';
 
         $weekdaysFlipped = WeekdayHelper::weekdaysFlipped();
 
-        foreach (WeekdayHelper::$weekdays as $num => $name) {
-            if (isset($attributes[$name]) && isset($weekdaysFlipped[$attributes[$name]])) {
-                $weekends .= $num . ',';
+        foreach ($attributes['weekends'] as $weekendName) {
+            if (isset($weekdaysFlipped[$weekendName])) {
+                $weekends .= $weekdaysFlipped[$weekendName] . ',';
             }
         }
 
