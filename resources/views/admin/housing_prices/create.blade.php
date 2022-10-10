@@ -52,11 +52,14 @@
                 <div class="p-2 flex flex-row items-center">
                     <x-form.label label="Weekends"/>
                     <div class="ml-1 flex justify-between grow">
+                        @php
+                            $oldWeekends = old('weekends');
+                        @endphp
                         @foreach(\App\Helpers\WeekdayHelper::weekdaysNames() as $name)
                             <div>
                                 <span>{{ $name }}</span>
-                                <input type="checkbox" name="{{ $name }}" class="hover:cursor-pointer"
-                                       value="{{ $name }}" @checked(((old($name) !== null) ? old($name) === $name : null) ?? ($loop->first | $loop->last))>
+                                <input type="checkbox" name="weekends[]" class="hover:cursor-pointer"
+                                       value="{{ $name }}" @checked(isset($oldWeekends) && in_array($name, $oldWeekends))>
                             </div>
                         @endforeach
                     </div>

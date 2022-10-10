@@ -65,14 +65,14 @@
                     <x-form.label label="Weekends"/>
                     <div class="ml-1 flex justify-between grow">
                         @php
-                            $weekends = explode(',', $housingPrice->weekends);
-                            $weekendsNames = \App\Helpers\WeekdayHelper::weekdaysNames();
+                            $weekendsNums = explode(',', $housingPrice->weekends);
+                            $oldWeekends = old('weekends');
                         @endphp
                         @foreach(\App\Helpers\WeekdayHelper::$weekdays as $num => $name)
                             <div>
                                 <span>{{ $name }}</span>
-                                <input type="checkbox" name="{{ $name }}" class="hover:cursor-pointer"
-                                       value="{{ $name }}" @checked(((old($name) !== null) ? in_array(old($name), $weekendsNames) : null) ?? in_array($num, $weekends))>
+                                <input type="checkbox" name="weekends[]" class="hover:cursor-pointer"
+                                       value="{{ $name }}" @checked((isset($oldWeekends)) ? in_array($name, $oldWeekends) : in_array($num, $weekendsNums))>
                             </div>
                         @endforeach
                     </div>
