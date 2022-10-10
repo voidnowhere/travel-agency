@@ -84,7 +84,7 @@ class SeasonController extends Controller
                     ->where('date_from', $request->input('from') ?? $season?->date_from)
                     ->where('date_to', $request->input('to') ?? $season?->date_to),
             ],
-            'description' => 'required|string',
+            'description' => 'required',
             'active' => 'nullable',
         ]);
 

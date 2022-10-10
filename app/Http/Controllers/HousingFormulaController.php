@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\NotiflixHelper;
 use App\Iframes\HousingFormulaIframe;
 use App\Models\HousingFormula;
+use App\Rules\AlphaOneSpaceBetween;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -70,9 +71,7 @@ class HousingFormulaController extends Controller
         $attributes = $request->validate([
             'name' => [
                 'required',
-                'min:2',
-                'max:25',
-                'alpha',
+                new AlphaOneSpaceBetween(),
                 Rule::unique('housing_formulas')->ignore($formula->name ?? '', 'name'),
             ],
             'order' => 'required|int',
