@@ -1,5 +1,5 @@
 @php
-    $columns = ['Type', 'From', 'To', 'Price'];
+    $columns = ['Type', 'From To', 'Price'];
 @endphp
 <x-admin.iframe.layout title="Order Price Details">
     <div class="p-2 border-2 border-blue-400 rounded-xl bg-blue-100 shadow-lg h-full">
@@ -13,8 +13,10 @@
                 @foreach($priceDetails as $priceDetail)
                     <tr @class(['border-b-2 border-b-blue-400', 'bg-blue-50' => $loop->even])>
                         <td class="text-center py-3 px-6">{{ $priceDetail->type }}</td>
-                        <td class="text-center py-3 px-6">{{ $priceDetail->date_from }}</td>
-                        <td class="text-center py-3 px-6">{{ $priceDetail->date_to }}</td>
+                        <td class="text-center py-3 px-6">
+                            <span>{{ $priceDetail->date_from }}</span>
+                            <span>{{ $priceDetail->date_to }}</span>
+                        </td>
                         <td class="text-center py-3 px-6">{{ $priceDetail->price }}</td>
                     </tr>
                 @endforeach
