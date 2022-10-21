@@ -212,7 +212,7 @@ class CityControllerTest extends TestCase
         $this->assertEquals(null, $response->content());
     }
 
-    public function test_that_city_cannot_be_stored_or_updated_with_an_existing_name_for_the_same_county()
+    public function test_that_city_cannot_be_stored_with_an_existing_name_for_the_same_county()
     {
         $this->actingAsAdmin();
 
@@ -222,6 +222,13 @@ class CityControllerTest extends TestCase
             'name' => $city->name,
             'order' => $city->order_by,
         ])->assertInvalid(['name']);
+    }
+
+    public function test_that_city_cannot_be_updated_with_an_existing_name_for_the_same_county()
+    {
+        $this->actingAsAdmin();
+
+        $city = City::factory()->create();
 
         $this->patch(route('admin.cities.city.edit', ['city' => $city]), [
             'name' => City::factory()->create(['country_id' => $city->country_id])->name,
@@ -229,17 +236,23 @@ class CityControllerTest extends TestCase
         ])->assertInvalid(['name']);
     }
 
-    public function test_that_name_and_order_fields_are_required()
+    public function test_that_name_and_order_fields_are_required_when_storing_a_city()
     {
         $this->actingAsAdmin();
 
         $this->post(route('admin.cities.create', ['country' => Country::factory()->create()]), [])
             ->assertInvalid(['name', 'order']);
+    }
+
+    public function test_that_name_and_order_fields_are_required_when_updating_a_city()
+    {
+        $this->actingAsAdmin();
+
         $this->patch(route('admin.cities.city.edit', ['city' => City::factory()->create()]), [])
             ->assertInvalid(['name', 'order']);
     }
 
-    public function test_that_name_field_should_be_an_alpha()
+    public function test_that_name_field_should_be_an_alpha_when_storing_a_city()
     {
         $this->actingAsAdmin();
 
@@ -247,6 +260,11 @@ class CityControllerTest extends TestCase
             'name' => 2,
             'order' => 1,
         ])->assertInvalid(['name']);
+    }
+
+    public function test_that_name_field_should_be_an_alpha_when_updating_a_city()
+    {
+        $this->actingAsAdmin();
 
         $this->patch(route('admin.cities.city.edit', ['city' => City::factory()->create()]), [
             'name' => 2,
@@ -254,7 +272,7 @@ class CityControllerTest extends TestCase
         ])->assertInvalid(['name']);
     }
 
-    public function test_that_order_field_should_be_an_int()
+    public function test_that_order_field_should_be_an_int_when_storing_a_city()
     {
         $this->actingAsAdmin();
 
@@ -262,6 +280,11 @@ class CityControllerTest extends TestCase
             'name' => 'Morocco',
             'order' => 'foo',
         ])->assertInvalid(['order']);
+    }
+
+    public function test_that_order_field_should_be_an_int_when_updating_a_city()
+    {
+        $this->actingAsAdmin();
 
         $this->patch(route('admin.cities.city.edit', ['city' => City::factory()->create()]), [
             'name' => 'Morocco',

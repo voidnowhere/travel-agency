@@ -2,13 +2,15 @@
 
 namespace Database\Factories;
 
-use App\Enums\SeasonTypes;
+use App\Models\Housing;
+use App\Models\HousingFormula;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Season>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Order>
  */
-class SeasonFactory extends Factory
+class OrderFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -26,11 +28,12 @@ class SeasonFactory extends Factory
         }
 
         return [
-            'description' => fake()->sentence(),
+            'user_id' => User::factory()->create()->id,
+            'housing_id' => Housing::factory()->create()->id,
+            'housing_formula_id' => HousingFormula::factory()->create()->id,
             'date_from' => $date_from,
             'date_to' => $date_to,
-            'type_SHML' => fake()->unique()->randomElement(SeasonTypes::values()),
-            'is_active' => fake()->boolean(),
+            'for_count' => fake()->numberBetween(1, 4),
         ];
     }
 }

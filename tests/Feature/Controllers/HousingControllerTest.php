@@ -184,18 +184,24 @@ class HousingControllerTest extends TestCase
         );
     }
 
-    public function test_that_all_fields_except_active_are_required()
+    public function test_that_all_fields_except_active_are_required_when_storing_housing()
     {
         $this->actingAsAdmin();
 
         $this->post(route('admin.housings.create'), [])->assertInvalid([
             'name', 'residence', 'category', 'description', 'max', 'order'
         ]);
+    }
+
+    public function test_that_all_fields_except_active_are_required_when_updating_housing()
+    {
+        $this->actingAsAdmin();
+
         $this->patch(route('admin.housings.housing.edit', ['housing' => Housing::factory()->create()]), [])
             ->assertInvalid(['name', 'residence', 'category', 'description', 'max', 'order']);
     }
 
-    public function test_that_name_field_should_be_an_alpha_one_space_between()
+    public function test_that_name_field_should_be_an_alpha_one_space_between_when_storing_housing()
     {
         $this->actingAsAdmin();
 
@@ -212,7 +218,15 @@ class HousingControllerTest extends TestCase
                 'max' => $housing->for_max,
                 'order' => $housing->order_by,
             ]
-        )->assertInvalid('name');
+        )->assertInvalid(['name']);
+    }
+
+    public function test_that_name_field_should_be_an_alpha_one_space_between_when_updating_housing()
+    {
+        $this->actingAsAdmin();
+
+        $housing = Housing::factory()->create();
+        $housing->delete();
 
         $this->patch(route('admin.housings.housing.edit', ['housing' => Housing::factory()->create()]), [
                 'name' => 1,
@@ -222,10 +236,10 @@ class HousingControllerTest extends TestCase
                 'max' => $housing->for_max,
                 'order' => $housing->order_by,
             ]
-        )->assertInvalid('name');
+        )->assertInvalid(['name']);
     }
 
-    public function test_that_housing_cannot_be_stored_or_updated_with_an_existing_name_for_the_same_residence_and_housing_category()
+    public function test_that_housing_cannot_be_stored_with_an_existing_name_for_the_same_residence_and_housing_category()
     {
         $this->actingAsAdmin();
 
@@ -238,7 +252,14 @@ class HousingControllerTest extends TestCase
             'description' => $housing->description,
             'max' => $housing->for_max,
             'order' => $housing->order_by,
-        ])->assertInvalid('name');
+        ])->assertInvalid(['name']);
+    }
+
+    public function test_that_housing_cannot_be_updated_with_an_existing_name_for_the_same_residence_and_housing_category()
+    {
+        $this->actingAsAdmin();
+
+        $housing = Housing::factory()->create();
 
         $this->patch(route('admin.housings.housing.edit', ['housing' => Housing::factory()->create()]), [
                 'name' => $housing->name,
@@ -248,10 +269,10 @@ class HousingControllerTest extends TestCase
                 'max' => $housing->for_max,
                 'order' => $housing->order_by,
             ]
-        )->assertInvalid('name');
+        )->assertInvalid(['name']);
     }
 
-    public function test_that_residence_field_should_exists()
+    public function test_that_residence_field_should_exists_when_storing_housing()
     {
         $this->actingAsAdmin();
 
@@ -265,7 +286,15 @@ class HousingControllerTest extends TestCase
             'description' => $housing->description,
             'max' => $housing->for_max,
             'order' => $housing->order_by,
-        ])->assertInvalid('residence');
+        ])->assertInvalid(['residence']);
+    }
+
+    public function test_that_residence_field_should_exists_when_updating_housing()
+    {
+        $this->actingAsAdmin();
+
+        $housing = Housing::factory()->create();
+        $housing->delete();
 
         $this->patch(route('admin.housings.housing.edit', ['housing' => Housing::factory()->create()]), [
                 'name' => $housing->name,
@@ -275,10 +304,10 @@ class HousingControllerTest extends TestCase
                 'max' => $housing->for_max,
                 'order' => $housing->order_by,
             ]
-        )->assertInvalid('residence');
+        )->assertInvalid(['residence']);
     }
 
-    public function test_that_housing_category_field_should_exists()
+    public function test_that_housing_category_field_should_exists_when_storing_housing()
     {
         $this->actingAsAdmin();
 
@@ -292,7 +321,15 @@ class HousingControllerTest extends TestCase
             'description' => $housing->description,
             'max' => $housing->for_max,
             'order' => $housing->order_by,
-        ])->assertInvalid('category');
+        ])->assertInvalid(['category']);
+    }
+
+    public function test_that_housing_category_field_should_exists_when_updating_housing()
+    {
+        $this->actingAsAdmin();
+
+        $housing = Housing::factory()->create();
+        $housing->delete();
 
         $this->patch(route('admin.housings.housing.edit', ['housing' => Housing::factory()->create()]), [
                 'name' => $housing->name,
@@ -302,10 +339,10 @@ class HousingControllerTest extends TestCase
                 'max' => $housing->for_max,
                 'order' => $housing->order_by,
             ]
-        )->assertInvalid('category');
+        )->assertInvalid(['category']);
     }
 
-    public function test_that_max_field_should_be_an_int()
+    public function test_that_max_field_should_be_an_int_when_storing_housing()
     {
         $this->actingAsAdmin();
 
@@ -319,7 +356,15 @@ class HousingControllerTest extends TestCase
             'description' => $housing->description,
             'max' => 'foo',
             'order' => $housing->order_by,
-        ])->assertInvalid('max');
+        ])->assertInvalid(['max']);
+    }
+
+    public function test_that_max_field_should_be_an_int_when_updating_housing()
+    {
+        $this->actingAsAdmin();
+
+        $housing = Housing::factory()->create();
+        $housing->delete();
 
         $this->patch(route('admin.housings.housing.edit', ['housing' => Housing::factory()->create()]), [
                 'name' => $housing->name,
@@ -329,10 +374,10 @@ class HousingControllerTest extends TestCase
                 'max' => 'foo',
                 'order' => $housing->order_by,
             ]
-        )->assertInvalid('max');
+        )->assertInvalid(['max']);
     }
 
-    public function test_that_order_field_should_be_an_int()
+    public function test_that_order_field_should_be_an_int_when_storing_housing()
     {
         $this->actingAsAdmin();
 
@@ -346,7 +391,15 @@ class HousingControllerTest extends TestCase
             'description' => $housing->description,
             'max' => $housing->for_max,
             'order' => 'foo',
-        ])->assertInvalid('order');
+        ])->assertInvalid(['order']);
+    }
+
+    public function test_that_order_field_should_be_an_int_when_updating_housing()
+    {
+        $this->actingAsAdmin();
+
+        $housing = Housing::factory()->create();
+        $housing->delete();
 
         $this->patch(route('admin.housings.housing.edit', ['housing' => Housing::factory()->create()]), [
                 'name' => $housing->name,
@@ -356,6 +409,6 @@ class HousingControllerTest extends TestCase
                 'max' => $housing->for_max,
                 'order' => 'foo',
             ]
-        )->assertInvalid('order');
+        )->assertInvalid(['order']);
     }
 }

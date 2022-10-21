@@ -131,29 +131,43 @@ class HousingFormulaControllerTest extends TestCase
         );
     }
 
-    public function test_that_name_and_order_fields_are_required()
+    public function test_that_name_and_order_fields_are_required_when_storing_housing_formula()
     {
         $this->actingAsAdmin();
 
         $this->post(route('admin.housing.formulas.create'), [])->assertInvalid(['name', 'order']);
+    }
+
+    public function test_that_name_and_order_fields_are_required_when_updating_housing_formula()
+    {
+        $this->actingAsAdmin();
+
         $this->patch(
             route('admin.housing.formulas.formula.edit', ['formula' => HousingFormula::factory()->create()]), []
         )->assertInvalid(['name', 'order']);
     }
 
-    public function test_that_name_field_should_be_an_alpha_one_space_between()
+    public function test_that_name_field_should_be_an_alpha_one_space_between_when_storing_housing_formula()
     {
         $this->actingAsAdmin();
 
         $data = ['name' => 1, 'order' => 1];
 
         $this->post(route('admin.housing.formulas.create'), $data)->assertInvalid(['name']);
+    }
+
+    public function test_that_name_field_should_be_an_alpha_one_space_between_when_updating_housing_formula()
+    {
+        $this->actingAsAdmin();
+
+        $data = ['name' => 1, 'order' => 1];
+
         $this->patch(
             route('admin.housing.formulas.formula.edit', ['formula' => HousingFormula::factory()->create()]), $data
         )->assertInvalid(['name']);
     }
 
-    public function test_that_housing_formula_cannot_be_stored_or_updated_with_an_existing_name()
+    public function test_that_housing_formula_cannot_be_stored_with_an_existing_name()
     {
         $this->actingAsAdmin();
 
@@ -161,18 +175,35 @@ class HousingFormulaControllerTest extends TestCase
         $data = ['name' => $formula->name, 'order' => 1];
 
         $this->post(route('admin.housing.formulas.create'), $data)->assertInvalid(['name']);
+    }
+
+    public function test_that_housing_formula_cannot_be_updated_with_an_existing_name()
+    {
+        $this->actingAsAdmin();
+
+        $formula = HousingFormula::factory()->create();
+        $data = ['name' => $formula->name, 'order' => 1];
+
         $this->patch(
             route('admin.housing.formulas.formula.edit', ['formula' => HousingFormula::factory()->create()]), $data
         )->assertInvalid(['name']);
     }
 
-    public function test_that_order_field_should_be_is_an_int()
+    public function test_that_order_field_should_be_is_an_int_when_storing_housing_formula()
     {
         $this->actingAsAdmin();
 
         $data = ['name' => 'Dinner', 'order' => 'test'];
 
         $this->post(route('admin.housing.formulas.create'), $data)->assertInvalid(['order']);
+    }
+
+    public function test_that_order_field_should_be_is_an_int_when_updating_housing_formula()
+    {
+        $this->actingAsAdmin();
+
+        $data = ['name' => 'Dinner', 'order' => 'test'];
+
         $this->patch(
             route('admin.housing.formulas.formula.edit', ['formula' => HousingFormula::factory()->create()]), $data
         )->assertInvalid(['order']);

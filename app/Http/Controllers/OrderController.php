@@ -63,7 +63,7 @@ class OrderController extends Controller
     {
         $attributes = $request->validate([
             'from' => 'required|date',
-            'to' => 'required|after:from',
+            'to' => 'required|date|after:from',
             'for' => 'required|int',
             'housing' => 'required|exists:housings,id',
             'formula' => 'required|exists:housing_formulas,id',

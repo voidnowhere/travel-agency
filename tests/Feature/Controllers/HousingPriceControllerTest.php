@@ -158,7 +158,7 @@ class HousingPriceControllerTest extends TestCase
         );
     }
 
-    public function test_that_all_fields_are_required()
+    public function test_that_all_fields_are_required_when_storing_housing_price()
     {
         $this->actingAsAdmin();
 
@@ -171,6 +171,12 @@ class HousingPriceControllerTest extends TestCase
                 'kid_bed_price',
                 'extra_bed_price',
             ]);
+    }
+
+    public function test_that_all_fields_are_required_when_updating_housing_price()
+    {
+        $this->actingAsAdmin();
+
         $this->patch(route('admin.housing.prices.price.edit', ['price' => HousingPrice::factory()->create()]), [])
             ->assertInvalid([
                 'housing', 'formula', 'type', 'one_price',
@@ -182,7 +188,7 @@ class HousingPriceControllerTest extends TestCase
             ]);
     }
 
-    public function test_that_housing_field_should_exists()
+    public function test_that_housing_field_should_exists_when_storing_housing_price()
     {
         $this->actingAsAdmin();
 
@@ -201,6 +207,14 @@ class HousingPriceControllerTest extends TestCase
             'kid_bed_price' => $price->kid_bed_price,
             'extra_bed_price' => $price->extra_bed_price,
         ])->assertInvalid('housing');
+    }
+
+    public function test_that_housing_field_should_exists_when_updating_housing_price()
+    {
+        $this->actingAsAdmin();
+
+        $price = HousingPrice::factory()->create();
+        $price->delete();
 
         $this->patch(route('admin.housing.prices.price.edit', ['price' => HousingPrice::factory()->create()]), [
             'housing' => Housing::max('id') + 1,
@@ -216,7 +230,7 @@ class HousingPriceControllerTest extends TestCase
         ])->assertInvalid('housing');
     }
 
-    public function test_that_formula_field_should_exists()
+    public function test_that_formula_field_should_exists_when_storing_housing_price()
     {
         $this->actingAsAdmin();
 
@@ -235,6 +249,14 @@ class HousingPriceControllerTest extends TestCase
             'kid_bed_price' => $price->kid_bed_price,
             'extra_bed_price' => $price->extra_bed_price,
         ])->assertInvalid('formula');
+    }
+
+    public function test_that_formula_field_should_exists_when_updating_housing_price()
+    {
+        $this->actingAsAdmin();
+
+        $price = HousingPrice::factory()->create();
+        $price->delete();
 
         $this->patch(route('admin.housing.prices.price.edit', ['price' => HousingPrice::factory()->create()]), [
             'housing' => $price->housing_id,
@@ -250,7 +272,7 @@ class HousingPriceControllerTest extends TestCase
         ])->assertInvalid('formula');
     }
 
-    public function test_that_type_field_should_be_a_season_type()
+    public function test_that_type_field_should_be_a_season_type_when_storing_housing_price()
     {
         $this->actingAsAdmin();
 
@@ -269,6 +291,14 @@ class HousingPriceControllerTest extends TestCase
             'kid_bed_price' => $price->kid_bed_price,
             'extra_bed_price' => $price->extra_bed_price,
         ])->assertInvalid('type');
+    }
+
+    public function test_that_type_field_should_be_a_season_type_when_updating_housing_price()
+    {
+        $this->actingAsAdmin();
+
+        $price = HousingPrice::factory()->create();
+        $price->delete();
 
         $this->patch(route('admin.housing.prices.price.edit', ['price' => HousingPrice::factory()->create()]), [
             'housing' => $price->housing_id,
@@ -284,7 +314,7 @@ class HousingPriceControllerTest extends TestCase
         ])->assertInvalid('type');
     }
 
-    public function test_that_housing_price_cannot_be_stored_or_updated_with_an_existing_season_type_and_housing_and_formula()
+    public function test_that_housing_price_cannot_be_stored_with_an_existing_season_type_and_housing_and_formula()
     {
         $this->actingAsAdmin();
 
@@ -302,6 +332,13 @@ class HousingPriceControllerTest extends TestCase
             'kid_bed_price' => $price->kid_bed_price,
             'extra_bed_price' => $price->extra_bed_price,
         ])->assertInvalid('type');
+    }
+
+    public function test_that_housing_price_cannot_be_updated_with_an_existing_season_type_and_housing_and_formula()
+    {
+        $this->actingAsAdmin();
+
+        $price = HousingPrice::factory()->create();
 
         $this->patch(route('admin.housing.prices.price.edit', ['price' => HousingPrice::factory()->create()]), [
             'housing' => $price->housing_id,
@@ -317,7 +354,7 @@ class HousingPriceControllerTest extends TestCase
         ])->assertInvalid('type');
     }
 
-    public function test_that_one_price_field_should_be_numeric()
+    public function test_that_one_price_field_should_be_numeric_when_storing_housing_price()
     {
         $this->actingAsAdmin();
 
@@ -336,6 +373,14 @@ class HousingPriceControllerTest extends TestCase
             'kid_bed_price' => $price->kid_bed_price,
             'extra_bed_price' => $price->extra_bed_price,
         ])->assertInvalid('one_price');
+    }
+
+    public function test_that_one_price_field_should_be_numeric_when_updating_housing_price()
+    {
+        $this->actingAsAdmin();
+
+        $price = HousingPrice::factory()->create();
+        $price->delete();
 
         $this->patch(route('admin.housing.prices.price.edit', ['price' => HousingPrice::factory()->create()]), [
             'housing' => $price->housing_id,
@@ -351,7 +396,7 @@ class HousingPriceControllerTest extends TestCase
         ])->assertInvalid('one_price');
     }
 
-    public function test_that_extra_price_field_should_be_numeric()
+    public function test_that_extra_price_field_should_be_numeric_when_storing_housing_price()
     {
         $this->actingAsAdmin();
 
@@ -370,6 +415,14 @@ class HousingPriceControllerTest extends TestCase
             'kid_bed_price' => $price->kid_bed_price,
             'extra_bed_price' => $price->extra_bed_price,
         ])->assertInvalid('extra_price');
+    }
+
+    public function test_that_extra_price_field_should_be_numeric_when_updating_housing_price()
+    {
+        $this->actingAsAdmin();
+
+        $price = HousingPrice::factory()->create();
+        $price->delete();
 
         $this->patch(route('admin.housing.prices.price.edit', ['price' => HousingPrice::factory()->create()]), [
             'housing' => $price->housing_id,
@@ -385,7 +438,7 @@ class HousingPriceControllerTest extends TestCase
         ])->assertInvalid('extra_price');
     }
 
-    public function test_that_min_nights_field_should_be_an_int()
+    public function test_that_min_nights_field_should_be_an_int_when_storing_housing_price()
     {
         $this->actingAsAdmin();
 
@@ -404,6 +457,14 @@ class HousingPriceControllerTest extends TestCase
             'kid_bed_price' => $price->kid_bed_price,
             'extra_bed_price' => $price->extra_bed_price,
         ])->assertInvalid('min_nights');
+    }
+
+    public function test_that_min_nights_field_should_be_an_int_when_updating_housing_price()
+    {
+        $this->actingAsAdmin();
+
+        $price = HousingPrice::factory()->create();
+        $price->delete();
 
         $this->patch(route('admin.housing.prices.price.edit', ['price' => HousingPrice::factory()->create()]), [
             'housing' => $price->housing_id,
@@ -419,7 +480,7 @@ class HousingPriceControllerTest extends TestCase
         ])->assertInvalid('min_nights');
     }
 
-    public function test_that_weekends_field_should_be_an_array()
+    public function test_that_weekends_field_should_be_an_array_when_storing_housing_price()
     {
         $this->actingAsAdmin();
 
@@ -438,6 +499,14 @@ class HousingPriceControllerTest extends TestCase
             'kid_bed_price' => $price->kid_bed_price,
             'extra_bed_price' => $price->extra_bed_price,
         ])->assertInvalid('weekends');
+    }
+
+    public function test_that_weekends_field_should_be_an_array_when_updating_housing_price()
+    {
+        $this->actingAsAdmin();
+
+        $price = HousingPrice::factory()->create();
+        $price->delete();
 
         $this->patch(route('admin.housing.prices.price.edit', ['price' => HousingPrice::factory()->create()]), [
             'housing' => $price->housing_id,
@@ -453,7 +522,7 @@ class HousingPriceControllerTest extends TestCase
         ])->assertInvalid('weekends');
     }
 
-    public function test_that_weekends_field_should_exists()
+    public function test_that_weekends_field_should_exists_when_storing_housing_price()
     {
         $this->actingAsAdmin();
 
@@ -472,6 +541,14 @@ class HousingPriceControllerTest extends TestCase
             'kid_bed_price' => $price->kid_bed_price,
             'extra_bed_price' => $price->extra_bed_price,
         ])->assertInvalid('weekends');
+    }
+
+    public function test_that_weekends_field_should_exists_when_updating_housing_price()
+    {
+        $this->actingAsAdmin();
+
+        $price = HousingPrice::factory()->create();
+        $price->delete();
 
         $this->patch(route('admin.housing.prices.price.edit', ['price' => HousingPrice::factory()->create()]), [
             'housing' => $price->housing_id,
@@ -487,7 +564,7 @@ class HousingPriceControllerTest extends TestCase
         ])->assertInvalid('weekends');
     }
 
-    public function test_that_weekend_price_field_should_be_numeric()
+    public function test_that_weekend_price_field_should_be_numeric_when_storing_housing_price()
     {
         $this->actingAsAdmin();
 
@@ -506,6 +583,14 @@ class HousingPriceControllerTest extends TestCase
             'kid_bed_price' => $price->kid_bed_price,
             'extra_bed_price' => $price->extra_bed_price,
         ])->assertInvalid('weekend_price');
+    }
+
+    public function test_that_weekend_price_field_should_be_numeric_when_updating_housing_price()
+    {
+        $this->actingAsAdmin();
+
+        $price = HousingPrice::factory()->create();
+        $price->delete();
 
         $this->patch(route('admin.housing.prices.price.edit', ['price' => HousingPrice::factory()->create()]), [
             'housing' => $price->housing_id,
@@ -521,7 +606,7 @@ class HousingPriceControllerTest extends TestCase
         ])->assertInvalid('weekend_price');
     }
 
-    public function test_that_kid_bed_price_field_should_be_numeric()
+    public function test_that_kid_bed_price_field_should_be_numeric_when_storing_housing_price()
     {
         $this->actingAsAdmin();
 
@@ -540,6 +625,14 @@ class HousingPriceControllerTest extends TestCase
             'kid_bed_price' => 'test',
             'extra_bed_price' => $price->extra_bed_price,
         ])->assertInvalid('kid_bed_price');
+    }
+
+    public function test_that_kid_bed_price_field_should_be_numeric_when_updating_housing_price()
+    {
+        $this->actingAsAdmin();
+
+        $price = HousingPrice::factory()->create();
+        $price->delete();
 
         $this->patch(route('admin.housing.prices.price.edit', ['price' => HousingPrice::factory()->create()]), [
             'housing' => $price->housing_id,
@@ -555,7 +648,7 @@ class HousingPriceControllerTest extends TestCase
         ])->assertInvalid('kid_bed_price');
     }
 
-    public function test_that_extra_bed_price_field_should_be_numeric()
+    public function test_that_extra_bed_price_field_should_be_numeric_when_storing_housing_price()
     {
         $this->actingAsAdmin();
 
@@ -574,6 +667,14 @@ class HousingPriceControllerTest extends TestCase
             'kid_bed_price' => $price->kid_bed_price,
             'extra_bed_price' => 'test',
         ])->assertInvalid('extra_bed_price');
+    }
+
+    public function test_that_extra_bed_price_field_should_be_numeric_when_updating_housing_price()
+    {
+        $this->actingAsAdmin();
+
+        $price = HousingPrice::factory()->create();
+        $price->delete();
 
         $this->patch(route('admin.housing.prices.price.edit', ['price' => HousingPrice::factory()->create()]), [
             'housing' => $price->housing_id,
