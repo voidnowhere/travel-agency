@@ -35,7 +35,7 @@ class ResidenceCategoryControllerTest extends TestCase
         ]);
     }
 
-    public function test_that_residence_category_cannot_be_stored_or_updated_with_an_existing_name()
+    public function test_that_residence_category_cannot_be_stored_with_an_existing_name()
     {
         $this->actingAsAdmin();
 
@@ -43,6 +43,13 @@ class ResidenceCategoryControllerTest extends TestCase
 
         $this->post(route('admin.residence.categories.create'), ['name' => $category->name, 'order' => 1])
             ->assertInvalid(['name']);
+    }
+
+    public function test_that_residence_category_cannot_be_updated_with_an_existing_name()
+    {
+        $this->actingAsAdmin();
+
+        $category = ResidenceCategory::factory()->create();
 
         $this->patch(
             route('admin.residence.categories.category.edit', ['category' => $category]),
@@ -149,11 +156,17 @@ class ResidenceCategoryControllerTest extends TestCase
         );
     }
 
-    public function test_that_name_and_order_fields_are_required()
+    public function test_that_name_and_order_fields_are_required_when_storing_residence_category()
     {
         $this->actingAsAdmin();
 
         $this->post(route('admin.residence.categories.create'), [])->assertInvalid(['name', 'order']);
+    }
+
+    public function test_that_name_and_order_fields_are_required_when_updating_residence_category()
+    {
+        $this->actingAsAdmin();
+
         $this->patch(
             route(
                 'admin.residence.categories.category.edit',
@@ -162,7 +175,7 @@ class ResidenceCategoryControllerTest extends TestCase
         )->assertInvalid(['name', 'order']);
     }
 
-    public function test_that_name_field_should_be_an_alpha_one_space_between()
+    public function test_that_name_field_should_be_an_alpha_one_space_between_when_storing_residence_category()
     {
         $this->actingAsAdmin();
 
@@ -170,6 +183,11 @@ class ResidenceCategoryControllerTest extends TestCase
             'name' => 2,
             'order' => 1,
         ])->assertInvalid(['name']);
+    }
+
+    public function test_that_name_field_should_be_an_alpha_one_space_between_when_updating_residence_category()
+    {
+        $this->actingAsAdmin();
 
         $this->patch(
             route(
@@ -183,7 +201,7 @@ class ResidenceCategoryControllerTest extends TestCase
         )->assertInvalid(['name']);
     }
 
-    public function test_that_order_field_should_be_an_int()
+    public function test_that_order_field_should_be_an_int_when_storing_residence_category()
     {
         $this->actingAsAdmin();
 
@@ -191,6 +209,11 @@ class ResidenceCategoryControllerTest extends TestCase
             'name' => 'Morocco',
             'order' => 'foo',
         ])->assertInvalid(['order']);
+    }
+
+    public function test_that_order_field_should_be_an_int_when_updating_residence_category()
+    {
+        $this->actingAsAdmin();
 
         $this->patch(
             route(

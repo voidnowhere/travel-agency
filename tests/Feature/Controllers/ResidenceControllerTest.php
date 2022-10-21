@@ -74,7 +74,7 @@ class ResidenceControllerTest extends TestCase
         );
     }
 
-    public function test_that_residence_cannot_be_stored_or_updated_with_an_existing_name_in_the_same_city()
+    public function test_that_residence_cannot_be_stored_with_an_existing_name_in_the_same_city()
     {
         $this->actingAsAdmin();
 
@@ -92,7 +92,13 @@ class ResidenceControllerTest extends TestCase
             'order' => $residence->order_by,
             'active' => $residence->is_active,
         ])->assertInvalid(['name']);
+    }
 
+    public function test_that_residence_cannot_be_updated_with_an_existing_name_in_the_same_city()
+    {
+        $this->actingAsAdmin();
+
+        $residence = Residence::factory()->create();
         $newResidence = Residence::factory()->create();
 
         $this->patch(
@@ -237,18 +243,23 @@ class ResidenceControllerTest extends TestCase
         );
     }
 
-    public function test_that_all_fields_except_active_are_required()
+    public function test_that_all_fields_except_active_are_required_when_storing_residence()
     {
         $this->actingAsAdmin();
 
         $this->post(route('admin.residences.create'), [])
             ->assertInvalid(['name', 'city', 'category', 'description', 'website', 'email', 'contact', 'tax', 'order']);
+    }
+
+    public function test_that_all_fields_except_active_are_required_when_updating_residence()
+    {
+        $this->actingAsAdmin();
 
         $this->patch(route('admin.residences.residence.edit', ['residence' => Residence::factory()->create()]), [])
             ->assertInvalid(['name', 'city', 'category', 'description', 'website', 'email', 'contact', 'tax', 'order']);
     }
 
-    public function test_that_name_field_should_be_an_alpha_one_space_between()
+    public function test_that_name_field_should_be_an_alpha_one_space_between_when_storing_residence()
     {
         $this->actingAsAdmin();
 
@@ -270,6 +281,14 @@ class ResidenceControllerTest extends TestCase
                 'active' => $residence->is_active,
             ]
         )->assertInvalid(['name']);
+    }
+
+    public function test_that_name_field_should_be_an_alpha_one_space_between_when_updating_residence()
+    {
+        $this->actingAsAdmin();
+
+        $residence = Residence::factory()->create();
+        $residence->delete();
 
         $this->patch(
             route('admin.residences.residence.edit', ['residence' => Residence::factory()->create()]),
@@ -288,7 +307,7 @@ class ResidenceControllerTest extends TestCase
         )->assertInvalid(['name']);
     }
 
-    public function test_that_city_field_should_exists()
+    public function test_that_city_field_should_exists_when_storing_residence()
     {
         $this->actingAsAdmin();
 
@@ -310,6 +329,14 @@ class ResidenceControllerTest extends TestCase
                 'active' => $residence->is_active,
             ]
         )->assertInvalid(['city']);
+    }
+
+    public function test_that_city_field_should_exists_when_updating_residence()
+    {
+        $this->actingAsAdmin();
+
+        $residence = Residence::factory()->create();
+        $residence->delete();
 
         $this->patch(
             route('admin.residences.residence.edit', ['residence' => Residence::factory()->create()]),
@@ -328,7 +355,7 @@ class ResidenceControllerTest extends TestCase
         )->assertInvalid(['city']);
     }
 
-    public function test_that_category_field_should_exists()
+    public function test_that_category_field_should_exists_when_storing_residence()
     {
         $this->actingAsAdmin();
 
@@ -350,6 +377,14 @@ class ResidenceControllerTest extends TestCase
                 'active' => $residence->is_active,
             ]
         )->assertInvalid(['category']);
+    }
+
+    public function test_that_category_field_should_exists_when_updating_residence()
+    {
+        $this->actingAsAdmin();
+
+        $residence = Residence::factory()->create();
+        $residence->delete();
 
         $this->patch(
             route('admin.residences.residence.edit', ['residence' => Residence::factory()->create()]),
@@ -368,7 +403,7 @@ class ResidenceControllerTest extends TestCase
         )->assertInvalid(['category']);
     }
 
-    public function test_that_website_field_should_be_a_url()
+    public function test_that_website_field_should_be_a_url_when_storing_residence()
     {
         $this->actingAsAdmin();
 
@@ -390,6 +425,14 @@ class ResidenceControllerTest extends TestCase
                 'active' => $residence->is_active,
             ]
         )->assertInvalid(['website']);
+    }
+
+    public function test_that_website_field_should_be_a_url_when_updating_residence()
+    {
+        $this->actingAsAdmin();
+
+        $residence = Residence::factory()->create();
+        $residence->delete();
 
         $this->patch(
             route('admin.residences.residence.edit', ['residence' => Residence::factory()->create()]),
@@ -408,7 +451,7 @@ class ResidenceControllerTest extends TestCase
         )->assertInvalid(['website']);
     }
 
-    public function test_that_email_field_should_be_a_valid_email()
+    public function test_that_email_field_should_be_a_valid_email_when_storing_residence()
     {
         $this->actingAsAdmin();
 
@@ -430,6 +473,14 @@ class ResidenceControllerTest extends TestCase
                 'active' => $residence->is_active,
             ]
         )->assertInvalid(['email']);
+    }
+
+    public function test_that_email_field_should_be_a_valid_email_when_updating_residence()
+    {
+        $this->actingAsAdmin();
+
+        $residence = Residence::factory()->create();
+        $residence->delete();
 
         $this->patch(
             route('admin.residences.residence.edit', ['residence' => Residence::factory()->create()]),
@@ -448,7 +499,7 @@ class ResidenceControllerTest extends TestCase
         )->assertInvalid(['email']);
     }
 
-    public function test_that_contact_field_should_be_an_alpha_one_space_between()
+    public function test_that_contact_field_should_be_an_alpha_one_space_between_when_storing_residence()
     {
         $this->actingAsAdmin();
 
@@ -470,6 +521,14 @@ class ResidenceControllerTest extends TestCase
                 'active' => $residence->is_active,
             ]
         )->assertInvalid(['contact']);
+    }
+
+    public function test_that_contact_field_should_be_an_alpha_one_space_between_when_updating_residence()
+    {
+        $this->actingAsAdmin();
+
+        $residence = Residence::factory()->create();
+        $residence->delete();
 
         $this->patch(
             route('admin.residences.residence.edit', ['residence' => Residence::factory()->create()]),
@@ -488,7 +547,7 @@ class ResidenceControllerTest extends TestCase
         )->assertInvalid(['contact']);
     }
 
-    public function test_that_tax_field_should_be_numeric()
+    public function test_that_tax_field_should_be_numeric_when_storing_residence()
     {
         $this->actingAsAdmin();
 
@@ -510,6 +569,14 @@ class ResidenceControllerTest extends TestCase
                 'active' => $residence->is_active,
             ]
         )->assertInvalid(['tax']);
+    }
+
+    public function test_that_tax_field_should_be_numeric_when_updating_residence()
+    {
+        $this->actingAsAdmin();
+
+        $residence = Residence::factory()->create();
+        $residence->delete();
 
         $this->patch(
             route('admin.residences.residence.edit', ['residence' => Residence::factory()->create()]),
@@ -528,7 +595,7 @@ class ResidenceControllerTest extends TestCase
         )->assertInvalid(['tax']);
     }
 
-    public function test_that_order_field_should_be_int()
+    public function test_that_order_field_should_be_int_when_storing_residence()
     {
         $this->actingAsAdmin();
 
@@ -550,6 +617,14 @@ class ResidenceControllerTest extends TestCase
                 'active' => $residence->is_active,
             ]
         )->assertInvalid(['order']);
+    }
+
+    public function test_that_order_field_should_be_int_when_updating_residence()
+    {
+        $this->actingAsAdmin();
+
+        $residence = Residence::factory()->create();
+        $residence->delete();
 
         $this->patch(
             route('admin.residences.residence.edit', ['residence' => Residence::factory()->create()]),

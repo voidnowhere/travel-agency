@@ -136,11 +136,16 @@ class SeasonControllerTest extends TestCase
         );
     }
 
-    public function test_that_all_fields_except_active_are_required()
+    public function test_that_all_fields_except_active_are_required_when_storing_season()
     {
         $this->actingAsAdmin();
 
         $this->post(route('admin.seasons.create'), [])->assertInvalid(['from', 'to', 'type', 'description']);
+    }
+
+    public function test_that_all_fields_except_active_are_required_when_updating_season()
+    {
+        $this->actingAsAdmin();
 
         $this->patch(
             route('admin.seasons.season.edit', ['season' => Season::factory()->create()]),
@@ -148,7 +153,7 @@ class SeasonControllerTest extends TestCase
         )->assertInvalid(['from', 'to', 'type', 'description']);
     }
 
-    public function test_that_from_field_should_be_a_date()
+    public function test_that_from_field_should_be_a_date_when_storing_season()
     {
         $this->actingAsAdmin();
 
@@ -161,6 +166,14 @@ class SeasonControllerTest extends TestCase
             'type' => $season->type_SHML,
             'description' => $season->description,
         ])->assertInvalid('from');
+    }
+
+    public function test_that_from_field_should_be_a_date_when_updating_season()
+    {
+        $this->actingAsAdmin();
+
+        $season = Season::factory()->create();
+        $season->delete();
 
         $this->patch(
             route('admin.seasons.season.edit', ['season' => Season::factory()->create()]),
@@ -173,7 +186,7 @@ class SeasonControllerTest extends TestCase
         )->assertInvalid('from');
     }
 
-    public function test_that_to_field_should_be_a_date()
+    public function test_that_to_field_should_be_a_date_when_storing_season()
     {
         $this->actingAsAdmin();
 
@@ -186,6 +199,14 @@ class SeasonControllerTest extends TestCase
             'type' => $season->type_SHML,
             'description' => $season->description,
         ])->assertInvalid('to');
+    }
+
+    public function test_that_to_field_should_be_a_date_when_updating_season()
+    {
+        $this->actingAsAdmin();
+
+        $season = Season::factory()->create();
+        $season->delete();
 
         $this->patch(
             route('admin.seasons.season.edit', ['season' => Season::factory()->create()]),
@@ -198,7 +219,7 @@ class SeasonControllerTest extends TestCase
         )->assertInvalid('to');
     }
 
-    public function test_that_to_field_should_be_after_from_field()
+    public function test_that_to_field_should_be_after_from_field_when_storing_season()
     {
         $this->actingAsAdmin();
 
@@ -211,6 +232,14 @@ class SeasonControllerTest extends TestCase
             'type' => $season->type_SHML,
             'description' => $season->description,
         ])->assertInvalid('to');
+    }
+
+    public function test_that_to_field_should_be_after_from_field_when_updating_season()
+    {
+        $this->actingAsAdmin();
+
+        $season = Season::factory()->create();
+        $season->delete();
 
         $this->patch(
             route('admin.seasons.season.edit', ['season' => Season::factory()->create()]),
@@ -223,7 +252,7 @@ class SeasonControllerTest extends TestCase
         )->assertInvalid('to');
     }
 
-    public function test_that_type_field_should_be_a_season_type()
+    public function test_that_type_field_should_be_a_season_type_when_storing_season()
     {
         $this->actingAsAdmin();
 
@@ -236,6 +265,14 @@ class SeasonControllerTest extends TestCase
             'type' => 'test',
             'description' => $season->description,
         ])->assertInvalid('type');
+    }
+
+    public function test_that_type_field_should_be_a_season_type_when_updating_season()
+    {
+        $this->actingAsAdmin();
+
+        $season = Season::factory()->create();
+        $season->delete();
 
         $this->patch(
             route('admin.seasons.season.edit', ['season' => Season::factory()->create()]),
@@ -248,7 +285,7 @@ class SeasonControllerTest extends TestCase
         )->assertInvalid('type');
     }
 
-    public function test_that_season_cannot_be_stored_or_updated_withe_an_existing_season_type_and_date_from_and_date_to()
+    public function test_that_season_cannot_be_stored_withe_an_existing_season_type_and_date_from_and_date_to()
     {
         $this->actingAsAdmin();
 
@@ -260,6 +297,13 @@ class SeasonControllerTest extends TestCase
             'type' => $season->type_SHML,
             'description' => $season->description,
         ])->assertInvalid('type');
+    }
+
+    public function test_that_season_cannot_be_updated_withe_an_existing_season_type_and_date_from_and_date_to()
+    {
+        $this->actingAsAdmin();
+
+        $season = Season::factory()->create();
 
         $this->patch(
             route('admin.seasons.season.edit', ['season' => Season::factory()->create()]),

@@ -144,7 +144,7 @@ class CountryControllerTest extends TestCase
         );
     }
 
-    public function test_that_country_cannot_be_stored_or_updated_with_an_existing_name()
+    public function test_that_country_cannot_be_stored_with_an_existing_name()
     {
         $this->actingAsAdmin();
 
@@ -154,6 +154,13 @@ class CountryControllerTest extends TestCase
             'name' => $country->name,
             'order' => $country->order_by,
         ])->assertInvalid(['name']);
+    }
+
+    public function test_that_country_cannot_be_updated_with_an_existing_name()
+    {
+        $this->actingAsAdmin();
+
+        $country = Country::factory()->create();
 
         $this->patch(route('admin.countries.country.edit', ['country' => $country]), [
             'name' => Country::factory()->create()->name,
@@ -161,16 +168,22 @@ class CountryControllerTest extends TestCase
         ])->assertInvalid(['name']);
     }
 
-    public function test_that_name_and_order_fields_are_required()
+    public function test_that_name_and_order_fields_are_required_when_storing_a_country()
     {
         $this->actingAsAdmin();
 
         $this->post(route('admin.countries.create'), [])->assertInvalid(['name', 'order']);
+    }
+
+    public function test_that_name_and_order_fields_are_required_when_updating_a_country()
+    {
+        $this->actingAsAdmin();
+
         $this->patch(route('admin.countries.country.edit', ['country' => Country::factory()->create()]), [])
             ->assertInvalid(['name', 'order']);
     }
 
-    public function test_that_name_field_should_be_an_alpha()
+    public function test_that_name_field_should_be_an_alpha_when_storing_a_country()
     {
         $this->actingAsAdmin();
 
@@ -178,6 +191,11 @@ class CountryControllerTest extends TestCase
             'name' => 2,
             'order' => 1,
         ])->assertInvalid(['name']);
+    }
+
+    public function test_that_name_field_should_be_an_alpha_when_updating_a_country()
+    {
+        $this->actingAsAdmin();
 
         $this->patch(route('admin.countries.country.edit', ['country' => Country::factory()->create()]), [
             'name' => 2,
@@ -185,7 +203,7 @@ class CountryControllerTest extends TestCase
         ])->assertInvalid(['name']);
     }
 
-    public function test_that_order_field_should_be_an_int()
+    public function test_that_order_field_should_be_an_int_when_string_a_country()
     {
         $this->actingAsAdmin();
 
@@ -193,6 +211,11 @@ class CountryControllerTest extends TestCase
             'name' => 'Morocco',
             'order' => 'foo',
         ])->assertInvalid(['order']);
+    }
+
+    public function test_that_order_field_should_be_an_int_when_updating_a_country()
+    {
+        $this->actingAsAdmin();
 
         $this->patch(route('admin.countries.country.edit', ['country' => Country::factory()->create()]), [
             'name' => 'Morocco',

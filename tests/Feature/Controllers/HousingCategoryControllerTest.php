@@ -133,31 +133,45 @@ class HousingCategoryControllerTest extends TestCase
         );
     }
 
-    public function test_that_name_and_order_fields_are_required()
+    public function test_that_name_and_order_fields_are_required_when_storing_a_housing_category()
     {
         $this->actingAsAdmin();
 
         $this->post(route('admin.housing.categories.create'), [])->assertInvalid(['name', 'order']);
+    }
+
+    public function test_that_name_and_order_fields_are_required_when_updating_a_housing_category()
+    {
+        $this->actingAsAdmin();
+
         $this->patch(
             route('admin.housing.categories.category.edit', ['category' => HousingCategory::factory()->create()]),
             []
         )->assertInvalid(['name', 'order']);
     }
 
-    public function test_that_name_field_should_be_an_alpha_one_space_between()
+    public function test_that_name_field_should_be_an_alpha_one_space_between_when_storing_a_housing_category()
     {
         $this->actingAsAdmin();
 
         $data = ['name' => 1, 'order' => 1];
 
         $this->post(route('admin.housing.categories.create'), $data)->assertInvalid(['name']);
+    }
+
+    public function test_that_name_field_should_be_an_alpha_one_space_between_when_updating_a_housing_category()
+    {
+        $this->actingAsAdmin();
+
+        $data = ['name' => 1, 'order' => 1];
+
         $this->patch(
             route('admin.housing.categories.category.edit', ['category' => HousingCategory::factory()->create()]),
             $data
         )->assertInvalid(['name']);
     }
 
-    public function test_that_housing_category_cannot_be_stored_or_updated_with_an_existing_name()
+    public function test_that_housing_category_cannot_be_stored_with_an_existing_name()
     {
         $this->actingAsAdmin();
 
@@ -165,19 +179,36 @@ class HousingCategoryControllerTest extends TestCase
         $data = ['name' => $category->name, 'order' => $category->order_by];
 
         $this->post(route('admin.housing.categories.create'), $data)->assertInvalid(['name']);
+    }
+
+    public function test_that_housing_category_cannot_be_updated_with_an_existing_name()
+    {
+        $this->actingAsAdmin();
+
+        $category = HousingCategory::factory()->create();
+        $data = ['name' => $category->name, 'order' => $category->order_by];
+
         $this->patch(
             route('admin.housing.categories.category.edit', ['category' => HousingCategory::factory()->create()]),
             $data
         )->assertInvalid(['name']);
     }
 
-    public function test_that_order_should_be_an_int()
+    public function test_that_order_should_be_an_int_when_storing_a_housing_category()
     {
         $this->actingAsAdmin();
 
         $data = ['name' => 'test', 'order' => 'test'];
 
         $this->post(route('admin.housing.categories.create'), $data)->assertInvalid(['order']);
+    }
+
+    public function test_that_order_should_be_an_int_when_updating_a_housing_category()
+    {
+        $this->actingAsAdmin();
+
+        $data = ['name' => 'test', 'order' => 'test'];
+
         $this->patch(
             route('admin.housing.categories.category.edit', ['category' => HousingCategory::factory()->create()]),
             $data
