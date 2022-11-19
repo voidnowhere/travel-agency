@@ -6,6 +6,7 @@ use App\Iframes\UserIframe;
 use App\Models\User;
 use App\Rules\AlphaNumOneSpaceBetween;
 use App\Rules\AlphaOneSpaceBetween;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -46,7 +47,9 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        User::create($this->validateUser($request));
+        $user = User::create($this->validateUser($request));
+
+        event(new Registered($user));
 
         return UserIframe::iframeCUClose() . '<br>' . UserIframe::reloadParent();
     }
@@ -61,6 +64,13 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $user->update($this->validateUser($request, $user));
+
+        if ($user->wasChanged('email')) {
+            $user->email_verified_at = null;
+            $user->save();
+
+            event(new Registered($user));
+        }
 
         return UserIframe::iframeCUClose() . '<br>' . UserIframe::reloadParent();
     }
