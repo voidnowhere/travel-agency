@@ -1,3 +1,1 @@
-<x-admin.layout.base>
-    <h1>Dashboard</h1>
-</x-admin.layout.base>
+<x-admin.layout.management name="Dashboard"></x-admin.layout.management>
