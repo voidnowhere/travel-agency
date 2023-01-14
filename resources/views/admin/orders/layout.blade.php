@@ -19,7 +19,7 @@
                     $('#user_id').val('');
                     $('#full_name').val('');
                     let value = $(this).val();
-                    if (value !== '') {
+                    if (value.length >= 3) {
                         $.ajax({
                             url: '{{ route('admin.users.get') }}',
                             type: 'POST',
@@ -58,6 +58,8 @@
                                 };
                             },
                         });
+                    } else {
+                        $("#email").autocomplete({source: []});
                     }
                 });
 
@@ -66,7 +68,7 @@
                     $('#user_id').val('');
                     $('#email').val('');
                     let value = $(this).val().split('/');
-                    if (value[0] !== '') {
+                    if (value[0].length >= 3) {
                         $.ajax({
                             url: '{{ route('admin.users.get') }}',
                             type: 'POST',
@@ -106,6 +108,8 @@
                                 };
                             },
                         });
+                    } else {
+                        $("#full_name").autocomplete({source: []})
                     }
                 });
             });

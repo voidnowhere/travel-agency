@@ -16,7 +16,7 @@
                 let url = '{{ route('admin.users') }}';
                 let full_name = document.getElementById('full_name').value;
                 let email = document.getElementById('email').value;
-                if (full_name !== '' || email !== '') {
+                if (full_name.length >= 3 || email.length >= 3) {
                     let full_name_splitted = full_name.split('/');
                     let query = new URLSearchParams();
                     if (full_name_splitted[0] ?? '' !== '') {
@@ -30,7 +30,7 @@
                         query.append('email', email);
                     }
                     parent_iframe.src = url + '?' + query.toString();
-                } else {
+                } else if (full_name.length === 0 && email.length === 0) {
                     parent_iframe.src = url;
                 }
             }
