@@ -1,4 +1,4 @@
-# Cynab Travel
+# Travel Agency
 
 ## `Demonstration`
 
