@@ -51,7 +51,7 @@ class DatabaseSeeder extends Seeder
         User::factory()->admin()->create([
             'city_id' => $marrakechCity->id,
             'last_name' => 'admin',
-            'first_name' => 'cynab',
+            'first_name' => 'agency',
             'email' => 'admin@admin.com',
         ]);
 
