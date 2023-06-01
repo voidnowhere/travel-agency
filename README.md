@@ -2,4 +2,4 @@
 
 ## `Demonstration`
 
-https://user-images.githubusercontent.com/79842485/236908456-711048ba-740b-4949-bc15-6f3ff1b0fae4.mp4
+https://github.com/voidnowhere/travel-agency/assets/79842485/20869f62-0a23-423d-b72a-d9061eb9bb87
